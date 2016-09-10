@@ -1,5 +1,6 @@
 package my.project.juja.controller.commands;
 
+import my.project.juja.controller.commands.table.Table;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
@@ -21,17 +22,8 @@ public class TableData extends Command{
     public void perform() {
         checkCountParameters(parametrs,COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        List<String> columnNames = store.getColumnName(tableName);
-        List<String> tableData = store.getTableData(tableName);
-
-        for (String columnName : columnNames) {
-            view.write(columnName + "|");
-        }
-        view.writeln();
-        view.writeln("---------------------------");
-        for (String s : tableData) {
-            view.writeln(s);
-        }
+        Table table = store.getTableData(tableName);
+        view.writeln(table.toString());
     }
     
 

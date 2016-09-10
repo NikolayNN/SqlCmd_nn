@@ -1,9 +1,7 @@
 //package my.project.juja.controller.command;
 //
-//import my.project.juja.controller.commands.AddRecord;
 //import my.project.juja.controller.commands.Command;
 //import my.project.juja.model.Storeable;
-//import my.project.juja.model.Table;
 //import my.project.juja.view.View;
 //import org.junit.Before;
 //import org.junit.Test;
@@ -44,7 +42,7 @@
 //        command.setup("add-record tableName");
 //        when(table.getColumnNames()).thenReturn(columnNames);
 //        when(view.read()).thenReturn(columnToEdit);
-//        when(table.setColumnsToEditIdx(anyString()))
+//        when(table.setColumnsToEditIdx(anyString()));
 //
 //        //when
 //        command.perform();

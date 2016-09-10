@@ -1,7 +1,11 @@
 package my.project.juja.model;
 
+import my.project.juja.controller.commands.table.CellInfo;
+import my.project.juja.controller.commands.table.Row;
+import my.project.juja.controller.commands.table.Table;
+
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -17,18 +21,15 @@ public interface Storeable {
 
     void clearTable(String tableName);
 
-    void addRecord(String tableName, String columnNames, String columnValues);
+    void addRecord(Table table) throws SQLException;
 
     Set<String> getTableList();
 
-    List<String> getColumnName(String tableName);
+    Table getTableData(String tableName);
 
-    List<String> getTableData(String tableName);
+    Table getTableData(String tableName, String where);
 
-    List<String> getTableData(String tableName, String where);
+    void updateRecord(String where, Table table);
 
-    void updateRecord(String tableName, String where, List<String> cellValues );
-
-    String getColumnType(String tableName, String columnName);
-
+    List<CellInfo> getColumnInformation(String tableName);
 }

@@ -9,6 +9,15 @@ import java.util.TreeSet;
  * Created by Nikol on 8/20/2016.
  */
 public class JujaUtils {
+
+    public static Boolean setBoolean(String str, String isTrue){
+        if(isTrue == null && str == null){
+            return true;
+        }
+
+        return str.equalsIgnoreCase(isTrue);
+
+    }
     public static String numberList(List<String> list){
         String result = "";
         for (int i = 0; i < list.size(); i++) {

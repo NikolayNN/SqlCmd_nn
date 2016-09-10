@@ -17,6 +17,8 @@ public abstract class Command{
     public static final String CLEAR_TABLE = "clear-table";
     public static final String UPDATE_TABLE = "update-table";
     public static final String SEPARATOR = " ";
+    public static final String ADD_RECORD_NEW = "add-record-new";
+    public static final String VALUES_SEPARATOR = "#!";
 
     protected String command;
     protected int countParametrs;

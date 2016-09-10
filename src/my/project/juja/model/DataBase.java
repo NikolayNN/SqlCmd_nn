@@ -1,5 +1,10 @@
 package my.project.juja.model;
-        import my.project.juja.controller.commands.Command;
+        import my.project.juja.controller.commands.table.Cell;
+        import my.project.juja.controller.commands.table.CellInfo;
+        import my.project.juja.controller.commands.table.Row;
+        import my.project.juja.controller.commands.table.Table;
+        import my.project.juja.utils.JujaUtils;
+
         import java.sql.*;
         import java.util.*;
 
@@ -69,27 +74,28 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public void addRecord(String tableName, String columnNames, String columnValues) {
+    public void addRecord(Table table) throws SQLException {
         checkConnection();
-        columnNames = format(columnNames, "\"");
-        columnValues = format(columnValues, "'");
-        try (Statement stmt = connection.createStatement()) {
+        Row row = table.getRow(0);
+        String tableName = table.getTableName();
+        String columnNames;
+        String columnValues;
+        columnNames = format(row.getColumnNamesNotNull(), "\"");
+        columnValues = format(row.getCellValuesNotNull(), "'");
+        Statement stmt = connection.createStatement();
             String sql =    "INSERT INTO " + tableName + "(" + columnNames + ")" +
                             " VALUES (" + columnValues + ")";
             stmt.executeUpdate(sql);
             stmt.close();
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_COMMAND);
-        }
     }
 
 
-    private String format(String line, String quoteType) {
-        String[] word = line.split(Command.SEPARATOR);
+
+    private String format(List<String> strings, String quoteType) {
         String result = "";
-        for (int i = 0; i < word.length; i++) {
-            result += quoteType + word[i] + quoteType;
-            if (!(i == word.length-1)){
+        for (int i = 0; i < strings.size(); i++) {
+            result += quoteType + strings.get(i) + quoteType;
+            if (!(i == strings.size()-1)){
                 result += ",";
             }else {
                 break;
@@ -120,75 +126,67 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public List<String> getColumnName(String tableName){
+    public Table getTableData(String tableName){
         checkConnection();
-        List<String> result = new ArrayList<>();
-        String query = "SELECT * FROM " + tableName + " Limit 1";
-        try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                result.add(rsmd.getColumnName(i));
-            }
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_TABLENAME);
-        }
-        return result;
-    }
-
-    @Override
-    public List<String> getTableData(String tableName){
-        checkConnection();
-        List<String> result = new ArrayList<>();
+        Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName;
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
-                String record = "";
+                Row row = new Row(table.getCellInfos());
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    record += (rs.getString(i).trim() + "|");
+                    if(rs.getString(i) != null){
+                        row.getCell(i-1).setValue(rs.getString(i).trim(), false);
+                    }else{
+                        row.getCell(i-1).setValue("", false);
+                    }
                 }
-                result.add(record);
+                table.addRow(row);
             }
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
-        return result;
+        return table;
     }
 
-    public List<String> getTableData(String tableName, String where){
+    @Override
+    public Table getTableData(String tableName, String where){
         checkConnection();
-        List<String> result = new ArrayList<>();
+        Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
+        System.out.println(query);
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
-                String record = "";
+                Row row = new Row(table.getCellInfos());
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    record += (rs.getString(i).trim() + "|");
+                    if(rs.getString(i) != null){
+                        row.getCell(i-1).setValue(rs.getString(i).trim(), false);
+                    }else{
+                        row.getCell(i-1).setValue("", false);
+                    }
                 }
-                result.add(record);
+                table.addRow(row);
             }
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
-        return result;
+        return table;
     }
 
-//    UPDATE public.users
-//    SET name=?, password=?, "Id"=?
-//    WHERE <condition>;
     @Override
-    public void updateRecord(String tableName, String where, List<String> cellValues) {
+    public void updateRecord(String where, Table table) {
         checkConnection();
-        String cellValueStr = "";
-        for (String cellValue : cellValues) {
-            cellValueStr += cellValue;
+        String tableName = table.getTableName();
+        String set = "";
+        for (Cell cell : table.getRow(0).getCellsNotNull()) {
+            set += cell.getColumnName() + "=" + "'" + cell.getValue() + "'";
         }
+
         try (Statement stmt = connection.createStatement()) {
-            String sql =    "UPDATE " + tableName + " SET " + cellValueStr + " WHERE " + where;
+            String sql =    "UPDATE " + tableName + " SET " + set + " WHERE " + where;
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
@@ -197,21 +195,29 @@ public class DataBase implements Storeable {
         }
     }
 
-//    select column_name, data_type from information_schema.columns
-//    where table_name = 'users' and column_name='name';
-
-    public String getColumnType(String tableName, String columnName){
-        String result ="";
+    @Override
+    public List<CellInfo> getColumnInformation(String tableName){
+        List<CellInfo> cellInfos = new ArrayList<>();
         checkConnection();
-        String query = "SELECT  data_type from information_schema.columns where table_name = '" + tableName + "' and column_name = '" + columnName +"'";
+        String result = "";
+        String query = "SELECT column_name, data_type, is_nullable, column_default from information_schema.columns where table_name = '" + tableName + "'";
         try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
+            ResultSet rs = stmt.executeQuery(query)){
+            int index = 0;
             while(rs.next()){
-            result += rs.getString(1);
+                String columnName = rs.getString(1);
+                String dataType = rs.getString(2);
+                Boolean isNullable = JujaUtils.setBoolean(rs.getString(3), "YES");
+                Boolean columnDefault = !JujaUtils.setBoolean(rs.getString(4), null);
+                CellInfo cellInfo = new CellInfo(columnName, dataType, isNullable, columnDefault, index);
+                cellInfos.add(cellInfo);
+                index++;
             }
+            System.out.println(result + " ");
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
-        return result;
+        return cellInfos;
     }
+
 }

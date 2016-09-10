@@ -1,5 +1,8 @@
 package my.project.juja.controller.commands;
 
+import my.project.juja.controller.commands.table.Cell;
+import my.project.juja.controller.commands.table.Row;
+import my.project.juja.controller.commands.table.Table;
 import my.project.juja.model.Storeable;
 import my.project.juja.utils.JujaUtils;
 import my.project.juja.view.View;
@@ -26,47 +29,52 @@ public class UpdateRecord extends Command {
     public void perform() {
         String tableName = parametrs[0];
         String where = addQuotes(parametrs[1]);
-
-        List<String> columnNames = store.getColumnName(tableName);
-        view.writeln(JujaUtils.numberList(columnNames));
-        view.writeln(store.getTableData(tableName, where).toString());
-
-        view.writeln("choose column for update. input column index separated by space. Example \"0 1 2 3\" ");
-
-        Set<Integer> selectedColumnIndexes;
-        while(true) {
-            String command = view.read();
-            command.trim();
-            try {
-                selectedColumnIndexes = JujaUtils.toSetInteger(command.split(" "));
-                JujaUtils.validate(selectedColumnIndexes, columnNames.size());
-                break;
-            }catch (NumberFormatException ex){
-                view.writeln("ERROR. check your input! only numbers, and can't be empty!");
-            }catch (IllegalArgumentException ex){
-                view.writeln(ex.getMessage());
-            }
+        Table table = store.getTableData(tableName, where);
+        table.addRow(new Row(table.getCellInfos()));
+        view.writeln(table.toString());
+        for (Cell cell : table.getRow(0).getCells()) {
+            view.writeln("input new value or skip");
+            view.writeln(cell.getCellInfo().toString());
+            cell.setValue(view.read(), false);
         }
-        Iterator<Integer> itr = selectedColumnIndexes.iterator();
-        List<String> valueList = new ArrayList<>();
-        String set = "";
-        while(itr.hasNext()){
-            String currentColumnName = columnNames.get(itr.next());
-            String currentColumnType = store.getColumnType(tableName, currentColumnName);
-            view.writeln(currentColumnName + "[" + currentColumnType + "]");
-            String value = "'" + view.read() + "'";
-            set += currentColumnName + "=" + value;
-            valueList.add(set);
-        }
-        store.updateRecord(tableName, where, valueList);
+        store.updateRecord(where, table);
 
 
 
-
-
-
-
-
+//        Set<Integer> selectedColumnIndexes;
+//        while(true) {
+//            String command = view.read();
+//            command.trim();
+//            try {
+//                selectedColumnIndexes = JujaUtils.toSetInteger(command.split(" "));
+//                JujaUtils.validate(selectedColumnIndexes, columnNames.size());
+//                break;
+//            }catch (NumberFormatException ex){
+//                view.writeln("ERROR. check your input! only numbers, and can't be empty!");
+//            }catch (IllegalArgumentException ex){
+//                view.writeln(ex.getMessage());
+//            }
+//        }
+//        Iterator<Integer> itr = selectedColumnIndexes.iterator();
+//        List<String> valueList = new ArrayList<>();
+//        String set = "";
+//        while(itr.hasNext()){
+//            String currentColumnName = columnNames.get(itr.next());
+//            String currentColumnType = store.getColumnType(tableName, currentColumnName);
+//            view.writeln(currentColumnName + "[" + currentColumnType + "]");
+//            String value = "'" + view.read() + "'";
+//            set += currentColumnName + "=" + value;
+//            valueList.add(set);
+//        }
+//        store.updateRecord(tableName, where, valueList);
+//
+//
+//
+//
+//
+//
+//
+//
     }
     //example input: name=Alex return: name='Alex'
     private String addQuotes(String where) {
