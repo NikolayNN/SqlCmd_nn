@@ -1,5 +1,6 @@
 package my.project.juja.model;
 
+import my.project.juja.controller.commands.table.CellInfo;
 import my.project.juja.controller.commands.table.Table;
 
 import java.sql.Connection;
