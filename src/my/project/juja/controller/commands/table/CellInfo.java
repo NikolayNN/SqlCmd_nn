@@ -3,12 +3,12 @@ package my.project.juja.controller.commands.table;
 /**
  * Created by Nikol on 8/22/2016.
  */
-public class cellInfo {
+public class CellInfo {
     private String columnName;
     private String type;
     private boolean canBeNull;
 
-    public cellInfo(String columnName, String type, boolean isNullable, boolean hasDefaultValue) {
+    public CellInfo(String columnName, String type, boolean isNullable, boolean hasDefaultValue) {
         this.columnName = columnName;
         this.type = type;
         this.canBeNull = isNullable || hasDefaultValue;
