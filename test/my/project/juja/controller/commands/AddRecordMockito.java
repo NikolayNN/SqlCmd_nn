@@ -1,7 +1,8 @@
 package my.project.juja.controller.commands;
 
-import junit.framework.TestCase;
 import my.project.juja.controller.commands.table.CellInfo;
+import my.project.juja.controller.commands.table.Row;
+import my.project.juja.controller.commands.table.Table;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
@@ -30,7 +31,7 @@ public class AddRecordMockito{
     }
 
     @Test
-    public void perform() throws Exception {
+    public void testNormal() throws Exception {
         //given
         String tableName = "users";
         Command command = new AddRecord(store, view);
@@ -44,7 +45,10 @@ public class AddRecordMockito{
         cellInfos.add(cellInfoName);
         cellInfos.add(cellInfoPass);
         Mockito.when(store.getColumnInformation(tableName)).thenReturn(cellInfos);
-        Mockito.when(view.read()).thenReturn("1").thenReturn("Alex").thenReturn("111");
+        String value1 = "1";
+        String value2 = "Alex";
+        String value3 = "111";
+        Mockito.when(view.read()).thenReturn(value1).thenReturn(value2).thenReturn(value3);
 
         //when
         command.perform();
@@ -52,13 +56,147 @@ public class AddRecordMockito{
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
-        assertEquals("[input value for [id(integer)], input value for [name(text)], input value for [password(character)], successful added, users\n" +
-                "----------------------------------------------\n" +
-                "id | name | password | \n" +
-                "----------------------------------------------\n" +
-                "1 | Alex | 111 | \n" +
+        String str1 = "[";
+        for (CellInfo cellInfo : cellInfos) {
+            str1 += "input value for " + cellInfo.toString() + ", ";
+        }
+        str1 += "successful added" + ", ";
+        Table table = new Table(tableName, cellInfos);
+        Row row = new Row(table.getCellInfos());
+        row.getCell(0).setValue(value1, false);
+        row.getCell(1).setValue(value2, false);
+        row.getCell(2).setValue(value3, false);
+        table.addRow(row);
+
+        assertEquals(str1 + table.toString() +
                 "]", captor.getAllValues().toString());
-
-
     }
+
+    @Test
+    public void testOneNullableColumnEmpty() throws Exception {
+    //given
+    String tableName = "users";
+    Command command = new AddRecord(store, view);
+    String commandString = Command.ADD_RECORD + Command.SEPARATOR + tableName;
+    command.setup(commandString);
+    CellInfo cellInfoId = new CellInfo("id", "integer", false, true, 0);
+    CellInfo cellInfoName = new CellInfo("name", "text", true, true, 1);
+    CellInfo cellInfoPass = new CellInfo("password", "character", true, true, 2);
+    List<CellInfo> cellInfos = new ArrayList<>();
+    cellInfos.add(cellInfoId);
+    cellInfos.add(cellInfoName);
+    cellInfos.add(cellInfoPass);
+    Mockito.when(store.getColumnInformation(tableName)).thenReturn(cellInfos);
+    String value1 = "1";
+    String value2 = "";
+    String value3 = "111";
+    Mockito.when(view.read()).thenReturn(value1).thenReturn(value2).thenReturn(value3);
+
+    //when
+    command.perform();
+
+    //then
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(view, atLeast(5)).writeln(captor.capture());
+    String str1 = "[";
+    for (CellInfo cellInfo : cellInfos) {
+        str1 += "input value for " + cellInfo.toString() + ", ";
+    }
+    str1 += "successful added" + ", ";
+    Table table = new Table(tableName, cellInfos);
+    Row row = new Row(table.getCellInfos());
+    row.getCell(0).setValue(value1, false);
+    row.getCell(1).setValue(value2, false);
+    row.getCell(2).setValue(value3, false);
+    table.addRow(row);
+
+    assertEquals(str1 + table.toString() +
+            "]", captor.getAllValues().toString());
+}
+
+    @Test
+    public void testTwoNullableColumnEmpty() throws Exception {
+        //given
+        String tableName = "users";
+        Command command = new AddRecord(store, view);
+        String commandString = Command.ADD_RECORD + Command.SEPARATOR + tableName;
+        command.setup(commandString);
+        CellInfo cellInfoId = new CellInfo("id", "integer", false, true, 0);
+        CellInfo cellInfoName = new CellInfo("name", "text", true, true, 1);
+        CellInfo cellInfoPass = new CellInfo("password", "character", true, true, 2);
+        List<CellInfo> cellInfos = new ArrayList<>();
+        cellInfos.add(cellInfoId);
+        cellInfos.add(cellInfoName);
+        cellInfos.add(cellInfoPass);
+        Mockito.when(store.getColumnInformation(tableName)).thenReturn(cellInfos);
+        String value1 = "1";
+        String value2 = "";
+        String value3 = "";
+        Mockito.when(view.read()).thenReturn(value1).thenReturn(value2).thenReturn(value3);
+
+        //when
+        command.perform();
+
+        //then
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeast(5)).writeln(captor.capture());
+        String str1 = "[";
+        for (CellInfo cellInfo : cellInfos) {
+            str1 += "input value for " + cellInfo.toString() + ", ";
+        }
+        str1 += "successful added" + ", ";
+        Table table = new Table(tableName, cellInfos);
+        Row row = new Row(table.getCellInfos());
+        row.getCell(0).setValue(value1, false);
+        row.getCell(1).setValue(value2, false);
+        row.getCell(2).setValue(value3, false);
+        table.addRow(row);
+
+        assertEquals(str1 + table.toString() +
+                "]", captor.getAllValues().toString());
+    }
+
+    @Test
+    public void testNotNulablleColumnEmpty() throws Exception {
+        //given
+        String tableName = "users";
+        Command command = new AddRecord(store, view);
+        String commandString = Command.ADD_RECORD + Command.SEPARATOR + tableName;
+        command.setup(commandString);
+        CellInfo cellInfoId = new CellInfo("id", "integer", false, true, 0);
+        CellInfo cellInfoName = new CellInfo("name", "text", false, false, 1);
+        CellInfo cellInfoPass = new CellInfo("password", "character", true, true, 2);
+        List<CellInfo> cellInfos = new ArrayList<>();
+        cellInfos.add(cellInfoId);
+        cellInfos.add(cellInfoName);
+        cellInfos.add(cellInfoPass);
+        Mockito.when(store.getColumnInformation(tableName)).thenReturn(cellInfos);
+        String value1 = "1";
+        String value2 = "Alex";
+        String value3 = "111";
+        String valueEmpty = "";
+        Mockito.when(view.read()).thenReturn(value1).thenReturn(valueEmpty)
+                .thenReturn(value2).thenReturn(value3);
+
+        //when
+        command.perform();
+
+        //then
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeast(5)).writeln(captor.capture());
+        String str1 = "[input value for [id(integer)], input value for [name*(text)], " +
+                "column \"name\" can't be null, input value for [name*(text)]," +
+                " input value for [password(character)], successful added, ";
+        Table table = new Table(tableName, cellInfos);
+        Row row = new Row(table.getCellInfos());
+        row.getCell(0).setValue(value1, false);
+        row.getCell(1).setValue(value2, false);
+        row.getCell(2).setValue(value3, false);
+        table.addRow(row);
+
+        assertEquals(str1 + table.toString() +
+                "]", captor.getAllValues().toString());
+    }
+
+
 }
