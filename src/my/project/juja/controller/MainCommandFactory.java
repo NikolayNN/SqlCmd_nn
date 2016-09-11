@@ -23,7 +23,7 @@ public class MainCommandFactory implements CommandFactory {
                 new ClearTable(store, view),
                 new UpdateRecord(store, view),
                 new Help(view),
-                new AddRecordNew(store,view)
+                new AddRecord(store,view)
         };
 
     }

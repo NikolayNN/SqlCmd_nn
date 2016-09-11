@@ -43,10 +43,10 @@ public class UpdateRecord extends Command {
 
 //        Set<Integer> selectedColumnIndexes;
 //        while(true) {
-//            String command = view.read();
-//            command.trim();
+//            String commands = view.read();
+//            commands.trim();
 //            try {
-//                selectedColumnIndexes = JujaUtils.toSetInteger(command.split(" "));
+//                selectedColumnIndexes = JujaUtils.toSetInteger(commands.split(" "));
 //                JujaUtils.validate(selectedColumnIndexes, columnNames.size());
 //                break;
 //            }catch (NumberFormatException ex){

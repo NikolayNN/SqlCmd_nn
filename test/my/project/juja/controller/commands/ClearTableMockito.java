@@ -1,20 +1,15 @@
-package my.project.juja.controller.command;
+package my.project.juja.controller.commands;
 
-import my.project.juja.controller.commands.ClearTable;
-import my.project.juja.controller.commands.Command;
-import my.project.juja.controller.commands.Exit;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 

@@ -13,7 +13,7 @@ public class Wrong extends Command {
 
     @Override
     public void perform() {
-        view.writeln("This command doesn't exist, please check your command");
+        view.writeln("This commands doesn't exist, please check your commands");
     }
 
     @Override

@@ -13,10 +13,10 @@ package my.project.juja.model;
  */
 public class DataBase implements Storeable {
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
-    private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
+    private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed commands";
     private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
     private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
-    private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command";
+    private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your commands";
     private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
     private Connection connection;
     private static String dbName;
