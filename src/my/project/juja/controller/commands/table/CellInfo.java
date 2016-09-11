@@ -1,17 +1,20 @@
 package my.project.juja.controller.commands.table;
 
 /**
- * Created by Nikol on 8/22/2016.
+ * Created by Nikol on 9/10/2016.
  */
 public class CellInfo {
+
     private String columnName;
     private String type;
     private boolean canBeNull;
+    int index;
 
-    public CellInfo(String columnName, String type, boolean isNullable, boolean hasDefaultValue) {
+    public CellInfo(String columnName, String type, boolean isNullable, boolean hasDefaultValue, int index) {
         this.columnName = columnName;
         this.type = type;
         this.canBeNull = isNullable || hasDefaultValue;
+        this.index = index;
     }
 
     public String getColumnName() {
@@ -28,7 +31,7 @@ public class CellInfo {
 
     @Override
     public String toString() {
-        String result = "";
+        String result;
         String mandatoryCell = "";
         if(!canBeNull){
             mandatoryCell ="*";
@@ -36,5 +39,6 @@ public class CellInfo {
         result = "[" + columnName + mandatoryCell + "(" + type + ")]";
         return result;
     }
+
 
 }
