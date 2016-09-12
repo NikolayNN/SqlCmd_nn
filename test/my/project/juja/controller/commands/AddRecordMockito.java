@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 public class AddRecordMockito{
     private Storeable store;
     private View view;
+    private Table table;
 
     @Before
     public void setup(){
