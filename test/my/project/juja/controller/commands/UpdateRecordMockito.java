@@ -100,7 +100,7 @@ public class UpdateRecordMockito {
     }
 
     @Test
-    public void testWhenSqlException() throws Exception {
+    public void testRecordsForUpdateNotFind() throws Exception {
         //given
         String tableName = "users";
         String where = "name='Alex'";
@@ -118,33 +118,23 @@ public class UpdateRecordMockito {
         cellInfos.add(cellInfoName);
         cellInfos.add(cellInfoPass);
         Table table = new Table(tableName, cellInfos);
-        Row row = new Row(table.getCellInfos());
-        String value1 = "1";
-        String value2 = "Alex";
-        String value3 = "111";
-        row.getCell(0).setValue(value1, false);
-        row.getCell(1).setValue(value2, false);
-        row.getCell(2).setValue(value3, false);
-        table.addRow(row);
         Mockito.when(store.getTableData(tableName, "name='Alex'")).thenReturn(table);
-        String updValue1 = "";
-        String updValue2 = "Vovan";
-        String updValue3 = "";
-        Mockito.doThrow(new RuntimeException()).when(store).updateRecord(where, table);
+
 
         //when
-        command.perform();
+        boolean flag = false;
+        try {
+            command.perform();
+        }catch (RuntimeException ex){
+            if(ex.getMessage().startsWith("ERROR. there is not record for input condition")){
+                flag = true;
+            }
 
+        }
         //then
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeast(5)).writeln(captor.capture());
-        assertEquals("[users\n" +
-                "----------------------------------------------\n" +
-                "id | name | password | \n" +
-                "----------------------------------------------\n" +
-                "1 | Alex | 111 | \n" +
-                ", input new value or skip, [id(integer)], input new value or skip, [name(text)], input new value or skip, [password(character)], table updated]", captor.getAllValues().toString());
+        assert (flag);
     }
+
 
 
 

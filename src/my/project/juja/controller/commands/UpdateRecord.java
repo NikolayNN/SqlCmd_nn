@@ -55,13 +55,6 @@ public class UpdateRecord extends Command {
         }
     }
 
-    //example input: name=Alex return: name='Alex'
-    private String addQuotes(String where) {
-        String result;
-        String[] StringArray = where.split("=");
-        result = StringArray[0] + "=" + "'" + StringArray[1] + "'";
-        return result;
-    }
 
     @Override
     public String getName() {
