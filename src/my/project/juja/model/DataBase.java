@@ -151,13 +151,13 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Table getTableData(String tableName, String where){
+    public Table getTableData(String tableName, String where) throws SQLException {
         checkConnection();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
         System.out.println(query);
-        try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
+        Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
                 Row row = new Row(table.getCellInfos());
@@ -170,9 +170,8 @@ public class DataBase implements Storeable {
                 }
                 table.addRow(row);
             }
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_TABLENAME);
-        }
+        stmt.close();
+        rs.close();
         return table;
     }
 
@@ -191,7 +190,7 @@ public class DataBase implements Storeable {
             stmt.executeUpdate(sql);
             stmt.close();
         }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_COMMAND);
+            throw new RuntimeException(ERROR_WRONG_COMMAND + " " + ex.getMessage());
         }
     }
 

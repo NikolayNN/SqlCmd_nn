@@ -26,7 +26,7 @@ public interface Storeable {
 
     Table getTableData(String tableName);
 
-    Table getTableData(String tableName, String where);
+    Table getTableData(String tableName, String where) throws SQLException;
 
     void updateRecord(String where, Table table);
 
