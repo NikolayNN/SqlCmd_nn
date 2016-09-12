@@ -88,4 +88,14 @@ public class UpdateRecordMockito {
         command.setup(commandString);
         command.perform();
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testAllParametersAreNull() throws Exception {
+        //given
+        String tableName = "users";
+        Command command = new UpdateRecord(store, view);
+        String commandString =  Command.UPDATE_TABLE;
+        command.setup(commandString);
+        command.perform();
+    }
 }
