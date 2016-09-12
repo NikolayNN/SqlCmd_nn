@@ -78,4 +78,14 @@ public class UpdateRecordMockito {
                 "1 | Alex | 111 | \n" +
                 ", input new value or skip, [id(integer)], input new value or skip, [name(text)], input new value or skip, [password(character)], table updated]", captor.getAllValues().toString());
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testWhereIsNull() throws Exception {
+        //given
+        String tableName = "users";
+        Command command = new UpdateRecord(store, view);
+        String commandString =  Command.UPDATE_TABLE + SEPARATOR + tableName;
+        command.setup(commandString);
+        command.perform();
+    }
 }
