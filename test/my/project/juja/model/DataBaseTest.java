@@ -67,30 +67,29 @@ public class DataBaseTest {
         assertEquals(actualTable.toString(), expectedTable.toString());
     }
 
-    @Test
-    public void getTableData(){
-//        dataBase.clearTable("users");
-//        dataBase.addRecord("users","name password Id", "login1 pass1 1");
-//        dataBase.addRecord("users","name password Id", "login2 pass2 2");
-//        dataBase.addRecord("users","name password Id", "login3 pass3 3");
-//
-//        List<String> actualList = dataBase.getTableData("users");
-//        String actual = "";
-//        for (String s : actualList) {
-//            actual += s + "\n";
-//        }
-//
-//        assertEquals(   "login1|pass1|1|\n" +
-//                        "login2|pass2|2|\n" +
-//                        "login3|pass3|3|\n", actual);
+    @Test(expected = SQLException.class)
+    public void testWrongTypeValue() throws SQLException {
+        dataBase.clearTable(tableName);
+        Table expectedTable = new Table(tableName, dataBase.getColumnInformation(tableName));
+        Row row = new Row(expectedTable.getCellInfos());
+        for (Cell cell : row.getCells()) {
+            cell.setValue("sss", true);
+        }
+        expectedTable.addRow(row);
+        dataBase.addRecord(expectedTable);
     }
 
-
-
-
-
-
-
-
-
+    @Test
+    public void testUpdateRecord() throws SQLException {
+        dataBase.clearTable(tableName);
+        Table table = new Table(tableName, dataBase.getColumnInformation(tableName));
+        Row row = new Row(table.getCellInfos());
+        for (Cell cell : row.getCells()) {
+            cell.setValue("235", true);
+        }
+        table.addRow(row);
+        dataBase.addRecord(table);
+        Table actualTable = dataBase.getTableData(tableName);
+        assertEquals(actualTable.toString(), table.toString());
+    }
 }
