@@ -24,7 +24,7 @@ public class IntegrationTest {
     private static final String DB_LOGIN = "postgres";
     private static final String DB_PASSWORD = "root";
     private static final String TEST_TABLE = "users";
-    private static final String SEPARATOR = "|";
+    private static final String SEPARATOR = Command.SEPARATOR_TO_STRING;
 
     @Before
     public void setup(){
