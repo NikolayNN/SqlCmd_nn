@@ -185,7 +185,7 @@ public class DataBase implements Storeable {
             }
             set += cell.getColumnName() + "=" + "'" + cell.getValue() + "', ";
         }
-        
+
         try (Statement stmt = connection.createStatement()) {
             String sql =    "UPDATE " + tableName + " SET " + set + " WHERE " + where;
             System.out.println(sql);

@@ -24,6 +24,7 @@ public class IntegrationTest {
     private static final String DB_LOGIN = "postgres";
     private static final String DB_PASSWORD = "root";
     private static final String TEST_TABLE = "users";
+    private static final String SEPARATOR = "|";
 
     @Before
     public void setup(){
@@ -117,9 +118,9 @@ public class IntegrationTest {
     @Test
     public void testConnect(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
         in.add(Command.EXIT);
         //when
@@ -136,9 +137,9 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongDBName(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + "WrongDataBaseName" + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + "WrongDataBaseName" + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
         in.add(Command.EXIT);
         //when
@@ -154,9 +155,9 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongLogin(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + "wrongLogin" + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + "wrongLogin" + SEPARATOR
                 + DB_PASSWORD);
         in.add(Command.EXIT);
         //when
@@ -172,9 +173,9 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongPassword(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + "wrongPassword");
         in.add(Command.EXIT);
         //when
@@ -190,9 +191,9 @@ public class IntegrationTest {
     @Test
     public void testUnsuportedCommandAfterConnect(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
         in.add("unsuportedcommand");
         in.add(Command.EXIT);
@@ -227,11 +228,11 @@ public class IntegrationTest {
     @Test
     public void testTableListAfterConnect(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.TABLE_LIST + Command.SEPARATOR);
+        in.add(Command.TABLE_LIST + SEPARATOR);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -240,7 +241,7 @@ public class IntegrationTest {
                 "Input your commands or 'help'\r\n" +
                 "Connect to sqlcmd successful!\r\n" +
                 "Input your commands or 'help'\r\n" +
-                "[users, users2]\r\n" +
+                "[users2, users]\r\n" +
                 "Input your commands or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
@@ -249,11 +250,11 @@ public class IntegrationTest {
     @Test
     public void testClearTable(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + TEST_TABLE);
+        in.add(Command.CLEAR_TABLE + SEPARATOR + TEST_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -271,7 +272,7 @@ public class IntegrationTest {
     @Test
     public void testClearTableWithoutConnect(){
         //given
-        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + TEST_TABLE);
+        in.add(Command.CLEAR_TABLE + SEPARATOR + TEST_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -286,11 +287,11 @@ public class IntegrationTest {
     @Test
     public void testClearTableWithError(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + "wrongTableName");
+        in.add(Command.CLEAR_TABLE + SEPARATOR + "wrongTableName");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -308,9 +309,9 @@ public class IntegrationTest {
     @Test
     public void testClearTableWithoutParameters(){
         //given
-        in.add(Command.CONNECTION + Command.SEPARATOR
-                + DB_NAME + Command.SEPARATOR
-                + DB_LOGIN + Command.SEPARATOR
+        in.add(Command.CONNECTION + SEPARATOR
+                + DB_NAME + SEPARATOR
+                + DB_LOGIN + SEPARATOR
                 + DB_PASSWORD);
         in.add(Command.CLEAR_TABLE);
         in.add(Command.EXIT);
