@@ -1,4 +1,4 @@
-package my.project.juja.controller.commands.table;
+package my.project.juja.model.table;
 
 /**
  * Created by Nikol on 8/22/2016.

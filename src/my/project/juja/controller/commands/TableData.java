@@ -1,11 +1,8 @@
 package my.project.juja.controller.commands;
 
-import my.project.juja.controller.commands.table.Table;
+import my.project.juja.model.table.Table;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Nikol on 4/13/2016.

@@ -1,18 +1,14 @@
 package my.project.juja.model;
 
-import my.project.juja.controller.commands.table.Cell;
-import my.project.juja.controller.commands.table.CellInfo;
-import my.project.juja.controller.commands.table.Row;
-import my.project.juja.controller.commands.table.Table;
+import my.project.juja.model.table.Cell;
+import my.project.juja.model.table.Row;
+import my.project.juja.model.table.Table;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javax.swing.text.TabableView;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;

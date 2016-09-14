@@ -1,4 +1,4 @@
-package my.project.juja.controller.commands.table;
+package my.project.juja.model.table;
 
 import java.util.ArrayList;
 import java.util.List;

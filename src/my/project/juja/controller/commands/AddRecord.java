@@ -1,7 +1,7 @@
 package my.project.juja.controller.commands;
 
-import my.project.juja.controller.commands.table.Row;
-import my.project.juja.controller.commands.table.Table;
+import my.project.juja.model.table.Row;
+import my.project.juja.model.table.Table;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 

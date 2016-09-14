@@ -1,7 +1,7 @@
 package my.project.juja.model;
 
-import my.project.juja.controller.commands.table.CellInfo;
-import my.project.juja.controller.commands.table.Table;
+import my.project.juja.model.table.CellInfo;
+import my.project.juja.model.table.Table;
 
 import java.sql.Connection;
 import java.sql.SQLException;
