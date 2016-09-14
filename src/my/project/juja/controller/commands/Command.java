@@ -17,6 +17,8 @@ public abstract class Command{
     public static final String CLEAR_TABLE = "clear-table";
     public static final String UPDATE_TABLE = "update-table";
     public static final String SEPARATOR = "\\|";
+    public static final String SEPARATOR_TO_STRING = "|";
+
 
 
     protected String command;
