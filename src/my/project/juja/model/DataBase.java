@@ -36,9 +36,6 @@ public class DataBase implements Storeable {
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
         }
-        if (connection == null) {
-            throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL);
-        }
     }
 
     @Override
@@ -180,10 +177,15 @@ public class DataBase implements Storeable {
         checkConnection();
         String tableName = table.getTableName();
         String set = "";
-        for (Cell cell : table.getRow(0).getCellsNotNull()) {
-            set += cell.getColumnName() + "=" + "'" + cell.getValue() + "'";
+        for (int i = 0; i < table.getRow(0).getCellsNotNull().size(); i++) {
+            Cell cell = table.getRow(0).getCellsNotNull().get(i);
+            if(i == table.getRow(0).getCellsNotNull().size() - 1){
+                set += cell.getColumnName() + "=" + "'" + cell.getValue() + "' ";
+                continue;
+            }
+            set += cell.getColumnName() + "=" + "'" + cell.getValue() + "', ";
         }
-
+        
         try (Statement stmt = connection.createStatement()) {
             String sql =    "UPDATE " + tableName + " SET " + set + " WHERE " + where;
             System.out.println(sql);

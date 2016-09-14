@@ -89,7 +89,40 @@ public class DataBaseTest {
         }
         table.addRow(row);
         dataBase.addRecord(table);
+        Table tableUpdate = new Table(tableName, table.getCellInfos());
+        Row rowUpdate = new Row(table.getCellInfos());
+        rowUpdate.getCell(0).setValue("", false);
+        rowUpdate.getCell(1).setValue("400", false);
+        rowUpdate.getCell(2).setValue("", false);
+        tableUpdate.addRow(rowUpdate);
+        dataBase.updateRecord("name='235'", tableUpdate);
+        Table expectedTable = tableUpdate;
+        expectedTable.getRow(0).getCell(0).setValue("235", false);
+        expectedTable.getRow(0).getCell(2).setValue("235", false);
         Table actualTable = dataBase.getTableData(tableName);
-        assertEquals(actualTable.toString(), table.toString());
+        assertEquals(expectedTable.toString() , actualTable.toString());
+    }
+
+    @Test
+    public void testUpdateRecordUpdateTwoValues() throws SQLException {
+        dataBase.clearTable(tableName);
+        Table table = new Table(tableName, dataBase.getColumnInformation(tableName));
+        Row row = new Row(table.getCellInfos());
+        for (Cell cell : row.getCells()) {
+            cell.setValue("235", true);
+        }
+        table.addRow(row);
+        dataBase.addRecord(table);
+        Table tableUpdate = new Table(tableName, table.getCellInfos());
+        Row rowUpdate = new Row(table.getCellInfos());
+        rowUpdate.getCell(0).setValue("400", false);
+        rowUpdate.getCell(1).setValue("400", false);
+        rowUpdate.getCell(2).setValue("", false);
+        tableUpdate.addRow(rowUpdate);
+        dataBase.updateRecord("name='235'", tableUpdate);
+        Table expectedTable = tableUpdate;
+        expectedTable.getRow(0).getCell(2).setValue("235", false);
+        Table actualTable = dataBase.getTableData(tableName);
+        assertEquals(expectedTable.toString() , actualTable.toString());
     }
 }
