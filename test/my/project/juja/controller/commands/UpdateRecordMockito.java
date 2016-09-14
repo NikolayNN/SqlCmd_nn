@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 public class UpdateRecordMockito {
     private Storeable store;
     private View view;
-    private static final String SEPARATOR = "|";
+    private static final String SEPARATOR = Command.SEPARATOR_TO_STRING;
 
 
     @Before
