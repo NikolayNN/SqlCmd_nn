@@ -13,6 +13,7 @@ import java.util.Set;
 public class TableList extends Command {
     public static final String name = Command.TABLE_LIST;
 
+
     public TableList(Storeable store, View view) {
         super(store, view);
     }

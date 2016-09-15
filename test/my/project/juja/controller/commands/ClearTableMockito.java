@@ -54,7 +54,7 @@ public class ClearTableMockito {
             command.perform();
         }catch (RuntimeException ex){
             //then
-            assertEquals("Wrong count parameters expected 1, but found 0",ex.getMessage());
+            assertEquals("ERROR. Wrong count parameters expected 1, but found 0",ex.getMessage());
             throw ex;
         }
     }

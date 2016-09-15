@@ -17,7 +17,7 @@ public class Controller {
         view.writeln("Hello");
         String source = "";
         while (!source.equalsIgnoreCase(Command.EXIT)){
-            view.writeln("Input your commands or 'help'");
+            view.writeln("Input your command or 'help'");
             try {
                 source = view.read();
                 Command command = commandFactory.createCommand(source);

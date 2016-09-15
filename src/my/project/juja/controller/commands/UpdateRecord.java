@@ -42,7 +42,7 @@ public class UpdateRecord extends Command {
         while (true) {
             try {
                 for (Cell cell : table.getRow(0).getCells()) {
-                    view.writeln("input new value or skip");
+                    view.writeln("input new value or just press 'enter' to skip");
                     view.writeln(cell.getCellInfo().toString());
                     cell.setValue(view.read(), false);
                 }

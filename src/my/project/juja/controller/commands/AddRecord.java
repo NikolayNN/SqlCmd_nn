@@ -29,7 +29,7 @@ public class AddRecord extends Command {
             int i = 0;
             while (i < table.getColumnCount()) {
                 try {
-                    view.writeln("input value for " + table.getCellInfos(i).toString());
+                    view.writeln("input value for the column " + table.getCellInfos(i).toString() + " or just press 'enter' to skip input");
                     row.getCell(i).setValue(view.read(), true);
                     i++;
                 } catch (IllegalArgumentException ex) {

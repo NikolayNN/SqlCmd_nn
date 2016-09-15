@@ -48,7 +48,7 @@ public abstract class Command{
 
     public void checkCountParameters(String parameters[] , int expectedCount){
         if(parameters.length != expectedCount){
-            throw new RuntimeException("Wrong count parameters expected " +
+            throw new RuntimeException("ERROR. Wrong count parameters expected " +
                                         expectedCount + ", but found " + parameters.length);
         }
     }

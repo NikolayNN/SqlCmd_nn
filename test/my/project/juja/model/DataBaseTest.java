@@ -40,7 +40,7 @@ public class DataBaseTest {
     public void getTableListTest(){
         Set<String> actual = dataBase.getTableList();
 
-        assertEquals("[users, users2]", actual.toString());
+        assertEquals("[users2, users]", actual.toString());
     }
 
     @Test

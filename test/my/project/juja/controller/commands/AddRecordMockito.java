@@ -59,7 +59,7 @@ public class AddRecordMockito{
         verify(view, atLeast(5)).writeln(captor.capture());
         String str1 = "[";
         for (CellInfo cellInfo : cellInfos) {
-            str1 += "input value for " + cellInfo.toString() + ", ";
+            str1 += "input value for the column " + cellInfo.toString() + " or just press 'enter' to skip input, ";
         }
         str1 += "successful added" + ", ";
         Table table = new Table(tableName, cellInfos);
@@ -101,7 +101,7 @@ public class AddRecordMockito{
     verify(view, atLeast(5)).writeln(captor.capture());
     String str1 = "[";
     for (CellInfo cellInfo : cellInfos) {
-        str1 += "input value for " + cellInfo.toString() + ", ";
+        str1 += "input value for the column " + cellInfo.toString() + " or just press 'enter' to skip input, ";
     }
     str1 += "successful added" + ", ";
     Table table = new Table(tableName, cellInfos);
@@ -143,7 +143,7 @@ public class AddRecordMockito{
         verify(view, atLeast(5)).writeln(captor.capture());
         String str1 = "[";
         for (CellInfo cellInfo : cellInfos) {
-            str1 += "input value for " + cellInfo.toString() + ", ";
+            str1 += "input value for the column " + cellInfo.toString() + " or just press 'enter' to skip input, ";
         }
         str1 += "successful added" + ", ";
         Table table = new Table(tableName, cellInfos);
@@ -185,9 +185,7 @@ public class AddRecordMockito{
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
-        String str1 = "[input value for [id(integer)], input value for [name*(text)], " +
-                "column \"name\" can't be null, input value for [name*(text)]," +
-                " input value for [password(character)], successful added, ";
+        String str1 = "[input value for the column [id(integer)] or just press 'enter' to skip input, input value for the column [name*(text)] or just press 'enter' to skip input, column \"name\" can't be null, input value for the column [name*(text)] or just press 'enter' to skip input, input value for the column [password(character)] or just press 'enter' to skip input, successful added, ";
         Table table = new Table(tableName, cellInfos);
         Row row = new Row(table.getCellInfos());
         row.getCell(0).setValue(value1, false);

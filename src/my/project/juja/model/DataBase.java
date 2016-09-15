@@ -16,7 +16,7 @@ public class DataBase implements Storeable {
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed commands";
     private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
     private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
-    private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your commands";
+    private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command.";
     private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
     private Connection connection;
     private static String dbName;
@@ -152,7 +152,6 @@ public class DataBase implements Storeable {
         checkConnection();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
-        System.out.println(query);
         Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -188,7 +187,6 @@ public class DataBase implements Storeable {
 
         try (Statement stmt = connection.createStatement()) {
             String sql =    "UPDATE " + tableName + " SET " + set + " WHERE " + where;
-            System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
         }catch (SQLException ex){
@@ -214,7 +212,6 @@ public class DataBase implements Storeable {
                 cellInfos.add(cellInfo);
                 index++;
             }
-            System.out.println(result + " ");
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }

@@ -77,7 +77,7 @@ public class UpdateRecordMockito {
                 "id | name | password | \n" +
                 "----------------------------------------------\n" +
                 "1 | Alex | 111 | \n" +
-                ", input new value or skip, [id(integer)], input new value or skip, [name(text)], input new value or skip, [password(character)], table updated]", captor.getAllValues().toString());
+                ", input new value or just press 'enter' to skip, [id(integer)], input new value or just press 'enter' to skip, [name(text)], input new value or just press 'enter' to skip, [password(character)], table updated]", captor.getAllValues().toString());
     }
 
     @Test(expected = RuntimeException.class)

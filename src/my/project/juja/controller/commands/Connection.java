@@ -21,7 +21,7 @@ public class Connection extends Command {
         String login = parametrs[1];
         String password = parametrs[2];
         store.getConnection(dbName, login, password);
-        view.writeln("Connect to " + dbName + " successful!");
+        view.writeln("Connect to the data base '" + dbName + "' successful!");
     }
 
     @Override
