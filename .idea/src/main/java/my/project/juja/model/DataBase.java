@@ -15,16 +15,13 @@ import java.util.*;
 public class DataBase implements Storeable {
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed commands";
-    private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
     private static final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
     private static final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command.";
     private static final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
     private Connection connection;
-    private static String dbName;
 
     @Override
     public void getConnection(String dbName, String login, String password) {
-        DataBase.dbName = dbName;
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -75,13 +72,10 @@ public class DataBase implements Storeable {
     public void addRecord(Table table) throws SQLException {
         checkConnection();
         Row row = table.getRow(0);
-        String tableName = table.getTableName();
-        String columnNames;
-        String columnValues;
-        columnNames = format(row.getColumnNamesNotNull(), "\"");
-        columnValues = format(row.getCellValuesNotNull(), "'");
+        String columnNames = format(row.getColumnNamesNotNull(), "\"");
+        String columnValues = format(row.getCellValuesNotNull(), "'");
         Statement stmt = connection.createStatement();
-        String sql = "INSERT INTO " + tableName + "(" + columnNames + ")" +
+        String sql = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
                 " VALUES (" + columnValues + ")";
         stmt.executeUpdate(sql);
         stmt.close();
@@ -174,7 +168,6 @@ public class DataBase implements Storeable {
     @Override
     public void updateRecord(String where, Table table) {
         checkConnection();
-        String tableName = table.getTableName();
         String set = "";
         for (int i = 0; i < table.getRow(0).getCellsNotNull().size(); i++) {
             Cell cell = table.getRow(0).getCellsNotNull().get(i);
@@ -185,6 +178,7 @@ public class DataBase implements Storeable {
             set += cell.getColumnName() + "=" + "'" + cell.getValue() + "', ";
         }
 
+        String tableName = table.getTableName();
         try (Statement stmt = connection.createStatement()) {
             String sql = "UPDATE " + tableName + " SET " + set + " WHERE " + where;
             stmt.executeUpdate(sql);
@@ -198,7 +192,6 @@ public class DataBase implements Storeable {
     public List<CellInfo> getColumnInformation(String tableName) {
         List<CellInfo> cellInfos = new ArrayList<>();
         checkConnection();
-        String result = "";
         String query = "SELECT column_name, data_type, is_nullable, column_default from information_schema.columns where table_name = '" + tableName + "'";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
