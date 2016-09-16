@@ -11,16 +11,19 @@ public class Console implements View {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
+
     @Override
-    public void writeln(String message){
+    public void writeln(String message) {
         System.out.println(message);
     }
+
     @Override
-    public void writeln(){
+    public void writeln() {
         System.out.println();
     }
+
     @Override
-    public void write(String message){
+    public void write(String message) {
         System.out.print(message);
     }
 

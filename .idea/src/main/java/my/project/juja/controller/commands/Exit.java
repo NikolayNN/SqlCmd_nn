@@ -6,16 +6,16 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class Exit extends Command{
+public class Exit extends Command {
     public static final String name = Command.EXIT;
+
     public Exit(Storeable store, View view) {
         super(store, view);
     }
 
     @Override
     public void perform() {
-
-        if(store.getConnection() == null){
+        if (store.getConnection() == null) {
             view.writeln("Goodbye");
             return;
         }

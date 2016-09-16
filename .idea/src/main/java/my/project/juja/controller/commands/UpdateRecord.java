@@ -16,8 +16,6 @@ public class UpdateRecord extends Command {
     private static final String NAME = Command.UPDATE_TABLE;
     private static final int COUNT_PARAMETERS = 2;
 
-
-
     public UpdateRecord(Storeable store, View view) {
         super(store, view);
     }
@@ -28,12 +26,12 @@ public class UpdateRecord extends Command {
         String tableName = parametrs[0];
         String where = parametrs[1];
         Table table;
-        try{
+        try {
             table = store.getTableData(tableName, where);
-            if(table.getRows().size() == 0){
+            if (table.getRows().size() == 0) {
                 throw new RuntimeException("ERROR. there is not record for input condition " + where);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new RuntimeException("ERROR. you input not exist table or wrong where. " + ex.getMessage());
         }
 
@@ -49,12 +47,11 @@ public class UpdateRecord extends Command {
                 store.updateRecord(where, table);
                 view.writeln("table updated");
                 break;
-            }catch (RuntimeException ex){
+            } catch (RuntimeException ex) {
                 System.out.println(ex.getMessage());
             }
         }
     }
-
 
     @Override
     public String getName() {

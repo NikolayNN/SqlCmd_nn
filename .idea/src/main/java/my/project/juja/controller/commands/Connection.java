@@ -10,6 +10,7 @@ import my.project.juja.view.View;
 public class Connection extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 3;
     public static final String name = Command.CONNECTION;
+
     public Connection(Storeable store, View view) {
         super(store, view);
     }

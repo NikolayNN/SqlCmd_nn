@@ -33,8 +33,8 @@ public class CellInfo {
     public String toString() {
         String result;
         String mandatoryCell = "";
-        if(!canBeNull){
-            mandatoryCell ="*";
+        if (!canBeNull) {
+            mandatoryCell = "*";
         }
         result = "[" + columnName + mandatoryCell + "(" + type + ")]";
         return result;

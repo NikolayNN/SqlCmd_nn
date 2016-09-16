@@ -10,15 +10,16 @@ import java.util.TreeSet;
  */
 public class JujaUtils {
 
-    public static Boolean setBoolean(String str, String isTrue){
-        if(isTrue == null && str == null){
+    public static Boolean setBoolean(String str, String isTrue) {
+        if (isTrue == null && str == null) {
             return true;
         }
 
         return str.equalsIgnoreCase(isTrue);
 
     }
-    public static String numberList(List<String> list){
+
+    public static String numberList(List<String> list) {
         String result = "";
         for (int i = 0; i < list.size(); i++) {
             result += list.get(i) + "(" + i + ") ";
@@ -26,7 +27,7 @@ public class JujaUtils {
         return result;
     }
 
-    public static Set<Integer> toSetInteger (String[] array) throws NumberFormatException {
+    public static Set<Integer> toSetInteger(String[] array) throws NumberFormatException {
         Set<Integer> result = new TreeSet<>();
         for (String s : array) {
             result.add(Integer.parseInt(s));
@@ -41,22 +42,22 @@ public class JujaUtils {
         validate(set, 4);
     }
 
-    public static void validate(Set<Integer> indexes, int size) throws IllegalArgumentException{
+    public static void validate(Set<Integer> indexes, int size) throws IllegalArgumentException {
 
-        int maxIndex = size -1;
+        int maxIndex = size - 1;
 
-        if(indexes.size() == 0){
+        if (indexes.size() == 0) {
             throw new IllegalArgumentException(" expect at least one number, but input 0");
         }
-        if(indexes.size() > size){
-            throw new IllegalArgumentException(" expect count" + size + " , but input " + indexes.size() + " elements " );
+        if (indexes.size() > size) {
+            throw new IllegalArgumentException(" expect count" + size + " , but input " + indexes.size() + " elements ");
         }
 
         for (Integer index : indexes) {
-            if(index >= size){
+            if (index >= size) {
                 throw new IllegalArgumentException(" the numbers can't be more than " + maxIndex);
             }
-            if(index < 0) {
+            if (index < 0) {
                 throw new IllegalArgumentException(" the numbers can't be less than 0");
             }
         }

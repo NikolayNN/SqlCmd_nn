@@ -15,7 +15,7 @@ public class Cell {
         return value;
     }
 
-    public String getColumnName(){
+    public String getColumnName() {
         return cellInfo.getColumnName();
     }
 
@@ -29,18 +29,16 @@ public class Cell {
     }
 
     public void setValue(String value, boolean check) {
-        if(!check){
+        if (!check) {
             this.value = value;
             return;
         }
-        if(value.equals("") && !cellInfo.isCanBeNull()){
+        if (value.equals("") && !cellInfo.isCanBeNull()) {
             throw new IllegalArgumentException("column \"" + cellInfo.getColumnName() + "\" can't be null");
         }
-         this.value = value;
+        this.value = value;
 
     }
-
-
 
 
 }

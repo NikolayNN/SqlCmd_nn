@@ -24,8 +24,7 @@ public class AddRecord extends Command {
         String tableName = parametrs[0];
         Table table = new Table(tableName, store.getColumnInformation(tableName));
         Row row = new Row(store.getColumnInformation(tableName));
-
-        while(true) {
+        while (true) {
             int i = 0;
             while (i < table.getColumnCount()) {
                 try {

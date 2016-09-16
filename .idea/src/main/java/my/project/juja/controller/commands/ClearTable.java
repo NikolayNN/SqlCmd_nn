@@ -9,6 +9,7 @@ import my.project.juja.view.View;
 public class ClearTable extends Command {
     private static final int countParameters = 1;
     public static final String name = Command.CLEAR_TABLE;
+
     public ClearTable(Storeable store, View view) {
         super(store, view);
     }
@@ -18,7 +19,7 @@ public class ClearTable extends Command {
         checkCountParameters(parametrs, countParameters);
         String tableName = parametrs[0];
         store.clearTable(tableName);
-        view.writeln(tableName + " has been cleared" );
+        view.writeln(tableName + " has been cleared");
     }
 
     @Override
