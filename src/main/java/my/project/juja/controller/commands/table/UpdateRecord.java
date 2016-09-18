@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.table;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;

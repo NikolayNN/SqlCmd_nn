@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.program;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.view.Console;
 import my.project.juja.view.View;
 
@@ -21,9 +22,5 @@ public class Unsupported extends Command {
         return "";
     }
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
 
 }

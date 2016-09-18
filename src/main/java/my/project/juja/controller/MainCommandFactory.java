@@ -1,6 +1,15 @@
 package my.project.juja.controller;
 
 import my.project.juja.controller.commands.*;
+import my.project.juja.controller.commands.database.ConnectToDataBase;
+import my.project.juja.controller.commands.database.TableList;
+import my.project.juja.controller.commands.program.Exit;
+import my.project.juja.controller.commands.program.Help;
+import my.project.juja.controller.commands.program.Unsupported;
+import my.project.juja.controller.commands.table.AddRecord;
+import my.project.juja.controller.commands.table.ClearTable;
+import my.project.juja.controller.commands.table.TableData;
+import my.project.juja.controller.commands.table.UpdateRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
@@ -16,7 +25,7 @@ public class MainCommandFactory implements CommandFactory {
         this.store = store;
         this.view = view;
         supportedCommands = new Command[]{
-                new Connection(store, view),
+                new ConnectToDataBase(store, view),
                 new Exit(store, view),
                 new TableList(store, view),
                 new TableData(store, view),
@@ -37,6 +46,6 @@ public class MainCommandFactory implements CommandFactory {
                 return supportedCommands[i];
             }
         }
-        return new Wrong(view);
+        return new Unsupported(view);
     }
 }

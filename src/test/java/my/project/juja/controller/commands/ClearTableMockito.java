@@ -1,5 +1,6 @@
 package my.project.juja.controller.commands;
 
+import my.project.juja.controller.commands.table.ClearTable;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;

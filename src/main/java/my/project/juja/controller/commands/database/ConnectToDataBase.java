@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.database;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.Console;
 import my.project.juja.view.View;
@@ -7,11 +8,11 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class Connection extends Command {
+public class ConnectToDataBase extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 3;
     public static final String name = Command.CONNECTION;
 
-    public Connection(Storeable store, View view) {
+    public ConnectToDataBase(Storeable store, View view) {
         super(store, view);
     }
 

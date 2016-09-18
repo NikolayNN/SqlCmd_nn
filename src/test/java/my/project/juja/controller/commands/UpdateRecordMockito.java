@@ -1,5 +1,6 @@
 package my.project.juja.controller.commands;
 
+import my.project.juja.controller.commands.table.UpdateRecord;
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
