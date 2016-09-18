@@ -25,7 +25,6 @@
 			<version>9.4-1202-jdbc4</version>
 		</dependency>
 
-
         <!-- TESTING -->
 		<dependency>
             <groupId>junit</groupId>
