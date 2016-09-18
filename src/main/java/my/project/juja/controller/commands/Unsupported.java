@@ -6,8 +6,8 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class Wrong extends Command {
-    public Wrong(View view) {
+public class Unsupported extends Command {
+    public Unsupported(View view) {
         super(view);
     }
 
@@ -18,6 +18,11 @@ public class Wrong extends Command {
 
     @Override
     public String getName() {
+        return "";
+    }
+
+    @Override
+    public String getDescription() {
         return "";
     }
 

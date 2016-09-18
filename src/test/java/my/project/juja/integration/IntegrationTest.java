@@ -70,7 +70,7 @@ public class IntegrationTest {
                 "\t - Close connection to a database and exit\n" +
                 "Input your command or 'help'\n" +
                 "Goodbye\n";
-        expected.replaceAll("\n", "\r\n");
+        expected.replaceAll("\n", System.lineSeparator());
         assertEquals(expected, getData());
 
     }
