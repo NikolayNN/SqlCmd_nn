@@ -54,14 +54,15 @@ public class Table {
         StringBuilder result = new StringBuilder();
         int[] maxLength = getMaxColumnsLengths(this);
         String columnNames = printColumnNames(maxLength);
+        String tableHeaderSeparator = addSymbol("", columnNames.length(), "-");
         String rows = printRows(maxLength);
         result.append(tableName);
         result.append("\n");
-        result.append(addSymbol("", columnNames.length(), "-"));
+        result.append(tableHeaderSeparator);
         result.append("\n");
         result.append(columnNames);
         result.append("\n");
-        result.append(addSymbol("", columnNames.length(), "-"));
+        result.append(tableHeaderSeparator);
         result.append("\n");
         result.append(rows);
         return result.toString();
