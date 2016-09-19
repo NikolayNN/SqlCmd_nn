@@ -14,9 +14,7 @@ public class JujaUtils {
         if (isTrue == null && str == null) {
             return true;
         }
-
         return str.equalsIgnoreCase(isTrue);
-
     }
 
     public static String numberList(List<String> list) {

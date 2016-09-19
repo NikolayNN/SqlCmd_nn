@@ -1,7 +1,9 @@
 package my.project.juja.model.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Created by Nikol on 9/7/2016.
@@ -49,35 +51,48 @@ public class Table {
 
     @Override
     public String toString() {
-        String result = "";
-        String columnNames = "";
-
+        StringBuilder result = new StringBuilder();
         int[] maxLength = getMaxColumnsLengths(this);
+        String columnNames = printColumnNames(maxLength);
+        String rows = printRows(maxLength);
+        result.append(tableName);
+        result.append("\n");
+        result.append(addSymbol("", columnNames.length(), "-"));
+        result.append("\n");
+        result.append(columnNames);
+        result.append("\n");
+        result.append(addSymbol("", columnNames.length(), "-"));
+        result.append("\n");
+        result.append(rows);
+        return result.toString();
+    }
 
-        for (int i = 0; i < columnCount; i++) {
-            String columnName = getCellInfos(i).getColumnName();
-            columnNames += columnName + addSpaces(columnName, maxLength[i]) + " | ";
-        }
-        String values = "";
-        for (int i = 0; i < rows.size(); i++) {
+    private String printRows(int[] maxLength) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < this.rows.size(); i++) {
             Row row = rows.get(i);
             for (int j = 0; j < columnCount; j++) {
                 String value = row.getCell(j).getValue();
-                values += value + addSpaces(value, maxLength[j]) + " | ";
+                result.append(value + addSymbol(value, maxLength[j], " "));
+                result.append(" | ");
             }
-            values += "\n";
+            result.append("\n");
         }
-        result += tableName + "\n" +
-                "----------------------------------------------" + "\n" +
-                columnNames + "\n" +
-                "----------------------------------------------" + "\n" +
-                values;
-        return result;
+        return result.toString();
+    }
+
+    private String printColumnNames(int[] maxLength) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < columnCount; i++) {
+            String columnName = getCellInfos(i).getColumnName();
+            result.append(columnName + addSymbol(columnName, maxLength[i], " "));
+            result.append(" | ");
+        }
+        return result.toString();
     }
 
     private int[] getMaxColumnsLengths(Table table){
         int[] result = new int[table.getColumnCount()];
-
         for (int i = 0; i < table.getColumnCount(); i++) {
             result[i] = getMaxLength(i);
         }
@@ -95,12 +110,12 @@ public class Table {
         return max;
     }
 
-    private String addSpaces(String value, int maxLength){
+    private String addSymbol(String value, int maxLength, String symbol){
         int count = maxLength - value.length();
-        String result = "";
+        StringBuilder result = new StringBuilder("");
         for (int i = 0; i < count; i++) {
-            result += " ";
+            result.append(symbol);
         }
-        return result;
+        return result.toString();
     }
 }
