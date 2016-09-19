@@ -74,11 +74,11 @@ public class UpdateRecordMockito {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
         assertEquals("[users\n" +
-                "----------------------------------------------\n" +
-                "id | name | password | \n" +
-                "----------------------------------------------\n" +
-                "1 | Alex | 111 | \n" +
-                ", input new value or just press 'enter' to skip, [id(integer)], input new value or just press 'enter' to skip, [name(text)], input new value or just press 'enter' to skip, [password(character)], table updated]", captor.getAllValues().toString());
+                        "----------------------------------------------\n" +
+                        "id | name | password | \n" +
+                        "----------------------------------------------\n" +
+                        "1  | Alex | 111      | \n" +
+                        ", input new value or just press 'enter' to skip, [id(integer)], input new value or just press 'enter' to skip, [name(text)], input new value or just press 'enter' to skip, [password(character)], table updated]", captor.getAllValues().toString());
     }
 
     @Test(expected = RuntimeException.class)

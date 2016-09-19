@@ -52,18 +52,35 @@ public class Table {
         String result = "";
         String columnNames = "";
 
-        for (CellInfo cellInfo : cellInfos) {
-            columnNames += cellInfo.getColumnName() + " | ";
+        int[] maxLength = getMaxColumnsLengths(this);
+
+        for (int i = 0; i < columnCount; i++) {
+            String columnName = getCellInfos(i).getColumnName();
+            columnNames += columnName + addSpaces(columnName, maxLength[i]) + " | ";
         }
         String values = "";
         for (int i = 0; i < rows.size(); i++) {
-            values += rows.get(i) + "\n";
+            Row row = rows.get(i);
+            for (int j = 0; j < columnCount; j++) {
+                String value = row.getCell(j).getValue();
+                values += value + addSpaces(value, maxLength[j]) + " | ";
+            }
+            values += "\n";
         }
         result += tableName + "\n" +
                 "----------------------------------------------" + "\n" +
                 columnNames + "\n" +
                 "----------------------------------------------" + "\n" +
                 values;
+        return result;
+    }
+
+    private int[] getMaxColumnsLengths(Table table){
+        int[] result = new int[table.getColumnCount()];
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            result[i] = getMaxLength(i);
+        }
         return result;
     }
 
@@ -76,5 +93,14 @@ public class Table {
             }
         }
         return max;
+    }
+
+    private String addSpaces(String value, int maxLength){
+        int count = maxLength - value.length();
+        String result = "";
+        for (int i = 0; i < count; i++) {
+            result += " ";
+        }
+        return result;
     }
 }
