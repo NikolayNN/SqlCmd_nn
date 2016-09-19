@@ -1,9 +1,7 @@
 package my.project.juja.model.table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Created by Nikol on 9/7/2016.
