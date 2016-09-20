@@ -246,4 +246,21 @@ public class DataBase implements Storeable {
         }
         return cellInfos;
     }
+
+    @Override
+    public Set<String> getDataBasesNames(){
+        checkConnectionToServer();
+        Set<String> result = new LinkedHashSet<>();
+        String query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
+        try (Statement stmt = connectionToServer.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                result.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+        return result;
+    }
+
 }

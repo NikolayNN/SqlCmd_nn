@@ -3,6 +3,7 @@ package my.project.juja.controller;
 import my.project.juja.controller.commands.*;
 import my.project.juja.controller.commands.database.ConnectDataBase;
 import my.project.juja.controller.commands.database.ConnectServer;
+import my.project.juja.controller.commands.database.DataBasesNames;
 import my.project.juja.controller.commands.database.TableList;
 import my.project.juja.controller.commands.program.Exit;
 import my.project.juja.controller.commands.program.Help;
@@ -28,6 +29,7 @@ public class MainCommandFactory implements CommandFactory {
         supportedCommands = new Command[]{
                 new ConnectServer(store, view),
                 new ConnectDataBase(store, view),
+                new DataBasesNames(store,view),
                 new Exit(store, view),
                 new TableList(store, view),
                 new TableData(store, view),

@@ -35,4 +35,6 @@ public interface Storeable {
     void updateRecord(String where, Table table);
 
     List<CellInfo> getColumnInformation(String tableName);
+
+    Set<String> getDataBasesNames();
 }

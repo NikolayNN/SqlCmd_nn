@@ -22,12 +22,14 @@ public class Help extends Command {
                 "serverUrl" + s +
                 "login" + s +
                 "password'" + "\n" +
-                "\tExample: '"+Command.CONNECTION_TO_SERVER + s + "localhost:5432" + s + "postgres" + s + "root'\n"+
+                "\t * Example: '"+Command.CONNECTION_TO_SERVER + s + "localhost:5432" + s + "postgres" + s + "root'\n"+
                 Command.CONNECTION + "\n" +
                 "\t - Connect to database '" + Command.CONNECTION + s +
                 "dbname" + s +
                 "login" + s +
                 "password'" + "\n" +
+                Command.DATA_BASES_NAMES + "\n" +
+                "\t - Show available data bases in the current server '" + Command.DATA_BASES_NAMES + "'" + "\n" +
                 Command.TABLE_LIST + "\n" +
                 "\t - Show exist tables in the current database '" + Command.TABLE_LIST + "'" + "\n" +
                 Command.TABLE_DATA + "\n" +
