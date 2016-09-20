@@ -20,6 +20,7 @@ public abstract class Command {
     public static final String SEPARATOR = "\\|";
     public static final String SEPARATOR_TO_STRING = "|";
     public static final String DATA_BASES_NAMES = "data-bases";
+    public static final String DISCONECT_DATA_BASE = "disconnect-db";
     protected String command;
     protected int countParametrs;
     protected String[] parametrs;

@@ -20,7 +20,9 @@ public interface Storeable {
 
     Connection connectToDataBase();
 
-    void closeConnection();
+    String disconectDataBase();
+
+    void closeAllConnections();
 
     void clearTable(String tableName);
 

@@ -20,7 +20,7 @@ public class Exit extends Command {
             view.writeln("Goodbye");
             return;
         }
-        store.closeConnection();
+        store.closeAllConnections();
         view.writeln("Connection to data base was closed");
         view.writeln("Goodbye");
     }

@@ -28,6 +28,8 @@ public class Help extends Command {
                 "dbname" + s +
                 "login" + s +
                 "password'" + "\n" +
+                Command.DISCONECT_DATA_BASE + "\n" +
+                        "\t - disonnect current database '" + Command.DISCONECT_DATA_BASE + "'" + "\n" +
                 Command.DATA_BASES_NAMES + "\n" +
                 "\t - Show available data bases in the current server '" + Command.DATA_BASES_NAMES + "'" + "\n" +
                 Command.TABLE_LIST + "\n" +

@@ -19,11 +19,12 @@ public class DataBase implements Storeable {
     private static final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command.";
     private static final String ERROR_CONNECTION_NOT_EXIST = "ERROR. connect to database";
     private static final String ERROR_CONNECTION_TO_SERVER_NOT_EXIST = "ERROR. At first connect to a server.";
-    private Connection connection;
-    private Connection connectionToServer;
+    private Connection connectionDataBase;
+    private Connection connectionServer;
     private String serverUrl;
     private String login;
     private String password;
+    private String dataBaseName;
 
     @Override
     public void connectToServer(String serverUrl, String login, String password){
@@ -33,7 +34,7 @@ public class DataBase implements Storeable {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
         }
-        connectionToServer = DriverManager.getConnection("jdbc:postgresql://" + serverUrl + "/" , login, password);
+        connectionServer = DriverManager.getConnection("jdbc:postgresql://" + serverUrl + "/" , login, password);
     } catch (SQLException ex) {
         throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
     }
@@ -50,37 +51,56 @@ public class DataBase implements Storeable {
             throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
         }
         try {
-            connection = DriverManager.getConnection(
+            connectionDataBase = DriverManager.getConnection(
                     "jdbc:postgresql://" + serverUrl + "/" + dbName, login,
                     password);
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
         }
+        this.dataBaseName = dbName;
     }
 
     @Override
     public Connection connectToDataBase() {
-        return connection;
+        return connectionDataBase;
     }
 
     @Override
-    public void closeConnection() {
+    public String disconectDataBase(){
+        checkConnectionToServer();
+        checkConnectionToDataBase();
+        String dbName = dataBaseName;
         try {
-            connection.close();
-            connection = null;
+            connectionDataBase.close();
+            connectionDataBase = null;
+            dataBaseName = null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dbName;
+    }
+
+    @Override
+    public void closeAllConnections() {
+        try {
+            connectionDataBase.close();
+            connectionDataBase = null;
+            connectionServer.close();
+            connectionServer = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void checkConnectionToDataBase() throws RuntimeException {
-        if (connection == null) {
+        if (connectionDataBase == null) {
             throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
     }
 
     private void checkConnectionToServer() throws RuntimeException {
-        if (connectionToServer == null) {
+        if (connectionServer == null) {
             throw new RuntimeException(ERROR_CONNECTION_TO_SERVER_NOT_EXIST);
         }
     }
@@ -90,7 +110,7 @@ public class DataBase implements Storeable {
     public void clearTable(String tableName) {
         checkConnectionToServer();
         checkConnectionToDataBase();
-        try (Statement stmt = connection.createStatement()) {
+        try (Statement stmt = connectionDataBase.createStatement()) {
             String sql = "DELETE FROM " + tableName;
             stmt.executeUpdate(sql);
         } catch (SQLException ex) {
@@ -105,7 +125,7 @@ public class DataBase implements Storeable {
         Row row = table.getRow(0);
         String columnNames = format(row.getColumnNamesNotNull(), "\"");
         String columnValues = format(row.getCellValuesNotNull(), "'");
-        Statement stmt = connection.createStatement();
+        Statement stmt = connectionDataBase.createStatement();
         String sql = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
                 " VALUES (" + columnValues + ")";
         stmt.executeUpdate(sql);
@@ -135,7 +155,7 @@ public class DataBase implements Storeable {
                 " FROM information_schema.tables" +
                 " WHERE table_schema='public'" +
                 " AND table_type='BASE TABLE';";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = connectionDataBase.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             Set<String> tables = new HashSet<>();
             while (rs.next()) {
                 result.add(rs.getString("table_name"));
@@ -154,7 +174,7 @@ public class DataBase implements Storeable {
         checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName;
-        try (Statement stmt = connection.createStatement();
+        try (Statement stmt = connectionDataBase.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
@@ -180,7 +200,7 @@ public class DataBase implements Storeable {
         checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
-        Statement stmt = connection.createStatement();
+        Statement stmt = connectionDataBase.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
         while (rs.next()) {
@@ -214,7 +234,7 @@ public class DataBase implements Storeable {
         }
 
         String tableName = table.getTableName();
-        try (Statement stmt = connection.createStatement()) {
+        try (Statement stmt = connectionDataBase.createStatement()) {
             String sql = "UPDATE " + tableName + " SET " + set + " WHERE " + where;
             stmt.executeUpdate(sql);
             stmt.close();
@@ -229,7 +249,7 @@ public class DataBase implements Storeable {
         checkConnectionToDataBase();
         List<CellInfo> cellInfos = new ArrayList<>();
         String query = "SELECT column_name, data_type, is_nullable, column_default from information_schema.columns where table_name = '" + tableName + "'";
-        try (Statement stmt = connection.createStatement();
+        try (Statement stmt = connectionDataBase.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             int index = 0;
             while (rs.next()) {
@@ -252,7 +272,7 @@ public class DataBase implements Storeable {
         checkConnectionToServer();
         Set<String> result = new LinkedHashSet<>();
         String query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
-        try (Statement stmt = connectionToServer.createStatement();
+        try (Statement stmt = connectionServer.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 result.add(rs.getString(1));
@@ -262,5 +282,4 @@ public class DataBase implements Storeable {
         }
         return result;
     }
-
 }
