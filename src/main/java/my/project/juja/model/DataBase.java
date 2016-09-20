@@ -17,7 +17,8 @@ public class DataBase implements Storeable {
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed commands";
     private static final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
     private static final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command.";
-    private static final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
+    private static final String ERROR_CONNECTION_NOT_EXIST = "ERROR. connect to database";
+    private static final String ERROR_CONNECTION_TO_SERVER_NOT_EXIST = "ERROR. At first connect to a server.";
     private Connection connection;
     private Connection connectionToServer;
     private String dbUrl;
@@ -72,15 +73,23 @@ public class DataBase implements Storeable {
         }
     }
 
-    private void checkConnection() throws RuntimeException {
+    private void checkConnectionToDataBase() throws RuntimeException {
         if (connection == null) {
             throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
     }
 
+    private void checkConnectionToServer() throws RuntimeException {
+        if (connectionToServer == null) {
+            throw new RuntimeException(ERROR_CONNECTION_TO_SERVER_NOT_EXIST);
+        }
+    }
+
+
     @Override
     public void clearTable(String tableName) {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         try (Statement stmt = connection.createStatement()) {
             String sql = "DELETE FROM " + tableName;
             stmt.executeUpdate(sql);
@@ -91,7 +100,8 @@ public class DataBase implements Storeable {
 
     @Override
     public void addRecord(Table table) throws SQLException {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         Row row = table.getRow(0);
         String columnNames = format(row.getColumnNamesNotNull(), "\"");
         String columnValues = format(row.getCellValuesNotNull(), "'");
@@ -118,7 +128,8 @@ public class DataBase implements Storeable {
 
     @Override
     public Set<String> getTableList() {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         Set<String> result = new LinkedHashSet<>();
         String query = "SELECT table_name" +
                 " FROM information_schema.tables" +
@@ -139,7 +150,8 @@ public class DataBase implements Storeable {
 
     @Override
     public Table getTableData(String tableName) {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName;
         try (Statement stmt = connection.createStatement();
@@ -164,7 +176,8 @@ public class DataBase implements Storeable {
 
     @Override
     public Table getTableData(String tableName, String where) throws SQLException {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
         Statement stmt = connection.createStatement();
@@ -188,7 +201,8 @@ public class DataBase implements Storeable {
 
     @Override
     public void updateRecord(String where, Table table) {
-        checkConnection();
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         String set = "";
         for (int i = 0; i < table.getRow(0).getCellsNotNull().size(); i++) {
             Cell cell = table.getRow(0).getCellsNotNull().get(i);
@@ -211,8 +225,9 @@ public class DataBase implements Storeable {
 
     @Override
     public List<CellInfo> getColumnInformation(String tableName) {
+        checkConnectionToServer();
+        checkConnectionToDataBase();
         List<CellInfo> cellInfos = new ArrayList<>();
-        checkConnection();
         String query = "SELECT column_name, data_type, is_nullable, column_default from information_schema.columns where table_name = '" + tableName + "'";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {

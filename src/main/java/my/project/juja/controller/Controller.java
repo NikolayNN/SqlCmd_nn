@@ -16,6 +16,7 @@ public class Controller {
         CommandFactory commandFactory = new MainCommandFactory(store, view);
         view.writeln("Hello");
         String source = "";
+        
         while (!source.equalsIgnoreCase(Command.EXIT)) {
             view.writeln("Input your command or 'help'");
             try {
