@@ -28,6 +28,8 @@ public class MainCommandFactory implements CommandFactory {
                 new ConnectDataBase(store, view),
                 new DataBasesNames(store,view),
                 new DisconnectDataBase(store, view),
+                new CurrentDataBaseName(store, view),
+                new DropDataBase(store, view),
                 new Exit(store, view),
                 new TableList(store, view),
                 new TableData(store, view),

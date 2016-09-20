@@ -19,8 +19,10 @@ public abstract class Command {
     public static final String UPDATE_TABLE = "update-table";
     public static final String SEPARATOR = "\\|";
     public static final String SEPARATOR_TO_STRING = "|";
-    public static final String DATA_BASES_NAMES = "data-bases";
+    public static final String DATA_BASES_NAMES = "list-db";
     public static final String DISCONECT_DATA_BASE = "disconnect-db";
+    public static final String CURRENT_DATA_BASE_NAME = "current-db";
+    public static final String DROP_DATA_BASE = "drop-db";
     protected String command;
     protected int countParametrs;
     protected String[] parametrs;

@@ -282,4 +282,26 @@ public class DataBase implements Storeable {
         }
         return result;
     }
+
+    @Override
+    public String getNameCurrentDataBase(){
+        checkConnectionToServer();
+        checkConnectionToDataBase();
+        return dataBaseName;
+    }
+
+    @Override
+    public void dropDataBase(String dataBaseName){
+        checkConnectionToServer();
+        if(this.dataBaseName != null && this.dataBaseName.equalsIgnoreCase(dataBaseName)){
+            throw new RuntimeException("At first you need to disconnect " + dataBaseName);
+        }
+        String query = "DROP DATABASE " + dataBaseName +";";
+        try (Statement stmt = connectionServer.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
 }

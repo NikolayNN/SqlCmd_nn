@@ -39,4 +39,8 @@ public interface Storeable {
     List<CellInfo> getColumnInformation(String tableName);
 
     Set<String> getDataBasesNames();
+
+    String getNameCurrentDataBase();
+
+    void dropDataBase(String dataBaseName);
 }

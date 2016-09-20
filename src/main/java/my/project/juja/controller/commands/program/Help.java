@@ -32,6 +32,10 @@ public class Help extends Command {
                         "\t - disonnect current database '" + Command.DISCONECT_DATA_BASE + "'" + "\n" +
                 Command.DATA_BASES_NAMES + "\n" +
                 "\t - Show available data bases in the current server '" + Command.DATA_BASES_NAMES + "'" + "\n" +
+                Command.CURRENT_DATA_BASE_NAME + "\n" +
+                "\t - Show current data base name '" + Command.CURRENT_DATA_BASE_NAME + "'" + "\n" +
+                        Command.DROP_DATA_BASE + "\n" +
+                        "\t - Delete the data base '" + Command.DROP_DATA_BASE + s + "dataBaseName'" + "\n" +
                 Command.TABLE_LIST + "\n" +
                 "\t - Show exist tables in the current database '" + Command.TABLE_LIST + "'" + "\n" +
                 Command.TABLE_DATA + "\n" +
