@@ -19,12 +19,23 @@ public class DropDataBase extends Command {
     public void perform() {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String dataBaseName = parametrs[0];
-        view.writeln("Are you sure delete data base '" + dataBaseName + "'" + "(Y/N)");
-        String confirm = view.read();
-        if(confirm.equalsIgnoreCase("y")){
-            throw new RuntimeException();
+        while (true) {
+            try {
+                view.writeln("Are you sure delete data base '" + dataBaseName + "'" + "(Y/N)");
+                String confirm = view.read();
+                if (confirm.equalsIgnoreCase("n")) {
+                    throw new RuntimeException("Cancelled");
+                }
+                if (confirm.equalsIgnoreCase("y")) {
+                    store.dropDataBase(dataBaseName);
+                    break;
+                } else {
+                    throw new IllegalArgumentException("wrong input");
+                }
+            }catch (IllegalArgumentException ex){
+                view.writeln(ex.getMessage());
+            }
         }
-        store.dropDataBase(dataBaseName);
         view.writeln("data base '" + dataBaseName + "'" + " deleted");
     }
 
