@@ -16,9 +16,9 @@ public interface Storeable {
 
     void connectToServer(String dbUrl, String login, String password);
 
-    void getConnection(String dbName, String login, String password);
+    void connectToDataBase(String dbName);
 
-    Connection getConnection();
+    Connection connectToDataBase();
 
     void closeConnection();
 

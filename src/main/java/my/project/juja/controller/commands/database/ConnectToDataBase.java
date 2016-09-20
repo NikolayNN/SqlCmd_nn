@@ -2,14 +2,13 @@ package my.project.juja.controller.commands.database;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
-import my.project.juja.view.Console;
 import my.project.juja.view.View;
 
 /**
  * Created by Nikol on 4/13/2016.
  */
 public class ConnectToDataBase extends Command {
-    private static final int EXPECTED_COUNT_PARAMETERS = 3;
+    private static final int EXPECTED_COUNT_PARAMETERS = 1;
     public static final String name = Command.CONNECTION;
 
     public ConnectToDataBase(Storeable store, View view) {
@@ -20,9 +19,7 @@ public class ConnectToDataBase extends Command {
     public void perform() {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String dbName = parametrs[0];
-        String login = parametrs[1];
-        String password = parametrs[2];
-        store.getConnection(dbName, login, password);
+        store.connectToDataBase(dbName);
         view.writeln("Connect to the data base '" + dbName + "' successful!");
     }
 

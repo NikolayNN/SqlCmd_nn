@@ -16,7 +16,7 @@ public class Exit extends Command {
 
     @Override
     public void perform() {
-        if (store.getConnection() == null) {
+        if (store.connectToDataBase() == null) {
             view.writeln("Goodbye");
             return;
         }

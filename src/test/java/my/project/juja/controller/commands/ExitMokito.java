@@ -35,7 +35,7 @@ public class ExitMokito {
     public void test(){
         //given
         Command command = new Exit(store, view);
-        Mockito.when(store.getConnection()).thenReturn(connection);
+        Mockito.when(store.connectToDataBase()).thenReturn(connection);
         //when
         command.perform();
         //then

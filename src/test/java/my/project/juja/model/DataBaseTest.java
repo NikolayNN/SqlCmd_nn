@@ -35,8 +35,7 @@ public class DataBaseTest {
         }
 
         dataBase = new DataBase();
-        dataBase.getConnection(property.get("db.name").toString(),
-                property.getProperty("db.login"), property.getProperty("db.password"));
+        dataBase.connectToDataBase(property.get("db.name").toString());
     }
 
 

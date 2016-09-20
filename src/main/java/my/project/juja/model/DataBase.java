@@ -21,29 +21,29 @@ public class DataBase implements Storeable {
     private static final String ERROR_CONNECTION_TO_SERVER_NOT_EXIST = "ERROR. At first connect to a server.";
     private Connection connection;
     private Connection connectionToServer;
-    private String dbUrl;
+    private String serverUrl;
     private String login;
     private String password;
 
     @Override
-    public void connectToServer(String dbUrl, String login, String password){
+    public void connectToServer(String serverUrl, String login, String password){
     try{
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
         }
-        connectionToServer = DriverManager.getConnection("jdbc:postgresql://" + dbUrl + "/" , login, password);
+        connectionToServer = DriverManager.getConnection("jdbc:postgresql://" + serverUrl + "/" , login, password);
     } catch (SQLException ex) {
         throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
     }
-        this.dbUrl = dbUrl;
+        this.serverUrl = serverUrl;
         this.login = login;
         this.password = password;
     }
 
     @Override
-    public void getConnection(String dbName, String login, String password) {
+    public void connectToDataBase(String dbName) {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -51,7 +51,7 @@ public class DataBase implements Storeable {
         }
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/", login,
+                    "jdbc:postgresql://" + serverUrl + "/" + dbName, login,
                     password);
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
@@ -59,7 +59,7 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Connection getConnection() {
+    public Connection connectToDataBase() {
         return connection;
     }
 
