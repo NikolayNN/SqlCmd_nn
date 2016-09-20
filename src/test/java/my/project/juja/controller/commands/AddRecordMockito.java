@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Nikol on 9/11/2016.
  */
+
 public class AddRecordMockito{
     private Storeable store;
     private View view;

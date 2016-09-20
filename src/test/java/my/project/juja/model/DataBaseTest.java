@@ -8,7 +8,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -21,8 +24,19 @@ public class DataBaseTest {
     private static final String tableName = "users";
     @Before
     public void setup() {
+        FileInputStream fis;
+        Properties property = new Properties();
+
+        try {
+            fis = new FileInputStream("src/main/resources/config.properties");
+            property.load(fis);
+        } catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+        }
+
         dataBase = new DataBase();
-        dataBase.getConnection("sqlcmd", "postgres", "root");
+        dataBase.getConnection(property.get("db.name").toString(),
+                property.getProperty("db.login"), property.getProperty("db.password"));
     }
 
 

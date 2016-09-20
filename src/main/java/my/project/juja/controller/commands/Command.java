@@ -11,6 +11,7 @@ public abstract class Command {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     public static final String CONNECTION = "connect";
+    public static final String CONNECTION_TO_SERVER = "connect-server";
     public static final String TABLE_LIST = "table-list";
     public static final String TABLE_DATA = "table-data";
     public static final String ADD_RECORD = "add-record";

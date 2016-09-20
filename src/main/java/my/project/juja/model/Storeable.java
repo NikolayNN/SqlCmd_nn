@@ -12,6 +12,10 @@ import java.util.Set;
  * Created by Nikol on 5/2/2016.
  */
 public interface Storeable {
+
+
+    void connectToServer(String dbUrl, String login, String password);
+
     void getConnection(String dbName, String login, String password);
 
     Connection getConnection();
