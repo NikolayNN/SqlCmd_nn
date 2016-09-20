@@ -7,11 +7,11 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 9/20/2016.
  */
-public class ConnectToServer extends Command {
+public class ConnectServer extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 3;
     public static final String name = Command.CONNECTION_TO_SERVER;
 
-    public ConnectToServer(Storeable store, View view) {
+    public ConnectServer(Storeable store, View view) {
         super(store, view);
     }
 

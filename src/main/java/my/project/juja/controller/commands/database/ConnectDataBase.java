@@ -7,11 +7,11 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class ConnectToDataBase extends Command {
+public class ConnectDataBase extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 1;
     public static final String name = Command.CONNECTION;
 
-    public ConnectToDataBase(Storeable store, View view) {
+    public ConnectDataBase(Storeable store, View view) {
         super(store, view);
     }
 
