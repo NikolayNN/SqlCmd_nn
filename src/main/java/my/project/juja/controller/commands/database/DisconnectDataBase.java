@@ -10,6 +10,7 @@ import my.project.juja.view.View;
 public class DisconnectDataBase extends Command {
 
     public static final String NAME = Command.DISCONECT_DATA_BASE;
+    private static final int EXPECTED_COUNT_PARAMETERS = 0;
 
     public DisconnectDataBase(Storeable store, View view) {
         super(store, view);
@@ -17,6 +18,7 @@ public class DisconnectDataBase extends Command {
 
     @Override
     public void perform() {
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String dbName = store.disconectDataBase();
         view.writeln("Data base '" + dbName + "' disconnected.");
     }
