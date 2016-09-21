@@ -5,10 +5,7 @@ import my.project.juja.controller.commands.database.*;
 import my.project.juja.controller.commands.program.Exit;
 import my.project.juja.controller.commands.program.Help;
 import my.project.juja.controller.commands.program.Unsupported;
-import my.project.juja.controller.commands.table.AddRecord;
-import my.project.juja.controller.commands.table.ClearTable;
-import my.project.juja.controller.commands.table.TableData;
-import my.project.juja.controller.commands.table.UpdateRecord;
+import my.project.juja.controller.commands.table.*;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
@@ -29,6 +26,7 @@ public class MainCommandFactory implements CommandFactory {
                 new DataBasesNames(store,view),
                 new DisconnectDataBase(store, view),
                 new CurrentDataBaseName(store, view),
+                new CreateDataBase(store, view),
                 new DropDataBase(store, view),
                 new Exit(store, view),
                 new TableList(store, view),

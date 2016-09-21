@@ -1,4 +1,4 @@
-package my.project.juja.controller.commands.database;
+package my.project.juja.controller.commands.table;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;

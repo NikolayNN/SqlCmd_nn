@@ -302,6 +302,16 @@ public class DataBase implements Storeable {
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
+    }
 
+    @Override
+    public void createDataBase(String dataBaseName){
+        checkConnectionToServer();
+        String query = "CREATE DATABASE " + dataBaseName +";";
+        try (Statement stmt = connectionServer.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }

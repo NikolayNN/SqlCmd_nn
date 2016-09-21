@@ -43,4 +43,6 @@ public interface Storeable {
     String getNameCurrentDataBase();
 
     void dropDataBase(String dataBaseName);
+
+    void createDataBase(String dataBaseName);
 }
