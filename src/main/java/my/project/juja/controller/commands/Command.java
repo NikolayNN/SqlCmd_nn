@@ -74,6 +74,13 @@ public abstract class Command {
         }
     }
 
+    protected boolean isConnectedDataBase(){
+        if(store.getConnectToDataBase() != null){
+            return true;
+        }else{
+            throw new RuntimeException("ERROR. connect to data base");
+        }
+    }
     public abstract void perform();
 
     public abstract String getName();

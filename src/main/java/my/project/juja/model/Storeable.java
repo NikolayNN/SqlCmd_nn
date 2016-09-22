@@ -18,7 +18,7 @@ public interface Storeable {
 
     void connectToDataBase(String dbName);
 
-    Connection connectToDataBase();
+    Connection getConnectToDataBase();
 
     String disconectDataBase();
 

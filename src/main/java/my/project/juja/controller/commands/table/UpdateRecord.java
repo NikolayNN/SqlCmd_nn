@@ -23,6 +23,7 @@ public class UpdateRecord extends Command {
 
     @Override
     public void perform() {
+        isConnectedDataBase();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
         String where = parametrs[1];

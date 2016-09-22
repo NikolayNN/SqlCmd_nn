@@ -61,7 +61,7 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Connection connectToDataBase() {
+    public Connection getConnectToDataBase() {
         return connectionDataBase;
     }
 
