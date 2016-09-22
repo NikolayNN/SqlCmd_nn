@@ -57,6 +57,22 @@ public abstract class Command {
         }
     }
 
+    protected boolean confirmCommand (String message) throws IllegalArgumentException, RuntimeException{
+        while (true) {
+            view.writeln("Are you sure " + message + "? (Y/N)");
+            String confirm = view.read().trim();
+            if (confirm.equalsIgnoreCase("n")) {
+                throw new RuntimeException("Canceled");
+            }
+            if (confirm.equalsIgnoreCase("y")) {
+                return true;
+            } else {
+                view.writeln("wrong input");
+                continue;
+            }
+        }
+    }
+
     public abstract void perform();
 
     public abstract String getName();

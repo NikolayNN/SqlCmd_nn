@@ -21,19 +21,12 @@ public class DropDataBase extends Command {
         String dataBaseName = parametrs[0];
         while (true) {
             try {
-                view.writeln("Are you sure delete data base '" + dataBaseName + "'" + "(Y/N)");
-                String confirm = view.read();
-                if (confirm.equalsIgnoreCase("n")) {
-                    throw new RuntimeException("Cancelled");
-                }
-                if (confirm.equalsIgnoreCase("y")) {
+                if (confirmCommand("delete " + dataBaseName)){
                     store.dropDataBase(dataBaseName);
                     break;
-                } else {
-                    throw new IllegalArgumentException("wrong input");
                 }
             }catch (IllegalArgumentException ex){
-                view.writeln(ex.getMessage());
+                view.writeln();
             }
         }
         view.writeln("data base '" + dataBaseName + "'" + " deleted");
