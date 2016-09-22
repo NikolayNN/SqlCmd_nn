@@ -30,6 +30,7 @@ public class MainCommandFactory implements CommandFactory {
                 new DropDataBase(store, view),
                 new Exit(store, view),
                 new CreateTable(store, view),
+                new DropTable(store, view),
                 new TableList(store, view),
                 new TableData(store, view),
                 new ClearTable(store, view),

@@ -27,17 +27,17 @@ public class DataBase implements Storeable {
     private String dataBaseName;
 
     @Override
-    public void connectToServer(String serverUrl, String login, String password){
-    try{
+    public void connectToServer(String serverUrl, String login, String password) {
         try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
+            try {
+                Class.forName("org.postgresql.Driver");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
+            }
+            connectionServer = DriverManager.getConnection("jdbc:postgresql://" + serverUrl + "/", login, password);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
         }
-        connectionServer = DriverManager.getConnection("jdbc:postgresql://" + serverUrl + "/" , login, password);
-    } catch (SQLException ex) {
-        throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
-    }
         this.serverUrl = serverUrl;
         this.login = login;
         this.password = password;
@@ -66,7 +66,7 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public String disconectDataBase(){
+    public String disconectDataBase() {
         checkConnectionToServer();
         checkConnectionToDataBase();
         String dbName = dataBaseName;
@@ -268,7 +268,7 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Set<String> getDataBasesNames(){
+    public Set<String> getDataBasesNames() {
         checkConnectionToServer();
         Set<String> result = new LinkedHashSet<>();
         String query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
@@ -284,19 +284,19 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public String getNameCurrentDataBase(){
+    public String getNameCurrentDataBase() {
         checkConnectionToServer();
         checkConnectionToDataBase();
         return dataBaseName;
     }
 
     @Override
-    public void dropDataBase(String dataBaseName){
+    public void dropDataBase(String dataBaseName) {
         checkConnectionToServer();
-        if(this.dataBaseName != null && this.dataBaseName.equalsIgnoreCase(dataBaseName)){
+        if (this.dataBaseName != null && this.dataBaseName.equalsIgnoreCase(dataBaseName)) {
             throw new RuntimeException("At first you need to disconnect " + dataBaseName);
         }
-        String query = "DROP DATABASE " + dataBaseName +";";
+        String query = "DROP DATABASE " + dataBaseName + ";";
         try (Statement stmt = connectionServer.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
@@ -305,9 +305,9 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public void createDataBase(String dataBaseName){
+    public void createDataBase(String dataBaseName) {
         checkConnectionToServer();
-        String query = "CREATE DATABASE " + dataBaseName +";";
+        String query = "CREATE DATABASE " + dataBaseName + ";";
         try (Statement stmt = connectionServer.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
@@ -319,26 +319,36 @@ public class DataBase implements Storeable {
     public void createTable(String tableName, List<CellInfo> cellInfos) {
         checkConnectionToServer();
         checkConnectionToDataBase();
-        try(Statement stmt = connectionDataBase.createStatement()){
+        try (Statement stmt = connectionDataBase.createStatement()) {
 
-        String sql = "CREATE TABLE " + tableName +
-                "(" + cellInfosToSQL(cellInfos) + ")";
+            String sql = "CREATE TABLE " + tableName +
+                    "(" + cellInfosToSQL(cellInfos) + ")";
             System.out.println(sql);
             stmt.executeUpdate(sql);
 
-    }catch(SQLException ex) {
-       throw new RuntimeException(ex.getMessage());
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
         }
     }
 
-    private String cellInfosToSQL (List<CellInfo> cellInfos){
+    private String cellInfosToSQL(List<CellInfo> cellInfos) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < cellInfos.size(); i++) {
             result.append(cellInfos.get(i).getCellInfoSQL());
-            if(i != cellInfos.size() - 1){
+            if (i != cellInfos.size() - 1) {
                 result.append(", ");
             }
         }
         return result.toString();
+    }
+
+    @Override
+    public void dropTable(String tableName) {
+        try (Statement stmt = connectionDataBase.createStatement()) {
+            String sql = "DROP TABLE " + tableName;
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }

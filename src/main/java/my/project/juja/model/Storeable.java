@@ -47,4 +47,6 @@ public interface Storeable {
     void createDataBase(String dataBaseName);
 
     void createTable(String tableName, List<CellInfo> cellInfos);
+
+    void dropTable(String tableName);
 }
