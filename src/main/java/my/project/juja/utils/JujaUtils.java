@@ -1,5 +1,7 @@
 package my.project.juja.utils;
 
+import my.project.juja.view.View;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +11,7 @@ import java.util.TreeSet;
  * Created by Nikol on 8/20/2016.
  */
 public class JujaUtils {
-    
+
     public static Boolean setBoolean(String str, String isTrue) {
         if (isTrue == null && str == null) {
             return true;
@@ -57,6 +59,20 @@ public class JujaUtils {
             }
             if (index < 0) {
                 throw new IllegalArgumentException(" the numbers can't be less than 0");
+            }
+        }
+    }
+
+    public static boolean confirm (String command, View view) {
+        while (true) {
+            if (command.equalsIgnoreCase("n")) {
+                return false;
+            }
+            if (command.equalsIgnoreCase("y")) {
+                return true;
+            } else {
+                view.writeln("wrong input");
+                continue;
             }
         }
     }

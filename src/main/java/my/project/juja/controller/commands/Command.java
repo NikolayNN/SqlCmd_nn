@@ -58,7 +58,7 @@ public abstract class Command {
         }
     }
 
-    protected boolean confirmCommand (String message) throws IllegalArgumentException, RuntimeException{
+    protected boolean confirmCommand (String message) throws RuntimeException{
         while (true) {
             view.writeln("Are you sure " + message + "? (Y/N)");
             String confirm = view.read().trim();
