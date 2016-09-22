@@ -323,7 +323,6 @@ public class DataBase implements Storeable {
 
             String sql = "CREATE TABLE " + tableName +
                     "(" + cellInfosToSQL(cellInfos) + ")";
-            System.out.println(sql);
             stmt.executeUpdate(sql);
 
         } catch (SQLException ex) {
