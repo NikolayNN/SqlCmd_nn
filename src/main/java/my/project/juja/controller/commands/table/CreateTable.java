@@ -31,7 +31,7 @@ public class CreateTable extends Command {
         String tableName = parametrs[0];
         List<CellInfo> cellInfos = createCellInfos(view);
         store.createTable(tableName, cellInfos);
-        view.writeln("table " + tableName + " added");
+        view.writeln("table '" + tableName + "' added");
         view.writeln(cellInfos.toString());
     }
 
