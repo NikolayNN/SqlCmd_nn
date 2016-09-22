@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * Created by Nikol on 8/20/2016.
  */
 public class JujaUtils {
-
+    
     public static Boolean setBoolean(String str, String isTrue) {
         if (isTrue == null && str == null) {
             return true;

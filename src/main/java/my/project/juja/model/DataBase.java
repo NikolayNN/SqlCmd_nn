@@ -314,4 +314,31 @@ public class DataBase implements Storeable {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Override
+    public void createTable(String tableName, List<CellInfo> cellInfos) {
+        checkConnectionToServer();
+        checkConnectionToDataBase();
+        try(Statement stmt = connectionDataBase.createStatement()){
+
+        String sql = "CREATE TABLE " + tableName +
+                "(" + cellInfosToSQL(cellInfos) + ")";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+
+    }catch(SQLException ex) {
+       throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    private String cellInfosToSQL (List<CellInfo> cellInfos){
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < cellInfos.size(); i++) {
+            result.append(cellInfos.get(i).getCellInfoSQL());
+            if(i != cellInfos.size() - 1){
+                result.append(", ");
+            }
+        }
+        return result.toString();
+    }
 }

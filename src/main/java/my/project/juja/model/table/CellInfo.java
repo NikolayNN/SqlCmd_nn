@@ -7,12 +7,17 @@ public class CellInfo {
 
     private String columnName;
     private String type;
+    private boolean isNullable;
+    private boolean hasDefault;
     private boolean canBeNull;
+    private int length;
     int index;
 
     public CellInfo(String columnName, String type, boolean isNullable, boolean hasDefaultValue, int index) {
         this.columnName = columnName;
         this.type = type;
+        this.isNullable = isNullable;
+        this.hasDefault = hasDefaultValue;
         this.canBeNull = isNullable || hasDefaultValue;
         this.index = index;
     }
@@ -25,8 +30,35 @@ public class CellInfo {
         return type;
     }
 
+    public boolean isHasDefault() {
+        return hasDefault;
+    }
+
     public boolean isCanBeNull() {
         return canBeNull;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public String getCellInfoSQL(){
+        StringBuilder result = new StringBuilder();
+        result.append(columnName);
+        result.append(" ");
+        result.append(type);
+        if(length != 0){
+            result.append("(" + length + ")");
+        }
+        result.append(" ");
+        if(canBeNull == false){
+            result.append("NOT NULL");
+        }
+        return result.toString();
     }
 
     @Override
