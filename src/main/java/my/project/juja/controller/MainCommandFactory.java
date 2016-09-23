@@ -33,6 +33,7 @@ public class MainCommandFactory implements CommandFactory {
                 new DropTable(store, view),
                 new TableList(store, view),
                 new TableData(store, view),
+                new TableDataWhere(store, view),
                 new DeleteRecord(store, view),
                 new ClearTable(store, view),
                 new UpdateRecord(store, view),
