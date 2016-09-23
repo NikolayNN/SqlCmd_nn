@@ -36,6 +36,12 @@ public class WhereConstructor {
 
     public void create() {
         StringBuilder result = new StringBuilder();
+        view.writeln("Do you like use where constructor? (Y/N)");
+        if(!JujaUtils.confirm(view.read(),view)){
+            view.writeln("Input where for sql query");
+            where = view.read();
+            return;
+        }
         while (true) {
             result.append(createCondition());
             view.write("do you like add another condition? (Y/N)");
