@@ -2,6 +2,7 @@ package my.project.juja.model;
 
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Table;
+import my.project.juja.utils.WhereConstructor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -49,4 +50,6 @@ public interface Storeable {
     void createTable(String tableName, List<CellInfo> cellInfos);
 
     void dropTable(String tableName);
+
+    void deleteRecord(String tableName, String where);
 }

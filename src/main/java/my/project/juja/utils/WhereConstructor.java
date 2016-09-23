@@ -16,6 +16,9 @@ public class WhereConstructor {
     List<CellInfo> cellInfos;
     List<String> supportedSym;
 
+
+    String where;
+
     {
         String[] array = {"=", "<", ">", "!=", "<=", ">="};
         supportedSym = new ArrayList<>(Arrays.asList(array));
@@ -26,11 +29,15 @@ public class WhereConstructor {
         this.cellInfos = cellInfos;
     }
 
-    public String create() {
+    public String getWhere() {
+        return where;
+    }
+
+    public void create() {
         StringBuilder result = new StringBuilder();
         while (true) {
             result.append(createCondition());
-            view.write("do you like add another condition?");
+            view.write("do you like add another condition? (Y/N)");
             String command = view.read().trim();
             if (JujaUtils.confirm(command, view)) {
                 result.append(" ");
@@ -41,7 +48,7 @@ public class WhereConstructor {
                 break;
             }
         }
-        return result.toString();
+        where = result.toString();
     }
 
 
@@ -86,10 +93,7 @@ public class WhereConstructor {
         String result;
         view.writeln("input value");
         result = view.read();
-        if (!NumberUtils.isNumber(result)) {
-            result = "'" + result + "'";
-        }
-        return result;
+        return "'" + result + "'";
     }
 
     private String createConnection() {

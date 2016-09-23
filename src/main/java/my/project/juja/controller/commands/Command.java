@@ -26,6 +26,7 @@ public abstract class Command {
     public static final String CREATE_DATA_BASE = "create-db";
     public static final String CREATE_TABLE = "create-table";
     public static final String DROP_TABLE = "drop-table";
+    public static final String DELETE_RECORD = "delete-record";
     protected String command;
     protected int countParametrs;
     protected String[] parametrs;

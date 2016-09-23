@@ -5,6 +5,7 @@ import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
 import my.project.juja.utils.JujaUtils;
+import my.project.juja.utils.WhereConstructor;
 
 import java.sql.*;
 import java.util.*;
@@ -345,6 +346,18 @@ public class DataBase implements Storeable {
     public void dropTable(String tableName) {
         try (Statement stmt = connectionDataBase.createStatement()) {
             String sql = "DROP TABLE " + tableName;
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteRecord(String tableName, String where) {
+        checkConnectionToServer();
+        checkConnectionToServer();
+        try (Statement stmt = connectionDataBase.createStatement()) {
+            String sql = "DELETE FROM " + tableName + " WHERE " + where;
             stmt.executeUpdate(sql);
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
