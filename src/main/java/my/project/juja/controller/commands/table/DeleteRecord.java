@@ -27,10 +27,10 @@ public class DeleteRecord extends Command {
         while (true){
             WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
             whereConstructor.create();
-            Table table = store.getTableData(tableName, whereConstructor.getWhere());
+            Table table = store.getTableData(tableName, whereConstructor.toString());
             view.writeln(table.toString());
             confirmCommand("delete this records");
-            store.deleteRecord(tableName, whereConstructor.getWhere());
+            store.deleteRecord(tableName, whereConstructor.toString());
             view.writeln("record deleted");
             break;
         }

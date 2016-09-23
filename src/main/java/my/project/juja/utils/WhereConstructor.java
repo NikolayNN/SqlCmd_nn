@@ -29,7 +29,8 @@ public class WhereConstructor {
         this.cellInfos = cellInfos;
     }
 
-    public String getWhere() {
+    @Override
+    public String toString() {
         return where;
     }
 

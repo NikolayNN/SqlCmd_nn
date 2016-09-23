@@ -30,7 +30,7 @@ public class TableDataWhere extends Command {
         while (true) {
             try {
                 WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
-                Table table = store.getTableData(tableName, whereConstructor.getWhere());
+                Table table = store.getTableData(tableName, whereConstructor.toString());
                 view.writeln(table.toString());
                 break;
             } catch (SQLException ex) {

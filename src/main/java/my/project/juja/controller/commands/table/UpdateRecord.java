@@ -5,6 +5,7 @@ import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
 import my.project.juja.model.Storeable;
+import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 
 import java.sql.SQLException;
@@ -26,12 +27,12 @@ public class UpdateRecord extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        String where = parametrs[1];
+        WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
         Table table;
         try {
-            table = store.getTableData(tableName, where);
+            table = store.getTableData(tableName, whereConstructor.toString());
             if (table.getRows().size() == 0) {
-                throw new RuntimeException("ERROR. there is not record for input condition " + where);
+                throw new RuntimeException("ERROR. there is not record for input condition " + whereConstructor.toString());
             }
         } catch (SQLException ex) {
             throw new RuntimeException("ERROR. you input not exist table or wrong where. " + ex.getMessage());
@@ -46,7 +47,7 @@ public class UpdateRecord extends Command {
                     view.writeln(cell.getCellInfo().toString());
                     cell.setValue(view.read(), false);
                 }
-                store.updateRecord(where, table);
+                store.updateRecord(whereConstructor.toString(), table);
                 view.writeln("table updated");
                 break;
             } catch (RuntimeException ex) {
