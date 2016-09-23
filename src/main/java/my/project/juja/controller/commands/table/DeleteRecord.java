@@ -2,8 +2,11 @@ package my.project.juja.controller.commands.table;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
+import my.project.juja.model.table.Table;
 import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
+
+import java.sql.SQLException;
 
 /**
  * Created by Nikol on 9/23/2016.
@@ -17,13 +20,16 @@ public class DeleteRecord extends Command {
     }
 
     @Override
-    public void perform() {
+    public void perform() throws SQLException {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
         while (true){
             WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
             whereConstructor.create();
+            Table table = store.getTableData(tableName, whereConstructor.getWhere());
+            view.writeln(table.toString());
+            confirmCommand("delete this records");
             store.deleteRecord(tableName, whereConstructor.getWhere());
             view.writeln("record deleted");
             break;

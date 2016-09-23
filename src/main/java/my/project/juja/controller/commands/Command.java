@@ -4,6 +4,8 @@ import my.project.juja.model.Storeable;
 import my.project.juja.view.Console;
 import my.project.juja.view.View;
 
+import java.sql.SQLException;
+
 /**
  * Created by Nikol on 4/12/2016.
  */
@@ -83,7 +85,7 @@ public abstract class Command {
             throw new RuntimeException("ERROR. connect to data base");
         }
     }
-    public abstract void perform();
+    public abstract void perform() throws SQLException;
 
     public abstract String getName();
 }
