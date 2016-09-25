@@ -133,7 +133,25 @@ public class IntegrationTest {
 
     @Test
     public void testCurrentDataBase(){
-        
+//        given
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
+        in.add(Command.CURRENT_DATA_BASE_NAME);
+        in.add(Command.EXIT);
+//        when
+        Main.main(new String[0]);
+//        then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "[test729451]\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
