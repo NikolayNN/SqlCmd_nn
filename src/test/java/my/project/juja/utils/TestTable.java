@@ -15,7 +15,7 @@ public class TestTable {
 
 
     public TestTable() {
-        Table table = createTable();
+        table = createTable();
     }
 
     public Table getTable() {

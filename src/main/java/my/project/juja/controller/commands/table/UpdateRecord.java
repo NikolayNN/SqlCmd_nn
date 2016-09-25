@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class UpdateRecord extends Command {
 
     private static final String NAME = Command.UPDATE_TABLE;
-    private static final int COUNT_PARAMETERS = 2;
+    private static final int COUNT_PARAMETERS = 1;
 
     public UpdateRecord(Storeable store, View view) {
         super(store, view);
@@ -28,6 +28,7 @@ public class UpdateRecord extends Command {
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
         WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
+        whereConstructor.create();
         Table table;
         try {
             table = store.getTableData(tableName, whereConstructor.toString());

@@ -25,7 +25,7 @@ public class AddRecord extends Command {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
         Table table = new Table(tableName, store.getColumnInformation(tableName));
-        Row row = new Row(store.getColumnInformation(tableName));
+        Row row = new Row(table.getCellInfos());
         while (true) {
             int i = 0;
             while (i < table.getColumnCount()) {

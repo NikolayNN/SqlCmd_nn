@@ -4,6 +4,7 @@ import my.project.juja.controller.commands.table.AddRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
 import my.project.juja.utils.TestTable;
+import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,10 +20,11 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Nikol on 9/25/2016.
  */
-public class AddRecordMockito {
+public class UpdateRecordMockitoNem {
     private Storeable store;
     private View view;
     private Connection connection;
+    private WhereConstructor whereConstructor;
     private Table table;
 
     @Before
@@ -30,18 +32,19 @@ public class AddRecordMockito {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
+        whereConstructor = Mockito.mock(WhereConstructor.class);
         table = new TestTable().getTable();
     }
 
     @Test
     public void testNormal(){
         //given
-        Table testTable = table;
         Command command = new AddRecord(store, view);
-        String commandString = Command.ADD_RECORD + Command.SEPARATOR + table.getTableName();
+        String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
-        Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(testTable.getCellInfos());
+        Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
+        Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getCellInfos());
         Mockito.when(view.read()).thenReturn("123").thenReturn("TestFName").thenReturn("TestLName").thenReturn("TestPassword");
         //when
         command.perform();
