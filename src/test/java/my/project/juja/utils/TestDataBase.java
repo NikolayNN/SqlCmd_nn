@@ -63,6 +63,7 @@ public class TestDataBase {
         }catch (RuntimeException ex){
 
         }
+        createTestTable();
         store.createTable(tableName, table.getCellInfos());
         try {
             store.addRecord(table);

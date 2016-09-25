@@ -108,6 +108,29 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testCreateTableData(){
+//        given
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
+        in.add(Command.TABLE_DATA + SEPARATOR + testDB.getTableName());
+        in.add(Command.EXIT);
+//        when
+        Main.main(new String[0]);
+//        then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "data base 'IntegrationTestDB1248657' created.\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure delete IntegrationTestDB1248657? (Y/N)\n" +
+                "data base 'IntegrationTestDB1248657' deleted\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
     public void testCreateDataBaseNormal(){
 //        given
         in.add(COMMAND_CONNECT_SERVER);
