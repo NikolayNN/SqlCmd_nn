@@ -25,8 +25,8 @@ public class DropDataBase extends Command {
                     store.dropDataBase(dataBaseName);
                     break;
                 }
-            }catch (IllegalArgumentException ex){
-                view.writeln();
+            }catch (RuntimeException ex){
+                view.writeln(ex.getMessage());
             }
         }
         view.writeln("data base '" + dataBaseName + "'" + " deleted");

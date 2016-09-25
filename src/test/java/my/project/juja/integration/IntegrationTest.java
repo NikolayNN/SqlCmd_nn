@@ -138,30 +138,6 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testCreateDataBaseNormal(){
-//        given
-        in.add(COMMAND_CONNECT_SERVER);
-        in.add(Command.CREATE_DATA_BASE + SEPARATOR + "IntegrationTestDB1248657");
-        in.add(Command.DROP_DATA_BASE + SEPARATOR + "IntegrationTestDB1248657" );
-        in.add("y");
-        in.add(Command.EXIT);
-//        when
-        Main.main(new String[0]);
-//        then
-        String expected = "Hello\n" +
-                "Input your command or 'help'\n" +
-                "Connect to the server successful!\n" +
-                "Input your command or 'help'\n" +
-                "data base 'IntegrationTestDB1248657' created.\n" +
-                "Input your command or 'help'\n" +
-                "Are you sure delete IntegrationTestDB1248657? (Y/N)\n" +
-                "data base 'IntegrationTestDB1248657' deleted\n" +
-                "Input your command or 'help'\n" +
-                "Goodbye\n";
-        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
-    }
-
-    @Test
     public void testCurrentDataBase(){
 //        given
         in.add(COMMAND_CONNECT_SERVER);
@@ -572,6 +548,78 @@ public class IntegrationTest {
                 "Goodbye\n";
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
+
+    @Test
+    public void dropTableConfirmN(){
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(Command.DROP_TABLE + Command.SEPARATOR_TO_STRING + testDB.getTableName());
+        in.add("n");
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure delete table 'users'? (Y/N)\n" +
+                "Canceled\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void dropTableConfirmY(){
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
+        in.add(Command.DROP_TABLE + Command.SEPARATOR_TO_STRING + testDB.getTableName());
+        in.add("y");
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure delete table 'users'? (Y/N)\n" +
+                "table 'users' deleted\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void dropTableAtFirstWrongConfirm(){
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
+        in.add(Command.DROP_TABLE + Command.SEPARATOR_TO_STRING + testDB.getTableName());
+        in.add("sss");
+        in.add("y");
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure delete table 'users'? (Y/N)\n" +
+                "wrong input\n" +
+                "Are you sure delete table 'users'? (Y/N)\n" +
+                "table 'users' deleted\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
 
 
 }
