@@ -49,6 +49,7 @@ public class TestDataBase {
             store.dropDataBase(dbName);
             store.createDataBase(dbName);
         }
+        store.disconectDataBase();
     }
 
     public void dropTestDataBase(){
@@ -70,6 +71,7 @@ public class TestDataBase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        store.disconectDataBase();
     }
 
     private List<CellInfo> createCellInfos(){

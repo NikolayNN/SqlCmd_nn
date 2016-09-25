@@ -35,7 +35,6 @@ public class IntegrationTest {
     public static void prepare() {
         testDB = new TestDataBase();
         testDB.createTestDataBase();
-        testDB.createTestTable();
     }
 
     @AfterClass
@@ -49,6 +48,7 @@ public class IntegrationTest {
         out = new ByteArrayOutputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        testDB.createTestTable();
     }
 
     public String getData() {
