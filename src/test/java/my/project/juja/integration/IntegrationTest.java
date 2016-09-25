@@ -25,6 +25,14 @@ public class IntegrationTest {
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
     private final String SEPARATOR = Command.SEPARATOR_TO_STRING;
+    private final String COMMAND_CONNECT_SERVER = Command.CONNECTION_TO_SERVER + SEPARATOR
+            + testDB.getServerURL() + SEPARATOR
+            + testDB.getLogin() + SEPARATOR
+            + testDB.getPassword();
+    private final String COMMAND_CONECT_DATABASE = Command.CONNECTION_TO_DB + SEPARATOR +
+                            testDB.getDbName();
+
+
 
     @BeforeClass
     public static void prepare() {
@@ -97,6 +105,35 @@ public class IntegrationTest {
                 "Goodbye\n";
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
 
+    }
+
+    @Test
+    public void testCreateDataBaseNormal(){
+//        given
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(Command.CREATE_DATA_BASE + SEPARATOR + "IntegrationTestDB1248657");
+        in.add(Command.DROP_DATA_BASE + SEPARATOR + "IntegrationTestDB1248657" );
+        in.add("y");
+        in.add(Command.EXIT);
+//        when
+        Main.main(new String[0]);
+//        then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "data base 'IntegrationTestDB1248657' created.\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure delete IntegrationTestDB1248657? (Y/N)\n" +
+                "data base 'IntegrationTestDB1248657' deleted\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void testCurrentDataBase(){
+        
     }
 
     @Test
