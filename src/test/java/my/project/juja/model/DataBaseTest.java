@@ -3,9 +3,8 @@ package my.project.juja.model;
 import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import my.project.juja.utils.TestDataBase;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 import java.io.FileInputStream;
@@ -21,22 +20,33 @@ import static org.junit.Assert.assertEquals;
  */
 public class DataBaseTest {
     private DataBase dataBase;
-    private static final String tableName = "users";
-    @Before
-    public void setup() {
-        FileInputStream fis;
-        Properties property = new Properties();
-        try {
-            fis = new FileInputStream("src/main/resources/config.properties");
-            property.load(fis);
-        } catch (IOException e) {
-            System.err.println("ОШИБКА: Файл свойств отсуствует!");
-        }
+    private static String tableName;
+    private static TestDataBase testDB;
 
-        dataBase = new DataBase();
-        dataBase.connectToDataBase(property.get("db.name").toString());
+    @BeforeClass
+    public static void prepare() {
+        testDB = new TestDataBase();
+        testDB.createTestDataBase();
+        testDB.createTestTable();
+        tableName = testDB.getTableName();
     }
 
+    @AfterClass
+    public static void delete() {
+        testDB.dropTestDataBase();
+    }
+
+    @Before
+    public void setup() {
+        dataBase = new DataBase();
+        dataBase.connectToServer(testDB.getServerURL(),testDB.getLogin(),testDB.getPassword());
+        dataBase.connectToDataBase(testDB.getDbName());
+    }
+
+    @After
+    public void finish(){
+        dataBase.disconectDataBase();
+    }
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -52,7 +62,7 @@ public class DataBaseTest {
     public void getTableListTest(){
         Set<String> actual = dataBase.getTableList();
 
-        assertEquals("[users2, users]", actual.toString());
+        assertEquals("[users]", actual.toString());
     }
 
     @Test
@@ -89,48 +99,21 @@ public class DataBaseTest {
 
     @Test
     public void testUpdateRecord() throws SQLException {
-        dataBase.clearTable(tableName);
-        Table table = new Table(tableName, dataBase.getColumnInformation(tableName));
-        Row row = new Row(table.getCellInfos());
-        for (Cell cell : row.getCells()) {
-            cell.setValue("235", true);
-        }
-        table.addRow(row);
-        dataBase.addRecord(table);
-        Table tableUpdate = new Table(tableName, table.getCellInfos());
-        Row rowUpdate = new Row(table.getCellInfos());
+        Table tableUpdate = new Table(tableName, testDB.getTable().getCellInfos());
+        Row rowUpdate = new Row(tableUpdate.getCellInfos());
         rowUpdate.getCell(0).setValue("", false);
         rowUpdate.getCell(1).setValue("400", false);
-        rowUpdate.getCell(2).setValue("", false);
+        rowUpdate.getCell(2).setValue("400", false);
+        rowUpdate.getCell(3).setValue("", false);
         tableUpdate.addRow(rowUpdate);
-        dataBase.updateRecord("name='235'", tableUpdate);
-        Table expectedTable = tableUpdate;
-        expectedTable.getRow(0).getCell(0).setValue("235", false);
-        expectedTable.getRow(0).getCell(2).setValue("235", false);
+        dataBase.updateRecord("id='3'", tableUpdate);
         Table actualTable = dataBase.getTableData(tableName);
-        assertEquals(expectedTable.toString() , actualTable.toString());
-    }
-
-    @Test
-    public void testUpdateRecordUpdateTwoValues() throws SQLException {
-        dataBase.clearTable(tableName);
-        Table table = new Table(tableName, dataBase.getColumnInformation(tableName));
-        Row row = new Row(table.getCellInfos());
-        for (Cell cell : row.getCells()) {
-            cell.setValue("235", true);
-        }
-        table.addRow(row);
-        dataBase.addRecord(table);
-        Table tableUpdate = new Table(tableName, table.getCellInfos());
-        Row rowUpdate = new Row(table.getCellInfos());
-        rowUpdate.getCell(0).setValue("400", false);
-        rowUpdate.getCell(1).setValue("400", false);
-        rowUpdate.getCell(2).setValue("", false);
-        tableUpdate.addRow(rowUpdate);
-        dataBase.updateRecord("name='235'", tableUpdate);
-        Table expectedTable = tableUpdate;
-        expectedTable.getRow(0).getCell(2).setValue("235", false);
-        Table actualTable = dataBase.getTableData(tableName);
-        assertEquals(expectedTable.toString() , actualTable.toString());
+        assertEquals("users\n" +
+                "-----------------------------------------\n" +
+                "id | firstname | lastname | password   | \n" +
+                "-----------------------------------------\n" +
+                "1  | Vasya     | Pupkin   | qwerty     | \n" +
+                "2  | Kirril    | Ivanov   | 0000       | \n" +
+                "3  | 400       | 400      | 157862asdw | \n" , actualTable.toString());
     }
 }

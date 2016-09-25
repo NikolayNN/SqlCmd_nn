@@ -24,14 +24,14 @@ public class TestDataBase {
     private String login;
     private String password;
     private String serverURL;
+    private Table table;
 
     public Table getTable() {
         return table;
     }
 
-    private Table table;
-
     public TestDataBase(){
+
         properties = getProperties();
         store = new DataBase();
         serverURL = properties.getProperty("server.url");
@@ -63,7 +63,7 @@ public class TestDataBase {
         }catch (RuntimeException ex){
 
         }
-        createTestTable();
+        table = createTable();
         store.createTable(tableName, table.getCellInfos());
         try {
             store.addRecord(table);
@@ -83,7 +83,7 @@ public class TestDataBase {
         return cellInfos;
     }
 
-    private void createTable (){
+    private Table createTable (){
         List<CellInfo> cellInfos = createCellInfos();
         Table table = new Table(tableName, cellInfos);
         Row row1 = new Row(cellInfos);
@@ -104,7 +104,7 @@ public class TestDataBase {
         table.addRow(row1);
         table.addRow(row2);
         table.addRow(row3);
-        this.table = table;
+        return table;
     }
 
 
