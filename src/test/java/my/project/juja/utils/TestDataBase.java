@@ -25,6 +25,12 @@ public class TestDataBase {
     private String password;
     private String serverURL;
 
+    public Table getTable() {
+        return table;
+    }
+
+    private Table table;
+
     public TestDataBase(){
         properties = getProperties();
         store = new DataBase();
@@ -57,7 +63,6 @@ public class TestDataBase {
         }catch (RuntimeException ex){
 
         }
-        Table table = createTable();
         store.createTable(tableName, table.getCellInfos());
         try {
             store.addRecord(table);
@@ -77,7 +82,7 @@ public class TestDataBase {
         return cellInfos;
     }
 
-    private Table createTable (){
+    private void createTable (){
         List<CellInfo> cellInfos = createCellInfos();
         Table table = new Table(tableName, cellInfos);
         Row row1 = new Row(cellInfos);
@@ -98,7 +103,7 @@ public class TestDataBase {
         table.addRow(row1);
         table.addRow(row2);
         table.addRow(row3);
-        return table;
+        this.table = table;
     }
 
 
