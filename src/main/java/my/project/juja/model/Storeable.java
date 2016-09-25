@@ -33,7 +33,7 @@ public interface Storeable {
 
     Table getTableData(String tableName);
 
-    Table getTableData(String tableName, String where) throws SQLException;
+    Table getTableData(String tableName, String where);
 
     void updateRecord(String where, Table table);
 

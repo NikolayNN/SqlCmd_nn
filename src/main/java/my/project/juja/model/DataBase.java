@@ -69,7 +69,11 @@ public class DataBase implements Storeable {
     @Override
     public String disconectDataBase() {
         checkConnectionToServer();
+        try {
         checkConnectionToDataBase();
+        }catch (RuntimeException ex){
+            return "";
+        }
         String dbName = dataBaseName;
         try {
             connectionDataBase.close();
@@ -123,14 +127,18 @@ public class DataBase implements Storeable {
     public void addRecord(Table table) throws SQLException {
         checkConnectionToServer();
         checkConnectionToDataBase();
-        Row row = table.getRow(0);
-        String columnNames = format(row.getColumnNamesNotNull(), "\"");
-        String columnValues = format(row.getCellValuesNotNull(), "'");
-        Statement stmt = connectionDataBase.createStatement();
-        String sql = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
-                " VALUES (" + columnValues + ")";
-        stmt.executeUpdate(sql);
-        stmt.close();
+
+        for (Row row : table.getRows()) {
+
+            String columnNames = format(row.getColumnNamesNotNull(), "");
+            String columnValues = format(row.getCellValuesNotNull(), "'");
+            Statement stmt = connectionDataBase.createStatement();
+            String sql = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
+                    " VALUES (" + columnValues + ")";
+            stmt.executeUpdate(sql);
+            stmt.close();
+        }
+
     }
 
 
@@ -196,14 +204,16 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Table getTableData(String tableName, String where) throws SQLException {
+    public Table getTableData(String tableName, String where) {
         checkConnectionToServer();
         checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
+        try{
         String query = "SELECT * FROM " + tableName + " WHERE " + where;
         Statement stmt = connectionDataBase.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
+        stmt.close();
         while (rs.next()) {
             Row row = new Row(table.getCellInfos());
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
@@ -215,8 +225,10 @@ public class DataBase implements Storeable {
             }
             table.addRow(row);
         }
-        stmt.close();
         rs.close();
+        }catch (SQLException ex ){
+            throw  new RuntimeException(ex.getMessage());
+        }
         return table;
     }
 

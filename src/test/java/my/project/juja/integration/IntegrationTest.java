@@ -1,9 +1,12 @@
 package my.project.juja.integration;
 
+import my.project.juja.utils.TestDataBase;
 import my.project.juja.controller.Main;
 import my.project.juja.controller.commands.Command;
+import my.project.juja.utils.TestUtils;
+import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -18,16 +21,25 @@ import static org.junit.Assert.assertEquals;
  */
 public class IntegrationTest {
 
-    private  ConfigurableInputStream in;
-    private  ByteArrayOutputStream out;
-    private static final String DB_NAME = "sqlcmd";
-    private static final String DB_LOGIN = "postgres";
-    private static final String DB_PASSWORD = "root";
-    private static final String TEST_TABLE = "users";
-    private static final String SEPARATOR = Command.SEPARATOR_TO_STRING;
+    private static TestDataBase testDB;
+    private ConfigurableInputStream in;
+    private ByteArrayOutputStream out;
+    private final String SEPARATOR = Command.SEPARATOR_TO_STRING;
+
+    @BeforeClass
+    public static void prepare() {
+        testDB = new TestDataBase();
+        testDB.createTestDataBase();
+        testDB.createTestTable();
+    }
+
+    @AfterClass
+    public static void delete() {
+        testDB.dropTestDataBase();
+    }
 
     @Before
-    public void setup(){
+    public void setup() {
         in = new ConfigurableInputStream();
         out = new ByteArrayOutputStream();
         System.setIn(in);
@@ -45,7 +57,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testHelp(){
+    public void testHelp() {
         //given
         in.add(Command.HELP);
         in.add(Command.EXIT);
@@ -54,8 +66,21 @@ public class IntegrationTest {
         //then
         String expected = "Hello\n" +
                 "Input your command or 'help'\n" +
-                "connect\n" +
-                "\t - Connect to database 'connect|dbname|login|password'\n" +
+                "connect-server\n" +
+                "\t - Connect to a server 'connect-server|serverUrl|login|password'\n" +
+                "\t * Example: 'connect-server|localhost:5432|postgres|root'\n" +
+                "connect-db\n" +
+                "\t - Connect to database 'connect-db|dbname|login|password'\n" +
+                "disconnect-db\n" +
+                "\t - disonnect current database 'disconnect-db'\n" +
+                "list-db\n" +
+                "\t - Show available data bases in the current server 'list-db'\n" +
+                "current-db\n" +
+                "\t - Show current data base name 'current-db'\n" +
+                "drop-db\n" +
+                "\t - Delete the data base 'drop-db|dataBaseName'\n" +
+                "create-db\n" +
+                "\t - Create new data base 'create-db|dataBaseName'\n" +
                 "table-list\n" +
                 "\t - Show exist tables in the current database 'table-list'\n" +
                 "table-data\n" +
@@ -70,42 +95,44 @@ public class IntegrationTest {
                 "\t - Close connection to a database and exit\n" +
                 "Input your command or 'help'\n" +
                 "Goodbye\n";
-        expected.replaceAll("\n", System.lineSeparator());
-        assertEquals(expected, getData());
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
 
     }
+
     @Test
-    public void testTableListWithoutConnect(){
+    public void testTableListWithoutConnect() {
         //given
         in.add(Command.TABLE_LIST);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. at first connect to database\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. At first connect to a server.\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testTableDataWithoutConnect(){
+    public void testTableDataWithoutConnect() {
         //given
         in.add(Command.TABLE_DATA);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. Wrong count parameters expected 1, but found 0\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Goodbye\r\n",getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. at first connect to database\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testWrongCommand(){
+    public void testWrongCommand() {
         //given
         in.add("unsupportedCommand");
         in.add(Command.EXIT);
@@ -116,108 +143,110 @@ public class IntegrationTest {
                 "Input your command or 'help'\r\n" +
                 "The command doesn't exist\r\n" +
                 "Input your command or 'help'\r\n" +
-                "Goodbye\r\n",getData());
-    }
-
-    @Test
-    public void testConnect(){
-        //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
-        in.add(Command.EXIT);
-        //when
-        Main.main(new String[0]);
-        //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n",getData());
-    }
-
-    @Test
-    public void testConnectWithWrongDBName(){
-        //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + "WrongDataBaseName" + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
-        in.add(Command.EXIT);
-        //when
-        Main.main(new String[0]);
-        //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. connect to database unsuccessful, check your command. FATAL: database \"WrongDataBaseName\" does not exist\r\n" +
-                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
     @Test
-    public void testConnectWithWrongLogin(){
+    public void testConnect() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + "wrongLogin" + SEPARATOR
-                + DB_PASSWORD);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. connect to database unsuccessful, check your command. FATAL: password authentication failed for user \"wrongLogin\"\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testConnectWithWrongPassword(){
+    public void testConnectWithWrongDBName() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + "wrongPassword");
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + "WrongTableName");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. connect to database unsuccessful, check your command. FATAL: password authentication failed for user \"postgres\"\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. connect to database unsuccessful, check your command. FATAL: database \"WrongTableName\" does not exist\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testUnsuportedCommandAfterConnect(){
+    public void testConnectWithWrongLogin() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + "WrongLogin" + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getTableName());
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. connect to database unsuccessful, check your command. FATAL: password authentication failed for user \"WrongLogin\"\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. connect to database unsuccessful, check your command. The connection attempt failed.\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void testUnsuportedCommandAfterConnect() {
+        //given
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
         in.add("unsuportedcommand");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "The command doesn't exist\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "The command doesn't exist\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-     public void testConnectionWithoutParametrs(){
+    public void testConnectionWithoutParametrs() {
         //given
-        in.add(Command.CONNECTION);
+        in.add(Command.CONNECTION_TO_SERVER );
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -230,108 +259,193 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testTableListAfterConnect(){
+    public void testTableListAfterConnect() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
         in.add(Command.TABLE_LIST + SEPARATOR);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "[users2, users]\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "[users]\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testClearTable(){
+    public void testClearTableY() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
-        in.add(Command.CLEAR_TABLE + SEPARATOR + TEST_TABLE);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
+        in.add(Command.CLEAR_TABLE + SEPARATOR + testDB.getTableName());
+        in.add("y");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "users has been cleared\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure clear table 'users'? (Y/N)\n" +
+                "users has been cleared\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testClearTableWithoutConnect(){
+    public void testClearTableN() {
         //given
-        in.add(Command.CLEAR_TABLE + SEPARATOR + TEST_TABLE);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
+        in.add(Command.CLEAR_TABLE + SEPARATOR + testDB.getTableName());
+        in.add("n");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. at first connect to database\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure clear table 'users'? (Y/N)\n" +
+                "Canceled\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testClearTableWithError(){
+    public void testClearTableWrongConfirm() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
+        in.add(Command.CLEAR_TABLE + SEPARATOR + testDB.getTableName());
+        in.add("wrongCommand");
+        in.add("y");
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure clear table 'users'? (Y/N)\n" +
+                "wrong input\n" +
+                "Are you sure clear table 'users'? (Y/N)\n" +
+                "users has been cleared\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void testClearTableWithoutConnect() {
+        //given
+        in.add(Command.CLEAR_TABLE + SEPARATOR + testDB.getTableName());
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. at first connect to database\n" +
+                "Input your command or 'help'\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+    @Test
+    public void testClearTableWithError() {
+        //given
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
         in.add(Command.CLEAR_TABLE + SEPARATOR + "wrongTableName");
+        in.add("y");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. check table name\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "Are you sure clear table 'wrongTableName'? (Y/N)\n" +
+                "ERROR. check table name\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
     @Test
-    public void testClearTableWithoutParameters(){
+    public void testClearTableWithoutParameters() {
         //given
-        in.add(Command.CONNECTION + SEPARATOR
-                + DB_NAME + SEPARATOR
-                + DB_LOGIN + SEPARATOR
-                + DB_PASSWORD);
+        in.add(Command.CONNECTION_TO_SERVER + SEPARATOR
+                + testDB.getServerURL() + SEPARATOR
+                + testDB.getLogin() + SEPARATOR
+                + testDB.getPassword());
+        in.add(Command.CONNECTION_TO_DB + SEPARATOR
+                + testDB.getDbName());
         in.add(Command.CLEAR_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connect to the data base 'sqlcmd' successful!\r\n" +
-                "Input your command or 'help'\r\n" +
-                "ERROR. Wrong count parameters expected 1, but found 0\r\n" +
-                "Input your command or 'help'\r\n" +
-                "Connection to data base was closed\r\n" +
-                "Goodbye\r\n", getData());
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "ERROR. Wrong count parameters expected 1, but found 0\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
-
 
 
 }

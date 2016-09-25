@@ -31,6 +31,7 @@ public class AddRecordMockito{
 
     @Before
     public void setup(){
+        
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
     }

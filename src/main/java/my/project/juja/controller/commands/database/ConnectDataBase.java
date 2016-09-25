@@ -9,7 +9,7 @@ import my.project.juja.view.View;
  */
 public class ConnectDataBase extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 1;
-    public static final String name = Command.CONNECTION;
+    public static final String name = Command.CONNECTION_TO_DB;
 
     public ConnectDataBase(Storeable store, View view) {
         super(store, view);

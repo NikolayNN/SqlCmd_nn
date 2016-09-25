@@ -26,7 +26,6 @@ public class DataBaseTest {
     public void setup() {
         FileInputStream fis;
         Properties property = new Properties();
-
         try {
             fis = new FileInputStream("src/main/resources/config.properties");
             property.load(fis);

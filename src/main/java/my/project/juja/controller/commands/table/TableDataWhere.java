@@ -33,7 +33,7 @@ public class TableDataWhere extends Command {
                 Table table = store.getTableData(tableName, whereConstructor.toString());
                 view.writeln(table.toString());
                 break;
-            } catch (SQLException ex) {
+            } catch (RuntimeException ex) {
                 view.writeln(ex.getMessage());
             }
         }

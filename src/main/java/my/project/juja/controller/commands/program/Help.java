@@ -23,8 +23,8 @@ public class Help extends Command {
                 "login" + s +
                 "password'" + "\n" +
                 "\t * Example: '"+Command.CONNECTION_TO_SERVER + s + "localhost:5432" + s + "postgres" + s + "root'\n"+
-                Command.CONNECTION + "\n" +
-                "\t - Connect to database '" + Command.CONNECTION + s +
+                Command.CONNECTION_TO_DB + "\n" +
+                "\t - Connect to database '" + Command.CONNECTION_TO_DB + s +
                 "dbname" + s +
                 "login" + s +
                 "password'" + "\n" +

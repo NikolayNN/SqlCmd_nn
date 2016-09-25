@@ -34,7 +34,7 @@ public class UpdateRecord extends Command {
             if (table.getRows().size() == 0) {
                 throw new RuntimeException("ERROR. there is not record for input condition " + whereConstructor.toString());
             }
-        } catch (SQLException ex) {
+        } catch (RuntimeException ex) {
             throw new RuntimeException("ERROR. you input not exist table or wrong where. " + ex.getMessage());
         }
 

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public abstract class Command {
     public static final String HELP = "help";
     public static final String EXIT = "exit";
-    public static final String CONNECTION = "connect-db";
+    public static final String CONNECTION_TO_DB = "connect-db";
     public static final String CONNECTION_TO_SERVER = "connect-server";
     public static final String TABLE_LIST = "table-list";
     public static final String TABLE_DATA = "table-data";
@@ -82,10 +82,10 @@ public abstract class Command {
         if(store.getConnectToDataBase() != null){
             return true;
         }else{
-            throw new RuntimeException("ERROR. connect to data base");
+            throw new RuntimeException("ERROR. at first connect to database");
         }
     }
-    public abstract void perform() throws SQLException;
+    public abstract void perform();
 
     public abstract String getName();
 }

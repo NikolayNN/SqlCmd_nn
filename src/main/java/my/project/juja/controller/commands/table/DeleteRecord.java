@@ -20,7 +20,7 @@ public class DeleteRecord extends Command {
     }
 
     @Override
-    public void perform() throws SQLException {
+    public void perform() {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
