@@ -49,7 +49,10 @@ public class UpdateRecordMockitoNem {
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getCellInfos());
-        Mockito.when(view.read()).thenReturn("123").thenReturn("TestFName").thenReturn("TestLName").thenReturn("TestPassword");
+        Mockito.when(view.read()).thenReturn("123")
+                .thenReturn("TestFName")
+                .thenReturn("TestLName")
+                .thenReturn("TestPassword");
         //when
         command.perform();
         //then
@@ -77,7 +80,11 @@ public class UpdateRecordMockitoNem {
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getCellInfos());
-        Mockito.when(view.read()).thenReturn("").thenReturn("123").thenReturn("TestFName").thenReturn("TestLName").thenReturn("TestPassword");
+        Mockito.when(view.read()).thenReturn("")
+                .thenReturn("123")
+                .thenReturn("TestFName")
+                .thenReturn("TestLName")
+                .thenReturn("TestPassword");
         //when
         command.perform();
         //then

@@ -44,7 +44,10 @@ public class AddRecordMockito {
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(testTable.getCellInfos());
-        Mockito.when(view.read()).thenReturn("123").thenReturn("TestFName").thenReturn("TestLName").thenReturn("TestPassword");
+        Mockito.when(view.read()).thenReturn("123")
+                .thenReturn("TestFName")
+                .thenReturn("TestLName")
+                .thenReturn("TestPassword");
         //when
         command.perform();
         //then
