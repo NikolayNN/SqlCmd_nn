@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.database;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.database.DataBasesNames;
 import my.project.juja.controller.commands.table.ClearTable;
 import my.project.juja.model.Storeable;

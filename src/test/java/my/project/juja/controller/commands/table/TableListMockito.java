@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.table;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.table.TableList;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;

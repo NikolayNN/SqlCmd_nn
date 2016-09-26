@@ -1,5 +1,6 @@
-package my.project.juja.controller.commands;
+package my.project.juja.controller.commands.database;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.database.ConnectDataBase;
 import my.project.juja.controller.commands.database.CreateDataBase;
 import my.project.juja.model.Storeable;
