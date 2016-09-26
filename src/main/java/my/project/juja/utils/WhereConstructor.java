@@ -73,13 +73,21 @@ public class WhereConstructor {
         while (true) {
             view.writeln("input column name for add to condition");
             columnName = view.read().trim();
-            if (!columnName.contains(columnName)) {
+            if (!contains(columnName)) {
                 view.writeln("column name '" + columnName + "'" + " doesn't exist");
                 continue;
             }
             break;
         }
         return columnName;
+    }
+
+    private boolean contains(String columnName){
+        List<String> columnNames = new ArrayList<>();
+        for (CellInfo cellInfo : cellInfos) {
+            columnNames.add(cellInfo.getColumnName());
+        }
+        return columnNames.contains(columnName);
     }
 
     private String createSym() {
@@ -109,12 +117,12 @@ public class WhereConstructor {
             view.writeln("choose and input condition 'or', 'and'");
             result = view.read().trim();
             if (result.equalsIgnoreCase("or") || result.equalsIgnoreCase("and")) {
-                break;
+                return result;
             } else {
                 view.writeln("you have to input 'or', 'and'. But you input " + result);
                 continue;
             }
         }
-        return result;
+
     }
 }

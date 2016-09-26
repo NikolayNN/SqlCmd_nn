@@ -622,7 +622,7 @@ public class IntegrationTest {
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
-   
+
 
 
 
