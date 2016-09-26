@@ -5,6 +5,7 @@ import my.project.juja.controller.commands.table.AddRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
 import my.project.juja.utils.TestTable;
+import my.project.juja.utils.TestUtils;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +13,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Nikol on 9/25/2016.
@@ -49,11 +50,17 @@ public class AddRecordMockito {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
-        assertEquals("[input value for the column [id*(integer)] or just press 'enter' to skip input, input value for the column [firstName*(text)] or just press 'enter' to skip input, input value for the column [lastName(text)] or just press 'enter' to skip input, input value for the column [password*(character)] or just press 'enter' to skip input, successful added, testTable174856\n" +
+        assertEquals("input value for the column [id*(integer)] or just press 'enter' to skip input\n" +
+                "input value for the column [firstName*(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [lastName(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [password*(character)] or just press 'enter' to skip input\n" +
+                "successful added\n" +
+                "testTable174856\n" +
                 "---------------------------------------------\n" +
                 "id  | firstName | lastName  | password     | \n" +
                 "---------------------------------------------\n" +
                 "123 | TestFName | TestLName | TestPassword | \n" +
-                "]", captor.getAllValues().toString());
+                "\n", TestUtils.getString(captor));
     }
+
 }

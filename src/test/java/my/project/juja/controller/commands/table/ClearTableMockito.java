@@ -3,6 +3,7 @@ package my.project.juja.controller.commands.table;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.table.ClearTable;
 import my.project.juja.model.Storeable;
+import my.project.juja.utils.TestUtils;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +45,9 @@ public class ClearTableMockito {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(1)).writeln(captor.capture());
-        assertEquals("[Are you sure clear table 'table'? (Y/N), table has been cleared]", captor.getAllValues().toString());
-    }
+        assertEquals("Are you sure clear table 'table'? (Y/N)\n" +
+                "table has been cleared\n", TestUtils.getString(captor));
+}
 
     @Test
     public void clearTableWithoutParameter(){

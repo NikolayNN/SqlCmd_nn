@@ -620,6 +620,51 @@ public class IntegrationTest {
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }
 
+    @Test
+    public void CreateTable(){
+        in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
+        in.add(Command.CREATE_TABLE + Command.SEPARATOR_TO_STRING + "testTableInegration126845");
+        in.add("id");
+        in.add("integer");
+        in.add("n");
+        in.add("add");
+        in.add("name");
+        in.add("character");
+        in.add("30");
+        in.add("y");
+        in.add("save");
+        in.add(Command.EXIT);
+        //when
+        Main.main(new String[0]);
+        //then
+        String expected = "Hello\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the server successful!\n" +
+                "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
+                "input column name:\n" +
+                "choose column type:\n" +
+                "[text, character, integer, real]\n" +
+                "Column can be null?(Y/N)\n" +
+                "input 'save' to save the table, input 'add' to add one more column, input 'cancel' to cancel\n" +
+                "input column name:\n" +
+                "choose column type:\n" +
+                "[text, character, integer, real]\n" +
+                "input length or press 'enter' to set length = 256\n" +
+                "Column can be null?(Y/N)\n" +
+                "input 'save' to save the table, input 'add' to add one more column, input 'cancel' to cancel\n" +
+                "table 'testTableInegration126845' added\n" +
+                "[[id*(integer)], [name(character)]]\n" +
+                "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
+                "Goodbye\n";
+        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+    }
+
+
+
 
 
 }

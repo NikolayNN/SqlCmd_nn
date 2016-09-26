@@ -5,6 +5,7 @@ import my.project.juja.controller.commands.table.AddRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
 import my.project.juja.utils.TestTable;
+import my.project.juja.utils.TestUtils;
 import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class UpdateRecordMockitoNem {
     private Table table;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
@@ -40,7 +41,7 @@ public class UpdateRecordMockitoNem {
     }
 
     @Test
-    public void testNormal(){
+    public void testNormal() {
         //given
         Command command = new AddRecord(store, view);
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
@@ -54,16 +55,21 @@ public class UpdateRecordMockitoNem {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
-        assertEquals("[input value for the column [id*(integer)] or just press 'enter' to skip input, input value for the column [firstName*(text)] or just press 'enter' to skip input, input value for the column [lastName(text)] or just press 'enter' to skip input, input value for the column [password*(character)] or just press 'enter' to skip input, successful added, testTable174856\n" +
+        assertEquals("input value for the column [id*(integer)] or just press 'enter' to skip input\n" +
+                "input value for the column [firstName*(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [lastName(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [password*(character)] or just press 'enter' to skip input\n" +
+                "successful added\n" +
+                "testTable174856\n" +
                 "---------------------------------------------\n" +
                 "id  | firstName | lastName  | password     | \n" +
                 "---------------------------------------------\n" +
                 "123 | TestFName | TestLName | TestPassword | \n" +
-                "]", captor.getAllValues().toString());
+                "\n", TestUtils.getString(captor));
     }
 
     @Test
-    public void testWhenInputNullForNotNullColumn(){
+    public void testWhenInputNullForNotNullColumn() {
         //given
         Command command = new AddRecord(store, view);
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
@@ -77,32 +83,18 @@ public class UpdateRecordMockitoNem {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(5)).writeln(captor.capture());
-        assertEquals("[input value for the column [id*(integer)] or just press 'enter' to skip input, column \"id\" can't be null, input value for the column [id*(integer)] or just press 'enter' to skip input, input value for the column [firstName*(text)] or just press 'enter' to skip input, input value for the column [lastName(text)] or just press 'enter' to skip input, input value for the column [password*(character)] or just press 'enter' to skip input, successful added, testTable174856\n" +
+        assertEquals("input value for the column [id*(integer)] or just press 'enter' to skip input\n" +
+                "column \"id\" can't be null\n" +
+                "input value for the column [id*(integer)] or just press 'enter' to skip input\n" +
+                "input value for the column [firstName*(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [lastName(text)] or just press 'enter' to skip input\n" +
+                "input value for the column [password*(character)] or just press 'enter' to skip input\n" +
+                "successful added\n" +
+                "testTable174856\n" +
                 "---------------------------------------------\n" +
                 "id  | firstName | lastName  | password     | \n" +
                 "---------------------------------------------\n" +
                 "123 | TestFName | TestLName | TestPassword | \n" +
-                "]", captor.getAllValues().toString());
+                "\n", TestUtils.getString(captor));
     }
-
-//    @Test
-//    public void testinputWrongTableName() throws SQLException {
-//        //given
-//        Command command = new AddRecord(store, view);
-//        String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
-//        command.setup(commandString);
-//        Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
-//        Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
-//        Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getCellInfos());
-//        Mockito.when(view.read()).thenReturn("123").thenReturn("TestFName").thenReturn("TestLName").thenReturn("TestPassword");
-//
-//
-//        //when
-//        command.perform();
-//        //then
-//        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-//        verify(view, atLeast(5)).writeln(captor.capture());
-//
-//
-//    }
 }
