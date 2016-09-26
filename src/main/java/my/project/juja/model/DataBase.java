@@ -213,7 +213,6 @@ public class DataBase implements Storeable {
         Statement stmt = connectionDataBase.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
-        stmt.close();
         while (rs.next()) {
             Row row = new Row(table.getCellInfos());
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
@@ -225,6 +224,7 @@ public class DataBase implements Storeable {
             }
             table.addRow(row);
         }
+            stmt.close();
         rs.close();
         }catch (SQLException ex ){
             throw  new RuntimeException(ex.getMessage());
