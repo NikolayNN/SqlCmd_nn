@@ -19,15 +19,6 @@ public class Row {
         }
     }
 
-    public Row(List<CellInfo> cellsInfo, List<String> values) {
-        if (cellsInfo.size() != values.size()) {
-            throw new IndexOutOfBoundsException();
-        }
-        for (int i = 0; i < cellsInfo.size(); i++) {
-            cells.add(new Cell(cellsInfo.get(i), values.get(i)));
-        }
-    }
-
     public List<Cell> getCells() {
         return cells;
     }
@@ -64,10 +55,6 @@ public class Row {
             }
         }
         return result;
-    }
-
-    public void addCell(CellInfo cellInfo, String value) {
-        cells.add(new Cell(cellInfo, value));
     }
 
     @Override
