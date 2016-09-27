@@ -1,11 +1,9 @@
 package my.project.juja.integration;
 
-import my.project.juja.model.Storeable;
-import my.project.juja.model.table.Table;
-import my.project.juja.utils.TestDataBase;
+import my.project.juja.testutils.TestDataBase;
 import my.project.juja.controller.Main;
 import my.project.juja.controller.commands.Command;
-import my.project.juja.utils.TestUtils;
+import my.project.juja.testutils.TestUtils;
 import org.junit.*;
 
 

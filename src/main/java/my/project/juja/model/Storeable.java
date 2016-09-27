@@ -2,7 +2,6 @@ package my.project.juja.model;
 
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.WhereConstructor;
 
 import java.sql.Connection;
 import java.sql.SQLException;

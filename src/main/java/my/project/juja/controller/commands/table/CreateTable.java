@@ -3,14 +3,11 @@ package my.project.juja.controller.commands.table;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.CellInfo;
-import my.project.juja.utils.JujaUtils;
 import my.project.juja.view.View;
 
-import javax.lang.model.element.Element;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Nikol on 9/21/2016.

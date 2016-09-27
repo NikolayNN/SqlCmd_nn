@@ -2,11 +2,9 @@ package my.project.juja.controller.commands;
 
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.CellInfo;
-import my.project.juja.utils.WhereConstructor;
-import my.project.juja.view.Console;
+import my.project.juja.testutils.WhereConstructor;
 import my.project.juja.view.View;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**

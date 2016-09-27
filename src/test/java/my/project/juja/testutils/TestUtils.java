@@ -1,12 +1,6 @@
-package my.project.juja.utils;
+package my.project.juja.testutils;
 
-import my.project.juja.model.table.CellInfo;
-import my.project.juja.model.table.Row;
-import my.project.juja.model.table.Table;
 import org.mockito.ArgumentCaptor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Nikol on 9/25/2016.

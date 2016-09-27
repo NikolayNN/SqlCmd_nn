@@ -3,15 +3,12 @@ package my.project.juja.model;
 import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.TestDataBase;
+import my.project.juja.testutils.TestDataBase;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;

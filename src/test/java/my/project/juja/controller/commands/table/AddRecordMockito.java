@@ -1,11 +1,10 @@
 package my.project.juja.controller.commands.table;
 
 import my.project.juja.controller.commands.Command;
-import my.project.juja.controller.commands.table.AddRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.TestTable;
-import my.project.juja.utils.TestUtils;
+import my.project.juja.testutils.TestTable;
+import my.project.juja.testutils.TestUtils;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;

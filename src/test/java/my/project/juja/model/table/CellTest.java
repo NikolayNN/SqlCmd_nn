@@ -1,7 +1,5 @@
 package my.project.juja.model.table;
 
-import my.project.juja.utils.TestTable;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

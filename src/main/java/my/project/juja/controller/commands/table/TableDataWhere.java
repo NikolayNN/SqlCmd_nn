@@ -4,10 +4,8 @@ import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**

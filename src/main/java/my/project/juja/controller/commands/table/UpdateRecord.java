@@ -5,10 +5,7 @@ import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
 import my.project.juja.model.Storeable;
-import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
-
-import java.sql.SQLException;
 
 /**
  * Created by Nikol on 8/20/2016.
@@ -27,7 +24,7 @@ public class UpdateRecord extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        String where = createWhere(view,store.getColumnInformation(tableName));
+        String where = createWhere(view, store.getColumnInformation(tableName));
         Table table;
         try {
             table = store.getTableData(tableName, where);

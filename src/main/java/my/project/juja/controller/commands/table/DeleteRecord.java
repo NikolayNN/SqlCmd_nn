@@ -3,10 +3,7 @@ package my.project.juja.controller.commands.table;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
-
-import java.sql.SQLException;
 
 /**
  * Created by Nikol on 9/23/2016.

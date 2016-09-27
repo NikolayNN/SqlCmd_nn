@@ -1,4 +1,4 @@
-package my.project.juja.utils;
+package my.project.juja.testutils;
 
 import my.project.juja.model.DataBase;
 import my.project.juja.model.Storeable;

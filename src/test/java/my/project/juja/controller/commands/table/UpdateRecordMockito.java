@@ -3,7 +3,7 @@ package my.project.juja.controller.commands.table;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.TestTable;
+import my.project.juja.testutils.TestTable;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;

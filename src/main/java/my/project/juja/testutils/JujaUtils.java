@@ -1,8 +1,7 @@
-package my.project.juja.utils;
+package my.project.juja.testutils;
 
 import my.project.juja.view.View;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;

@@ -4,7 +4,7 @@ import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
-import my.project.juja.utils.JujaUtils;
+import my.project.juja.testutils.JujaUtils;
 
 import java.sql.*;
 import java.util.*;
