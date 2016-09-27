@@ -106,38 +106,6 @@ public class IntegrationTest {
 
     }
 
-    @Test
-    @Ignore
-    public void testGetTableData(){
-//        given
-        testDB.createTestTable();
-        in.add(COMMAND_CONNECT_SERVER);
-        in.add(COMMAND_CONECT_DATABASE);
-        in.add(Command.TABLE_DATA + SEPARATOR + testDB.getTableName());
-        in.add(Command.EXIT);
-//        when
-        Main.main(new String[0]);
-//        then
-
-        String expected = "Hello\n" +
-                "Input your command or 'help'\n" +
-                "Connect to the server successful!\n" +
-                "Input your command or 'help'\n" +
-                "Connect to the data base 'test729451' successful!\n" +
-                "Input your command or 'help'\n" +
-                "users\n" +
-                "-----------------------------------------\n" +
-                "id | firstname | lastname | password   | \n" +
-                "-----------------------------------------\n" +
-                "1  | Vasya     | Pupkin   | qwerty     | \n" +
-                "2  | Kirril    | Ivanov   | 0000       | \n" +
-                "3  | Pasha     | Sidorov  | 157862asdw | \n" +
-                "\n" +
-                "Input your command or 'help'\n" +
-                "Connection to data base was closed\n" +
-                "Goodbye\n";
-        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
-    }
 
     @Test
     public void testCurrentDataBase(){

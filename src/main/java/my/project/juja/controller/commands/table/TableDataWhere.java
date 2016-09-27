@@ -29,8 +29,8 @@ public class TableDataWhere extends Command {
         List<CellInfo> cellInfos = store.getColumnInformation(tableName);
         while (true) {
             try {
-                WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
-                Table table = store.getTableData(tableName, whereConstructor.toString());
+                String where = createWhere(view, store.getColumnInformation(tableName));
+                Table table = store.getTableData(tableName, where);
                 view.writeln(table.toString());
                 break;
             } catch (RuntimeException ex) {
