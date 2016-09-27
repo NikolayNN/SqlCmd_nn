@@ -5,7 +5,6 @@ import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
 import my.project.juja.utils.JujaUtils;
-import my.project.juja.utils.WhereConstructor;
 
 import java.sql.*;
 import java.util.*;
@@ -104,7 +103,7 @@ public class DataBase implements Storeable {
         }
     }
 
-    private void checkConnectionToServer() throws RuntimeException {
+    public void checkConnectionToServer() throws RuntimeException {
         if (connectionServer == null) {
             throw new RuntimeException(ERROR_CONNECTION_TO_SERVER_NOT_EXIST);
         }
