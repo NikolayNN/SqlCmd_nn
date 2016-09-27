@@ -1,10 +1,13 @@
 package my.project.juja.controller.commands;
 
 import my.project.juja.model.Storeable;
+import my.project.juja.model.table.CellInfo;
+import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.Console;
 import my.project.juja.view.View;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Nikol on 4/12/2016.
@@ -85,6 +88,12 @@ public abstract class Command {
             throw new RuntimeException("ERROR. at first connect to database");
         }
     }
+
+    public String createWhere(View view, List<CellInfo> cellInfos){
+        WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
+        return whereConstructor.toString();
+    }
+
     public abstract void perform();
 
     public abstract String getName();

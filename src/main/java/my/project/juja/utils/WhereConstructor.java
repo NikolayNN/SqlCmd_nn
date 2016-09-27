@@ -2,7 +2,6 @@ package my.project.juja.utils;
 
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.view.View;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,13 +60,13 @@ public class WhereConstructor {
 
     private StringBuilder createCondition() {
         StringBuilder result = new StringBuilder();
-        result.append(createTableName());
+        result.append(createColumnName());
         result.append(createSym());
         result.append(createValue());
         return result;
     }
 
-    private String createTableName() {
+    private String createColumnName() {
         view.writeln(cellInfos.toString());
         String columnName;
         while (true) {

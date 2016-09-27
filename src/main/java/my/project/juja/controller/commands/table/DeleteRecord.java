@@ -25,12 +25,11 @@ public class DeleteRecord extends Command {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
         while (true){
-            WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
-            whereConstructor.create();
-            Table table = store.getTableData(tableName, whereConstructor.toString());
+            String where = createWhere(view, store.getColumnInformation(tableName));
+            Table table = store.getTableData(tableName, where);
             view.writeln(table.toString());
             confirmCommand("delete this records");
-            store.deleteRecord(tableName, whereConstructor.toString());
+            store.deleteRecord(tableName, where);
             view.writeln("record deleted");
             break;
         }
