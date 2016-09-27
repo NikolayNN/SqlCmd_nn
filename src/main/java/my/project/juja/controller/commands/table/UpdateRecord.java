@@ -27,13 +27,12 @@ public class UpdateRecord extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        WhereConstructor whereConstructor = new WhereConstructor(view, store.getColumnInformation(tableName));
-        whereConstructor.create();
+        String where = createWhere(view,store.getColumnInformation(tableName));
         Table table;
         try {
-            table = store.getTableData(tableName, whereConstructor.toString());
+            table = store.getTableData(tableName, where);
             if (table.getRows().size() == 0) {
-                throw new RuntimeException("ERROR. there is not record for input condition " + whereConstructor.toString());
+                throw new RuntimeException("ERROR. there is not record for input condition " + where);
             }
         } catch (RuntimeException ex) {
             throw new RuntimeException("ERROR. you input not exist table or wrong where. " + ex.getMessage());
@@ -48,7 +47,7 @@ public class UpdateRecord extends Command {
                     view.writeln(cell.getCellInfo().toString());
                     cell.setValue(view.read(), false);
                 }
-                store.updateRecord(whereConstructor.toString(), table);
+                store.updateRecord(where, table);
                 view.writeln("table updated");
                 break;
             } catch (RuntimeException ex) {
