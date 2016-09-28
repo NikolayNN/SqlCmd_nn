@@ -2,7 +2,7 @@ package my.project.juja.controller.commands.table;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
-import my.project.juja.testutils.TestUtils;
+import my.project.juja.utilsForTest.TestUtils;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;

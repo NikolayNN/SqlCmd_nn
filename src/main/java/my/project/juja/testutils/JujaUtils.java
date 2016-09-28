@@ -18,27 +18,12 @@ public class JujaUtils {
         return str.equalsIgnoreCase(isTrue);
     }
 
-    public static String numberList(List<String> list) {
-        String result = "";
-        for (int i = 0; i < list.size(); i++) {
-            result += list.get(i) + "(" + i + ") ";
-        }
-        return result;
-    }
-
     public static Set<Integer> toSetInteger(String[] array) throws NumberFormatException {
         Set<Integer> result = new TreeSet<>();
         for (String s : array) {
             result.add(Integer.parseInt(s));
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        String[] array = {"0", "1", "2", "4"};
-        Set<Integer> set = toSetInteger(array);
-
-        validate(set, 4);
     }
 
     public static void validate(Set<Integer> indexes, int size) throws IllegalArgumentException {
@@ -64,15 +49,15 @@ public class JujaUtils {
 
     public static boolean confirm (String command, View view) {
         while (true) {
-            if (command.equalsIgnoreCase("n")) {
-                return false;
-            }
-            if (command.equalsIgnoreCase("y")) {
-                return true;
-            } else {
-                view.writeln("wrong input");
-                continue;
-            }
+                if (command.equalsIgnoreCase("n")) {
+                    return false;
+                }
+                if (command.equalsIgnoreCase("y")) {
+                    return true;
+                } else {
+                    throw new RuntimeException("you can input 'y' or 'n', but you input" + command);
+                }
+
         }
     }
 }

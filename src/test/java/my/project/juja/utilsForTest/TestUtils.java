@@ -1,4 +1,4 @@
-package my.project.juja.testutils;
+package my.project.juja.utilsForTest;
 
 import org.mockito.ArgumentCaptor;
 

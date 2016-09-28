@@ -3,7 +3,7 @@ package my.project.juja.model;
 import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
-import my.project.juja.testutils.TestDataBase;
+import my.project.juja.utilsForTest.TestDataBase;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 

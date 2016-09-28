@@ -1,4 +1,4 @@
-package my.project.juja.testutils;
+package my.project.juja.utilsForTest;
 
 import my.project.juja.model.DataBase;
 import my.project.juja.model.Storeable;
@@ -140,10 +140,5 @@ public class TestDataBase {
 
     public String getServerURL() {
         return serverURL;
-    }
-
-    public static void main(String[] args) {
-        TestDataBase testDataBase = new TestDataBase();
-        testDataBase.createTestDataBase();
     }
 }

@@ -1,7 +1,7 @@
 package my.project.juja.controller.commands.utils;
 
 import my.project.juja.model.table.Table;
-import my.project.juja.testutils.TestTable;
+import my.project.juja.utilsForTest.TestTable;
 import my.project.juja.testutils.WhereConstructor;
 import my.project.juja.view.View;
 import org.junit.Before;

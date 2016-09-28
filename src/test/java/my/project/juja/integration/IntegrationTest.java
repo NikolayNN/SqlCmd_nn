@@ -1,9 +1,9 @@
 package my.project.juja.integration;
 
-import my.project.juja.testutils.TestDataBase;
+import my.project.juja.utilsForTest.TestDataBase;
 import my.project.juja.controller.Main;
 import my.project.juja.controller.commands.Command;
-import my.project.juja.testutils.TestUtils;
+import my.project.juja.utilsForTest.TestUtils;
 import org.junit.*;
 
 

@@ -1,4 +1,4 @@
-package my.project.juja.testutils;
+package my.project.juja.utilsForTest;
 
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
