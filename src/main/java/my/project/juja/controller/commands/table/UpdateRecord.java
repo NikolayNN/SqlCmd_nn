@@ -25,6 +25,31 @@ public class UpdateRecord extends Command {
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
         String where = createWhere(view, store.getColumnInformation(tableName));
+        Table table = getTableToDelete(tableName, where);
+        view.writeln(table.toString());
+
+        table.addRow(new Row(table.getCellInfos()));
+        while (true) {
+            try {
+                inputValuesToUpdate(table);
+                store.updateRecord(where, table);
+                view.writeln("table updated");
+                break;
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+    private void inputValuesToUpdate(Table table) {
+        for (Cell cell : table.getRow(0).getCells()) {
+            view.writeln("input new value or just press 'enter' to skip");
+            view.writeln(cell.getCellInfo().toString());
+            cell.setValue(view.read(), false);
+        }
+    }
+
+    private Table getTableToDelete(String tableName, String where) {
         Table table;
         try {
             table = store.getTableData(tableName, where);
@@ -34,23 +59,7 @@ public class UpdateRecord extends Command {
         } catch (RuntimeException ex) {
             throw new RuntimeException("ERROR. you input not exist table or wrong where. " + ex.getMessage());
         }
-
-        view.writeln(table.toString());
-        table.addRow(new Row(table.getCellInfos()));
-        while (true) {
-            try {
-                for (Cell cell : table.getRow(0).getCells()) {
-                    view.writeln("input new value or just press 'enter' to skip");
-                    view.writeln(cell.getCellInfo().toString());
-                    cell.setValue(view.read(), false);
-                }
-                store.updateRecord(where, table);
-                view.writeln("table updated");
-                break;
-            } catch (RuntimeException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
+        return table;
     }
 
     @Override
