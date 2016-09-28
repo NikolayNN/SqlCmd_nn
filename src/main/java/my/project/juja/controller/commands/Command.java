@@ -89,6 +89,7 @@ public abstract class Command {
 
     public String createWhere(View view, List<CellInfo> cellInfos){
         WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
+        whereConstructor.create();
         return whereConstructor.toString();
     }
 

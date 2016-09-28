@@ -126,9 +126,7 @@ public class DataBase implements Storeable {
     public void addRecord(Table table) throws SQLException {
         checkConnectionToServer();
         checkConnectionToDataBase();
-
         for (Row row : table.getRows()) {
-
             String columnNames = format(row.getColumnNamesNotNull(), "");
             String columnValues = format(row.getCellValuesNotNull(), "'");
             Statement stmt = connectionDataBase.createStatement();

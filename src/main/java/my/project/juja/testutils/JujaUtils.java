@@ -55,7 +55,9 @@ public class JujaUtils {
                 if (command.equalsIgnoreCase("y")) {
                     return true;
                 } else {
-                    throw new RuntimeException("you can input 'y' or 'n', but you input" + command);
+                   view.writeln("you can input 'y' or 'n', but you input '" + command + "'");
+                    view.writeln("(Y/N) ?");
+                    command = view.read();
                 }
 
         }

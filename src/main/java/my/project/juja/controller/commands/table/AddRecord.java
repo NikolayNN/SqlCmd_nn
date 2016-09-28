@@ -27,16 +27,7 @@ public class AddRecord extends Command {
         Table table = new Table(tableName, store.getColumnInformation(tableName));
         Row row = new Row(table.getCellInfos());
         while (true) {
-            int i = 0;
-            while (i < table.getColumnCount()) {
-                try {
-                    view.writeln("input value for the column " + table.getCellInfos(i).toString() + " or just press 'enter' to skip input");
-                    row.getCell(i).setValue(view.read(), true);
-                    i++;
-                } catch (IllegalArgumentException ex) {
-                    view.writeln(ex.getMessage());
-                }
-            }
+            fillRow(table, row);
             try {
                 table.addRow(row);
                 store.addRecord(table);
@@ -47,6 +38,19 @@ public class AddRecord extends Command {
         }
         view.writeln("successful added");
         view.writeln(table.toString());
+    }
+
+    private void fillRow(Table table, Row row) {
+        int i = 0;
+        while (i < table.getColumnCount()) {
+            try {
+                view.writeln("input value for the column " + table.getCellInfos(i).toString() + " or just press 'enter' to skip input");
+                row.getCell(i).setValue(view.read(), true);
+                i++;
+            } catch (IllegalArgumentException ex) {
+                view.writeln(ex.getMessage());
+            }
+        }
     }
 
     @Override
