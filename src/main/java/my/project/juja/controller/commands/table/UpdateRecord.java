@@ -27,7 +27,6 @@ public class UpdateRecord extends Command {
         String where = createWhere(view, store.getColumnInformation(tableName));
         Table table = getTableToDelete(tableName, where);
         view.writeln(table.toString());
-
         table.addRow(new Row(table.getCellInfos()));
         while (true) {
             try {
