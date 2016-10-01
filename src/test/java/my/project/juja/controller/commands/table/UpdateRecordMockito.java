@@ -35,18 +35,19 @@ public class UpdateRecordMockito {
         command = new UpdateRecord(store, view);
         spyCommand = Mockito.spy(command);
     }
-    @Ignore
+
     @Test
     public void testNormal(){
         //given
-        String where = "id=1";
+        String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + testTable.getTableName();
         spyCommand.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
-        Mockito.when(spyCommand.createWhere(view, testTable.getCellInfos())).thenReturn(where);
+        Mockito.when(view.read()).thenReturn("n")
+                .thenReturn(where);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getCellInfos());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
-        Mockito.when(view.read()).thenReturn("n");
+
         //when
         spyCommand.perform();
         //then

@@ -51,5 +51,5 @@ public class TableDataWhereMockito {
         verify(store, atLeast(1)).getTableData(testTable.getTableName(), where);
 
     }
-    
+
     }
