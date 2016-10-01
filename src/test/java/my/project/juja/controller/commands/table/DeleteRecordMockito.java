@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeast;
@@ -25,6 +27,7 @@ public class DeleteRecordMockito {
     private Table testTable;
     private Command spyCommand;
     private Command command;
+    private Set<String> availableTables;
 
     @Before
     public void setup(){
@@ -34,6 +37,8 @@ public class DeleteRecordMockito {
         testTable = new TestTable().getTable();
         command = new DeleteRecord(store, view);
         spyCommand = Mockito.spy(command);
+        availableTables = new HashSet<>();
+        availableTables.add(testTable.getTableName());
     }
 
     @Test
@@ -43,6 +48,7 @@ public class DeleteRecordMockito {
         String commandString = Command.DELETE_RECORD + Command.SEPARATOR + testTable.getTableName();
         spyCommand.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getTableHeader());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
         Mockito.when(view.read()).thenReturn("n")

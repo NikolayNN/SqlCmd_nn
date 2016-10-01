@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
@@ -23,6 +25,7 @@ public class TableDataWhereMockito {
     private Connection connection;
     private Table testTable;
     private Command command;
+    private Set<String> availableTables;
 
     @Before
     public void setup(){
@@ -31,6 +34,8 @@ public class TableDataWhereMockito {
         connection = Mockito.mock(Connection.class);
         testTable = new TestTable().getTable();
         command = new TableDataWhere(store, view);
+        availableTables = new HashSet<>();
+        availableTables.add(testTable.getTableName());
     }
 
     @Test
@@ -40,6 +45,7 @@ public class TableDataWhereMockito {
         String commandString = Command.TABLE_DATA + Command.SEPARATOR_TO_STRING + testTable.getTableName();
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getTableHeader());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
         Mockito.when(view.read()).thenReturn("n")
