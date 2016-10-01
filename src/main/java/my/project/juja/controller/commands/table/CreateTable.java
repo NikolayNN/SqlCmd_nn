@@ -61,23 +61,23 @@ public class CreateTable extends Command {
 
 
     private CellInfo createColumnInfo(View view, List<CellInfo> cellInfos, int columnIndex) {
-        String columnName = createColumnName(view);
-        String type = createColumnType(view);
-        int length = createColumnLength(view, type);
-        boolean canBeNull = createCanBeNull(view);
+        String columnName = inputColumnName(view);
+        String type = inputColumnType(view);
+        int length = inputColumnLength(view, type);
+        boolean canBeNull = inputCanBeNull(view);
         CellInfo cellInfo = new CellInfo(columnName, type, canBeNull, false, columnIndex);
         cellInfo.setLength(length);
         return cellInfo;
     }
 
 
-    private String createColumnName(View view) {
+    private String inputColumnName(View view) {
         String columnName;
         while (true) {
             try {
                 view.writeln("input column name:");
                 columnName = view.read().trim();
-                hasSpace(columnName);
+                checkHasSpace(columnName);
                 break;
             } catch (RuntimeException ex) {
                 view.writeln(ex.getMessage());
@@ -87,7 +87,7 @@ public class CreateTable extends Command {
         return columnName;
     }
 
-    private String createColumnType(View view) {
+    private String inputColumnType(View view) {
         String type;
         while (true) {
             try {
@@ -105,7 +105,7 @@ public class CreateTable extends Command {
         return type;
     }
 
-    private int createColumnLength(View view, String type) {
+    private int inputColumnLength(View view, String type) {
         if (!type.equalsIgnoreCase("character")) {
             return 0;
         }
@@ -126,7 +126,7 @@ public class CreateTable extends Command {
         return length;
     }
 
-    private boolean createCanBeNull(View view) {
+    private boolean inputCanBeNull(View view) {
         while (true) {
             try {
                 view.writeln("Column can be null?(Y/N)");
@@ -145,7 +145,7 @@ public class CreateTable extends Command {
         }
     }
 
-    private void hasSpace(String s) {
+    private void checkHasSpace(String s) {
         if (s.contains(" ")) {
             throw new RuntimeException("ERROR. you can't use spaces here");
         }
