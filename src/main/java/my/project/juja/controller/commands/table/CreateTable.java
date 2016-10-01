@@ -34,12 +34,6 @@ public class CreateTable extends Command {
         view.writeln(cellInfos.toString());
     }
 
-    private void checkTableName(String tableName) {
-        if(isTableExist(tableName)){
-            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " is already exist.");
-        }
-    }
-
     private List<CellInfo> createCellInfos(View view) {
         List<CellInfo> cellInfos = new ArrayList<>();
         int columnIndex = 0;
