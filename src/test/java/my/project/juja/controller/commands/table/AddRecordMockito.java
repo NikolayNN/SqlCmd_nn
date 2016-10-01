@@ -12,6 +12,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -37,10 +39,13 @@ public class AddRecordMockito {
     public void testNormal(){
         //given
         Table testTable = table;
+        Set<String> availableTables = new HashSet<>();
+        availableTables.add(testTable.getTableName());
         Command command = new AddRecord(store, view);
         String commandString = Command.ADD_RECORD + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(testTable.getTableHeader());
         Mockito.when(view.read()).thenReturn("123")
                 .thenReturn("TestFName")

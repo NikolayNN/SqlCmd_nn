@@ -24,6 +24,7 @@ public class AddRecord extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
+        checkTableName(tableName);
         Table table = new Table(tableName, store.getColumnInformation(tableName));
         Row row = new Row(table.getTableHeader());
         while (true) {
@@ -38,6 +39,12 @@ public class AddRecord extends Command {
         }
         view.writeln("successful added");
         view.writeln(table.toString());
+    }
+
+    private void checkTableName(String tableName) {
+        if(!isTableExist(tableName)){
+            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
+        }
     }
 
     private void fillRow(Table table, Row row) {
