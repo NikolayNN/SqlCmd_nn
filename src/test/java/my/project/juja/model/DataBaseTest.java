@@ -118,7 +118,7 @@ public class DataBaseTest {
 
     @Test(expected = RuntimeException.class)
     public void createTableWithWrongName(){
-        dataBase.createTable("Wrong table name", testDB.getTable().getCellInfos());
+        dataBase.createTable("Wrong table name", testDB.getTable().getTableHeader());
     }
 
     @Test(expected = RuntimeException.class)
@@ -162,7 +162,7 @@ public class DataBaseTest {
     public void testAddRecord() throws SQLException {
         dataBase.clearTable(tableName);
         Table expectedTable = new Table(tableName, dataBase.getColumnInformation(tableName));
-        Row row = new Row(expectedTable.getCellInfos());
+        Row row = new Row(expectedTable.getTableHeader());
         for (Cell cell : row.getCells()) {
             cell.setValue("235", true);
         }
@@ -176,7 +176,7 @@ public class DataBaseTest {
     public void testWrongTypeValue() throws SQLException {
         dataBase.clearTable(tableName);
         Table expectedTable = new Table(tableName, dataBase.getColumnInformation(tableName));
-        Row row = new Row(expectedTable.getCellInfos());
+        Row row = new Row(expectedTable.getTableHeader());
         for (Cell cell : row.getCells()) {
             cell.setValue("sss", true);
         }
@@ -186,8 +186,8 @@ public class DataBaseTest {
 
     @Test
     public void testUpdateRecord() throws SQLException {
-        Table tableUpdate = new Table(tableName, testDB.getTable().getCellInfos());
-        Row rowUpdate = new Row(tableUpdate.getCellInfos());
+        Table tableUpdate = new Table(tableName, testDB.getTable().getTableHeader());
+        Row rowUpdate = new Row(tableUpdate.getTableHeader());
         rowUpdate.getCell(0).setValue("", false);
         rowUpdate.getCell(1).setValue("400", false);
         rowUpdate.getCell(2).setValue("400", false);

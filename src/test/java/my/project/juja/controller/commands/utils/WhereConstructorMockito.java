@@ -25,7 +25,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testCreateConditionUseConstructor() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
 
         Mockito.when(view.read()).thenReturn("y")
                 .thenReturn("firstName")
@@ -38,7 +38,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testCreateConditionDoNotUseConstructor() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
         Mockito.when(view.read()).thenReturn("n")
                 .thenReturn("colName=value");
         whereConstructor.create();
@@ -47,7 +47,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testCreateTwoConditionsWithConstructor() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
         Mockito.when(view.read()).thenReturn("y")
                 .thenReturn("firstName")
                 .thenReturn("=")
@@ -64,7 +64,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testInputWrongColumnName() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
         Mockito.when(view.read()).thenReturn("y")
                 .thenReturn("wrongColumnName")
                 .thenReturn("firstName")
@@ -78,7 +78,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testWrongSymbol() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
 
         Mockito.when(view.read()).thenReturn("y")
                 .thenReturn("firstName")
@@ -92,7 +92,7 @@ public class WhereConstructorMockito {
 
     @Test
     public void testCreateTwoConditionsWithWrongCondition() {
-        WhereConstructor whereConstructor = new WhereConstructor(view, table.getCellInfos());
+        WhereConstructor whereConstructor = new WhereConstructor(view, table.getTableHeader());
         Mockito.when(view.read()).thenReturn("y")
                 .thenReturn("firstName")
                 .thenReturn("=")

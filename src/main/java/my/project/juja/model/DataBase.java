@@ -184,7 +184,7 @@ public class DataBase implements Storeable {
              ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
-                Row row = new Row(table.getCellInfos());
+                Row row = new Row(table.getTableHeader());
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     if (rs.getString(i) != null) {
                         row.getCell(i - 1).setValue(rs.getString(i).trim(), false);
@@ -211,7 +211,7 @@ public class DataBase implements Storeable {
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
         while (rs.next()) {
-            Row row = new Row(table.getCellInfos());
+            Row row = new Row(table.getTableHeader());
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                 if (rs.getString(i) != null) {
                     row.getCell(i - 1).setValue(rs.getString(i).trim(), false);

@@ -8,14 +8,14 @@ import java.util.List;
  */
 public class Table {
     private String tableName;
-    private List<CellInfo> cellInfos;
+    private List<CellInfo> tableHeader;
     private List<Row> rows;
     private int columnCount;
 
-    public Table(String tableName, List<CellInfo> cellInfos) {
+    public Table(String tableName, List<CellInfo> tableHeader) {
         this.tableName = tableName;
-        this.cellInfos = cellInfos;
-        this.columnCount = cellInfos.size();
+        this.tableHeader = tableHeader;
+        this.columnCount = tableHeader.size();
         rows = new ArrayList<>();
     }
 
@@ -27,12 +27,12 @@ public class Table {
         return columnCount;
     }
 
-    public List<CellInfo> getCellInfos() {
-        return cellInfos;
+    public List<CellInfo> getTableHeader() {
+        return tableHeader;
     }
 
     public CellInfo getCellInfos(int columnIndex) {
-        return cellInfos.get(columnIndex);
+        return tableHeader.get(columnIndex);
     }
 
     public List<Row> getRows() {

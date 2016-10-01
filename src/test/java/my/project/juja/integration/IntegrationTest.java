@@ -86,14 +86,20 @@ public class IntegrationTest {
                 "\t - Delete the data base 'drop-db|dataBaseName'\n" +
                 "create-db\n" +
                 "\t - Create new data base 'create-db|dataBaseName'\n" +
+                "create-table\n" +
+                "\t - Create new table in the current data base 'create-table|tableName '\n" +
+                "drop-table\n" +
+                "\t - Drop table 'drop-table|tableName '\n" +
                 "table-list\n" +
                 "\t - Show exist tables in the current database 'table-list'\n" +
                 "table-data\n" +
-                "\t - Show table rows 'table-data|tableName'\n" +
+                "\t - Show all table rows 'table-data|tableName'\n" +
+                "table-data-where\n" +
+                "\t - Show table rows with the condition WHERE 'table-data-where|tableName'\n" +
                 "add-record\n" +
                 "\t - Add record in the selectd table 'add-record|tableName'\n" +
                 "update-table\n" +
-                "\t - Update record in the selectd table 'update-table|tableName|where'\n" +
+                "\t - Update record in the selected table 'update-table|tableName|where'\n" +
                 "clear-table\n" +
                 "\t - Clear selected table 'clear-table|tableName'\n" +
                 "exit\n" +

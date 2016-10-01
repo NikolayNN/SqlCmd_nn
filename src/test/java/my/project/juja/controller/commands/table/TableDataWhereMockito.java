@@ -6,7 +6,6 @@ import my.project.juja.model.table.Table;
 import my.project.juja.utilsForTest.TestTable;
 import my.project.juja.view.View;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -41,7 +40,7 @@ public class TableDataWhereMockito {
         String commandString = Command.TABLE_DATA + Command.SEPARATOR_TO_STRING + testTable.getTableName();
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
-        Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getCellInfos());
+        Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getTableHeader());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
         Mockito.when(view.read()).thenReturn("n")
                 .thenReturn(where);
