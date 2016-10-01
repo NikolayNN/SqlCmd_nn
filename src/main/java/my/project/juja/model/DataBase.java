@@ -115,8 +115,8 @@ public class DataBase implements Storeable {
         checkConnectionToServer();
         checkConnectionToDataBase();
         try (Statement stmt = connectionDataBase.createStatement()) {
-            String sql = "DELETE FROM " + tableName;
-            stmt.executeUpdate(sql);
+            String query = "DELETE FROM " + tableName;
+            stmt.executeUpdate(query);
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
@@ -130,9 +130,9 @@ public class DataBase implements Storeable {
             String columnNames = format(row.getColumnNamesNotNull(), "");
             String columnValues = format(row.getCellValuesNotNull(), "'");
             Statement stmt = connectionDataBase.createStatement();
-            String sql = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
+            String query = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
                     " VALUES (" + columnValues + ")";
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate(query);
             stmt.close();
         }
 
@@ -245,8 +245,8 @@ public class DataBase implements Storeable {
 
         String tableName = table.getTableName();
         try (Statement stmt = connectionDataBase.createStatement()) {
-            String sql = "UPDATE " + tableName + " SET " + set + " WHERE " + where;
-            stmt.executeUpdate(sql);
+            String query = "UPDATE " + tableName + " SET " + set + " WHERE " + where;
+            stmt.executeUpdate(query);
             stmt.close();
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_WRONG_COMMAND + " " + ex.getMessage());
@@ -331,9 +331,9 @@ public class DataBase implements Storeable {
         checkConnectionToDataBase();
         try (Statement stmt = connectionDataBase.createStatement()) {
 
-            String sql = "CREATE TABLE " + tableName +
+            String query = "CREATE TABLE " + tableName +
                     "(" + cellInfosToSQL(cellInfos) + ")";
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate(query);
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
@@ -354,8 +354,8 @@ public class DataBase implements Storeable {
     @Override
     public void dropTable(String tableName) {
         try (Statement stmt = connectionDataBase.createStatement()) {
-            String sql = "DROP TABLE " + tableName;
-            stmt.executeUpdate(sql);
+            String query = "DROP TABLE " + tableName;
+            stmt.executeUpdate(query);
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -366,8 +366,8 @@ public class DataBase implements Storeable {
         checkConnectionToServer();
         checkConnectionToServer();
         try (Statement stmt = connectionDataBase.createStatement()) {
-            String sql = "DELETE FROM " + tableName + " WHERE " + where;
-            stmt.executeUpdate(sql);
+            String query = "DELETE FROM " + tableName + " WHERE " + where;
+            stmt.executeUpdate(query);
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
