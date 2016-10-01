@@ -13,6 +13,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeast;
@@ -40,9 +42,12 @@ public class UpdateRecordMockitoNem {
     @Test
     public void testNormal() {
         //given
+        Set<String> availableTables = new HashSet<>();
+        availableTables.add(table.getTableName());
         Command command = new AddRecord(store, view);
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getTableHeader());
@@ -72,8 +77,11 @@ public class UpdateRecordMockitoNem {
     public void testWhenInputNullForNotNullColumn() {
         //given
         Command command = new AddRecord(store, view);
+        Set<String> availableTables = new HashSet<>();
+        availableTables.add(table.getTableName());
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getTableHeader());

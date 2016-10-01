@@ -21,6 +21,7 @@ public class DeleteRecord extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
+        checkTableName(tableName);
         while (true){
             String where = createWhere(view, store.getColumnInformation(tableName));
             Table table = store.getTableData(tableName, where);
@@ -29,6 +30,12 @@ public class DeleteRecord extends Command {
             store.deleteRecord(tableName, where);
             view.writeln("record deleted");
             break;
+        }
+    }
+
+    private void checkTableName(String tableName) {
+        if(!isTableExist(tableName)){
+            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
         }
     }
 
