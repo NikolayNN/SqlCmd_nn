@@ -488,8 +488,9 @@ public class IntegrationTest {
                 "Input your command or 'help'\n" +
                 "Connect to the data base 'test729451' successful!\n" +
                 "Input your command or 'help'\n" +
-                "Are you sure clear table 'wrongTableName'? (Y/N)\n" +
-                "ERROR. check table name\n" +
+                "ERROR. The table 'wrongTableName' isn't exist. Available tables [users]\n" +
+                "Input your command or 'help'\n" +
+                "The command doesn't exist\n" +
                 "Input your command or 'help'\n" +
                 "Connection to data base was closed\n" +
                 "Goodbye\n";
@@ -526,6 +527,7 @@ public class IntegrationTest {
     @Test
     public void dropTableConfirmN(){
         in.add(COMMAND_CONNECT_SERVER);
+        in.add(COMMAND_CONECT_DATABASE);
         in.add(Command.DROP_TABLE + Command.SEPARATOR_TO_STRING + testDB.getTableName());
         in.add("n");
         in.add(Command.EXIT);
@@ -536,9 +538,12 @@ public class IntegrationTest {
                 "Input your command or 'help'\n" +
                 "Connect to the server successful!\n" +
                 "Input your command or 'help'\n" +
+                "Connect to the data base 'test729451' successful!\n" +
+                "Input your command or 'help'\n" +
                 "Are you sure delete table 'users'? (Y/N)\n" +
                 "Canceled\n" +
                 "Input your command or 'help'\n" +
+                "Connection to data base was closed\n" +
                 "Goodbye\n";
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
     }

@@ -27,11 +27,17 @@ public class CreateTable extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        checkTableName(tableName);
+        checkName(tableName);
         List<CellInfo> cellInfos = createCellInfos(view);
         store.createTable(tableName, cellInfos);
         view.writeln("table '" + tableName + "' added");
         view.writeln(cellInfos.toString());
+    }
+
+    private void checkName(String tableName) {
+        if(isTableExist(tableName)){
+            throw new RuntimeException("ERROR. table '" + tableName + "'" + " is already exist.");
+        }
     }
 
     private List<CellInfo> createCellInfos(View view) {

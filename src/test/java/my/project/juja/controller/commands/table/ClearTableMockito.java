@@ -10,6 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -21,21 +23,24 @@ public class ClearTableMockito {
     private Storeable store;
     private View view;
     private Connection connection;
-
+    private String tableName = "table";
+    private Set<String> availableTables;
     @Before
     public void setup(){
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
+        availableTables = new HashSet<>();
+        availableTables.add(tableName);
     }
 
     @Test
     public void clearTableWithValidParameter(){
         //given
-        String tableName = "table";
         String commandString = Command.CLEAR_TABLE + Command.SEPARATOR + tableName;
         Command command = new ClearTable(store, view);
         command.setup(commandString);
+        Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("y");
         //when

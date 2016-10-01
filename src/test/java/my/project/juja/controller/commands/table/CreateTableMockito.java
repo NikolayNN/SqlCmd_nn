@@ -10,6 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeast;
@@ -22,6 +24,7 @@ public class CreateTableMockito {
     private Storeable store;
     private View view;
     private Connection connection;
+    Set<String> availableTables;
 
 
     @Before
@@ -29,7 +32,6 @@ public class CreateTableMockito {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
-
     }
 
     @Test
