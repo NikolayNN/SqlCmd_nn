@@ -36,19 +36,19 @@ public class DeleteRecordMockito {
         command = new DeleteRecord(store, view);
         spyCommand = Mockito.spy(command);
     }
-    @Ignore
+
     @Test
     public void testNormal(){
         //given
-        String where = "id=1";
+        String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.DELETE_RECORD + Command.SEPARATOR + testTable.getTableName();
         spyCommand.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getCellInfos());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
-        Mockito.when(spyCommand.createWhere(view, testTable.getCellInfos())).thenReturn(where);
-        Mockito.when(view.read()).thenReturn("y");
-        //when
+        Mockito.when(view.read()).thenReturn("n")
+                .thenReturn(where)
+                .thenReturn("y");
         spyCommand.perform();
         //then
         verify(store, atLeast(1)).deleteRecord(testTable.getTableName(),where);
