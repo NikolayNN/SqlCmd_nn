@@ -8,6 +8,7 @@ import my.project.juja.view.View;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nikol on 9/21/2016.
@@ -26,10 +27,17 @@ public class CreateTable extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
+        checkTableName(tableName);
         List<CellInfo> cellInfos = createCellInfos(view);
         store.createTable(tableName, cellInfos);
         view.writeln("table '" + tableName + "' added");
         view.writeln(cellInfos.toString());
+    }
+
+    private void checkTableName(String tableName) {
+        if(isTableExist(tableName)){
+            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " is already exist.");
+        }
     }
 
     private List<CellInfo> createCellInfos(View view) {

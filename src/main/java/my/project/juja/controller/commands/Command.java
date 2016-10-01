@@ -6,6 +6,7 @@ import my.project.juja.testutils.WhereConstructor;
 import my.project.juja.view.View;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nikol on 4/12/2016.
@@ -91,6 +92,15 @@ public abstract class Command {
         WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
         whereConstructor.create();
         return whereConstructor.toString();
+    }
+
+    public boolean isTableExist(String tableName) {
+        Set<String> existingTables = store.getTableList();
+        if(existingTables.contains(tableName)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public abstract void perform();
