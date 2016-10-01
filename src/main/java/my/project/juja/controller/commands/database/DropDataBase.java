@@ -20,7 +20,7 @@ public class DropDataBase extends Command {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String dataBaseName = parametrs[0];
         while (true) {
-            if (confirmCommand("delete " + dataBaseName)) {
+            if (confirmCommand("Are you sure delete " + dataBaseName + "? (Y/N)")) {
                 store.dropDataBase(dataBaseName);
                 break;
             }

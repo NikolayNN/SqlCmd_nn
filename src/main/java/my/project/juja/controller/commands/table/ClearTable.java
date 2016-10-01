@@ -20,7 +20,7 @@ public class ClearTable extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, countParameters);
         String tableName = parametrs[0];
-        confirmCommand("clear table '" + tableName + "'");
+        confirmCommand("Are you sure clear table '" +tableName + "'? (Y/N)");
         store.clearTable(tableName);
         view.writeln(tableName + " has been cleared");
     }

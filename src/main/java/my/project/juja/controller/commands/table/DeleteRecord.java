@@ -25,7 +25,7 @@ public class DeleteRecord extends Command {
             String where = createWhere(view, store.getColumnInformation(tableName));
             Table table = store.getTableData(tableName, where);
             view.writeln(table.toString());
-            confirmCommand("delete this records");
+            confirmCommand("Are you sure delete this records? (Y/N)");
             store.deleteRecord(tableName, where);
             view.writeln("record deleted");
             break;

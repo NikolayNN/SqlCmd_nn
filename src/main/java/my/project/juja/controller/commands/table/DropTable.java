@@ -19,7 +19,7 @@ public class DropTable extends Command {
     public void perform() {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        if (confirmCommand("delete table '" + tableName + "'")) {
+        if (confirmCommand("Are you sure delete table '" + tableName + "'? (Y/N)")) {
             store.dropTable(tableName);
         }
         view.writeln("table '" + tableName + "'" + " deleted");

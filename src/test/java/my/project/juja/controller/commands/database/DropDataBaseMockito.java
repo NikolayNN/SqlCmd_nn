@@ -1,7 +1,9 @@
 package my.project.juja.controller.commands.database;
 
 import my.project.juja.controller.commands.Command;
+import my.project.juja.controller.commands.utils.JujaUtilsTest;
 import my.project.juja.model.Storeable;
+import my.project.juja.utilsForTest.TestUtils;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +50,8 @@ public class DropDataBaseMockito {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(2)).writeln(captor.capture());
-        assertEquals("[Are you sure delete dbName? (Y/N), data base 'dbName' deleted]", captor.getAllValues().toString());
+        assertEquals("Are you sure delete dbName? (Y/N)\n" +
+                "data base 'dbName' deleted\n", TestUtils.getString(captor));
     }
 
     @Test
@@ -63,6 +66,9 @@ public class DropDataBaseMockito {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeast(2)).writeln(captor.capture());
-        assertEquals("[Are you sure delete dbName? (Y/N), wrong input, Are you sure delete dbName? (Y/N), data base 'dbName' deleted]", captor.getAllValues().toString());
+        assertEquals("Are you sure delete dbName? (Y/N)\n" +
+                "wrong input\n" +
+                "Are you sure delete dbName? (Y/N)\n" +
+                "data base 'dbName' deleted\n", TestUtils.getString(captor));
     }
 }

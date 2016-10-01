@@ -25,7 +25,7 @@ public class UpdateRecord extends Command {
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
         String where = createWhere(view, store.getColumnInformation(tableName));
-        Table table = getTableToDelete(tableName, where);
+        Table table = getTableToUpdate(tableName, where);
         view.writeln(table.toString());
         table.addRow(new Row(table.getCellInfos()));
         while (true) {
@@ -48,7 +48,7 @@ public class UpdateRecord extends Command {
         }
     }
 
-    private Table getTableToDelete(String tableName, String where) {
+    private Table getTableToUpdate(String tableName, String where) {
         Table table;
         try {
             table = store.getTableData(tableName, where);

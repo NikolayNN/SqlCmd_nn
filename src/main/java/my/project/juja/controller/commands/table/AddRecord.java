@@ -28,8 +28,8 @@ public class AddRecord extends Command {
         Row row = new Row(table.getCellInfos());
         while (true) {
             fillRow(table, row);
+            table.addRow(row);
             try {
-                table.addRow(row);
                 store.addRecord(table);
                 break;
             } catch (SQLException ex) {

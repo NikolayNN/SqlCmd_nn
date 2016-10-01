@@ -65,7 +65,7 @@ public abstract class Command {
 
     protected boolean confirmCommand (String message) {
         while (true) {
-            view.writeln("Are you sure " + message + "? (Y/N)");
+            view.writeln(message);
             String confirm = view.read().trim();
             if (confirm.equalsIgnoreCase("n")) {
                 throw new RuntimeException("Canceled");

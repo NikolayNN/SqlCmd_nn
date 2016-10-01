@@ -6,6 +6,7 @@ import my.project.juja.model.table.Table;
 import my.project.juja.utilsForTest.TestTable;
 import my.project.juja.view.View;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -35,7 +36,7 @@ public class DeleteRecordMockito {
         command = new DeleteRecord(store, view);
         spyCommand = Mockito.spy(command);
     }
-
+    @Ignore
     @Test
     public void testNormal(){
         //given
