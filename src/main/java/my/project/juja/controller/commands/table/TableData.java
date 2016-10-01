@@ -21,6 +21,7 @@ public class TableData extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
+
         Table table = store.getTableData(tableName);
         view.writeln(table.toString());
     }

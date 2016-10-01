@@ -33,11 +33,6 @@ public class DeleteRecord extends Command {
         }
     }
 
-    private void checkTableName(String tableName) {
-        if(!isTableExist(tableName)){
-            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
-        }
-    }
 
     @Override
     public String getName() {

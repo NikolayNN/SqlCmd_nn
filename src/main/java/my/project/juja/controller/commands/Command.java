@@ -103,6 +103,12 @@ public abstract class Command {
         }
     }
 
+    public void checkTableName(String tableName){
+        if(!isTableExist(tableName)){
+            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
+        }
+    }
+
     public abstract void perform();
 
     public abstract String getName();

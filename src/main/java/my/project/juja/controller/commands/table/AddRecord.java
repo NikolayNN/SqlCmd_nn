@@ -41,11 +41,6 @@ public class AddRecord extends Command {
         view.writeln(table.toString());
     }
 
-    private void checkTableName(String tableName) {
-        if(!isTableExist(tableName)){
-            throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
-        }
-    }
 
     private void fillRow(Table table, Row row) {
         int i = 0;
