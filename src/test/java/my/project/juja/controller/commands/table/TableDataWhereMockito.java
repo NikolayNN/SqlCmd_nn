@@ -23,7 +23,6 @@ public class TableDataWhereMockito {
     private View view;
     private Connection connection;
     private Table testTable;
-    private Command spyCommand;
     private Command command;
 
     @Before
@@ -33,42 +32,24 @@ public class TableDataWhereMockito {
         connection = Mockito.mock(Connection.class);
         testTable = new TestTable().getTable();
         command = new TableDataWhere(store, view);
-        spyCommand = Mockito.spy(command);
     }
-    @Ignore
+
     @Test
     public void testNormal(){
         //given
-        String where = "id=1";
-        String commandString = Command.TABLE_DATA + Command.SEPARATOR + testTable.getTableName();
-        spyCommand.setup(commandString);
+        String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
+        String commandString = Command.TABLE_DATA + Command.SEPARATOR_TO_STRING + testTable.getTableName();
+        command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getCellInfos());
         Mockito.when(store.getTableData(testTable.getTableName(), where)).thenReturn(testTable);
-        Mockito.when(spyCommand.createWhere(view, testTable.getCellInfos())).thenReturn(where);
-        Mockito.when(view.read()).thenReturn("y");
+        Mockito.when(view.read()).thenReturn("n")
+                .thenReturn(where);
         //when
-        spyCommand.perform();
+        command.perform();
         //then
         verify(store, atLeast(1)).getTableData(testTable.getTableName(), where);
 
     }
-    @Ignore
-    @Test
-    public void testException(){
-        //given
-        String where = "id=1";
-        String commandString = Command.TABLE_DATA + Command.SEPARATOR + testTable.getTableName();
-        spyCommand.setup(commandString);
-        Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
-        Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getCellInfos());
-        Mockito.when(store.getTableData(testTable.getTableName(), where)).thenThrow(RuntimeException.class).thenReturn(testTable);
-        Mockito.when(spyCommand.createWhere(view, testTable.getCellInfos())).thenReturn(where);
-        Mockito.when(view.read()).thenReturn("y");
-        //when
-        spyCommand.perform();
-        //then
-        verify(store, atLeast(1)).getTableData(testTable.getTableName(), where);
-
+    
     }
-}

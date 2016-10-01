@@ -24,7 +24,6 @@ public class TableDataWhere extends Command {
         isConnectedDataBase();
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
-        List<CellInfo> cellInfos = store.getColumnInformation(tableName);
         while (true) {
             try {
                 String where = createWhere(view, store.getColumnInformation(tableName));
