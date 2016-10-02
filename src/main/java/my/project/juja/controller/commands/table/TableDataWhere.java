@@ -1,5 +1,6 @@
 package my.project.juja.controller.commands.table;
 
+import com.sun.xml.internal.bind.v2.runtime.Name;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.CellInfo;
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by Nikol on 9/23/2016.
  */
 public class TableDataWhere extends Command {
-    public static final String name = Command.TABLE_DATA_WHERE;
+    public static final String NAME = Command.TABLE_DATA_WHERE;
     private static final int EXPECTED_COUNT_PARAMETERS = 1;
 
     public TableDataWhere(Storeable store, View view) {
@@ -39,6 +40,6 @@ public class TableDataWhere extends Command {
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 }
