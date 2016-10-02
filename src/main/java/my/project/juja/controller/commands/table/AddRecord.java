@@ -22,8 +22,8 @@ public class AddRecord extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
-        String tableName = parametrs[0];
+        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
+        String tableName = commandParametrs[0];
         checkTableName(tableName);
         Table table = new Table(tableName, store.getColumnInformation(tableName));
         Row row = new Row(table.getTableHeader());

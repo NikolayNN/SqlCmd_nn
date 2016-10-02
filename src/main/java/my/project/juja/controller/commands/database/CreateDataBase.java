@@ -17,8 +17,8 @@ public class CreateDataBase extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
-        String dataBaseName = parametrs[0];
+        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
+        String dataBaseName = commandParametrs[0];
         store.createDataBase(dataBaseName);
         view.writeln("data base '" + dataBaseName + "' created.");
     }

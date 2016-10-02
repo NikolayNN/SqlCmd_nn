@@ -21,8 +21,8 @@ public class UpdateRecord extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(parametrs, COUNT_PARAMETERS);
-        String tableName = parametrs[0];
+        checkCountParameters(commandParametrs, COUNT_PARAMETERS);
+        String tableName = commandParametrs[0];
         checkTableName(tableName);
         String where = createWhere(view, store.getColumnInformation(tableName));
         Table table = getTableToUpdate(tableName, where);

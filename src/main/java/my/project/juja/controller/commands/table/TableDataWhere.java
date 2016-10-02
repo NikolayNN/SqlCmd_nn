@@ -1,13 +1,9 @@
 package my.project.juja.controller.commands.table;
 
-import com.sun.xml.internal.bind.v2.runtime.Name;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.Storeable;
-import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Table;
 import my.project.juja.view.View;
-
-import java.util.List;
 
 /**
  * Created by Nikol on 9/23/2016.
@@ -23,8 +19,8 @@ public class TableDataWhere extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
-        String tableName = parametrs[0];
+        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
+        String tableName = commandParametrs[0];
         checkTableName(tableName);
         while (true) {
             try {

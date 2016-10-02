@@ -17,7 +17,7 @@ public class DisconnectDataBase extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
+        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
         String dbName = store.disconectDataBase();
         view.writeln("Data base '" + dbName + "' disconnected.");
     }
