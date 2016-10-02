@@ -8,7 +8,6 @@ import my.project.juja.view.View;
  * Created by Nikol on 9/20/2016.
  */
 public class DisconnectDataBase extends Command {
-
     public static final String NAME = Command.DISCONECT_DATA_BASE;
     private static final int EXPECTED_COUNT_PARAMETERS = 0;
 

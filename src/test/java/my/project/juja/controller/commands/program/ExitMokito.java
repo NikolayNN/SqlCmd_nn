@@ -26,14 +26,14 @@ public class ExitMokito {
     private Connection connection;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
     }
 
     @Test
-    public void test(){
+    public void test() {
         //given
         Command command = new Exit(store, view);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);

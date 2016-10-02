@@ -46,16 +46,16 @@ public class CellInfo {
         this.length = length;
     }
 
-    public String getCellInfoSQL(){
+    public String getCellInfoSQL() {
         StringBuilder result = new StringBuilder();
         result.append(columnName);
         result.append(" ");
         result.append(type);
-        if(length != 0){
+        if (length != 0) {
             result.append("(" + length + ")");
         }
         result.append(" ");
-        if(canBeNull == false){
+        if (canBeNull == false) {
             result.append("NOT NULL");
         }
         return result.toString();

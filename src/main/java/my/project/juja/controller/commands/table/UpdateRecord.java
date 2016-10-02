@@ -11,7 +11,6 @@ import my.project.juja.view.View;
  * Created by Nikol on 8/20/2016.
  */
 public class UpdateRecord extends Command {
-
     private static final String NAME = Command.UPDATE_TABLE;
     private static final int COUNT_PARAMETERS = 1;
 

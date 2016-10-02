@@ -23,15 +23,15 @@ public class TableListMockito {
     private View view;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
     }
 
     @Test
-    public void test(){
+    public void test() {
         //given
-        Command command = new TableList(store,view);
+        Command command = new TableList(store, view);
         Set<String> tableList = new LinkedHashSet<>();
         tableList.add("TestTable1");
         tableList.add("TestTable2");

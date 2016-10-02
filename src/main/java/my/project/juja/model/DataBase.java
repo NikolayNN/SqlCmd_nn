@@ -4,7 +4,7 @@ import my.project.juja.model.table.Cell;
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.model.table.Row;
 import my.project.juja.model.table.Table;
-import my.project.juja.testutils.JujaUtils;
+import my.project.juja.utils.JujaUtils;
 
 import java.sql.*;
 import java.util.*;
@@ -69,8 +69,8 @@ public class DataBase implements Storeable {
     public String disconectDataBase() {
         checkConnectionToServer();
         try {
-        checkConnectionToDataBase();
-        }catch (RuntimeException ex){
+            checkConnectionToDataBase();
+        } catch (RuntimeException ex) {
             return "";
         }
         String dbName = dataBaseName;
@@ -205,26 +205,26 @@ public class DataBase implements Storeable {
         checkConnectionToServer();
         checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
-        try{
-        String query = "SELECT * FROM " + tableName + " WHERE " + where;
-        Statement stmt = connectionDataBase.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        ResultSetMetaData rsmd = rs.getMetaData();
-        while (rs.next()) {
-            Row row = new Row(table.getTableHeader());
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                if (rs.getString(i) != null) {
-                    row.getCell(i - 1).setValue(rs.getString(i).trim(), false);
-                } else {
-                    row.getCell(i - 1).setValue("", false);
+        try {
+            String query = "SELECT * FROM " + tableName + " WHERE " + where;
+            Statement stmt = connectionDataBase.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while (rs.next()) {
+                Row row = new Row(table.getTableHeader());
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    if (rs.getString(i) != null) {
+                        row.getCell(i - 1).setValue(rs.getString(i).trim(), false);
+                    } else {
+                        row.getCell(i - 1).setValue("", false);
+                    }
                 }
+                table.addRow(row);
             }
-            table.addRow(row);
-        }
             stmt.close();
-        rs.close();
-        }catch (SQLException ex ){
-            throw  new RuntimeException(ex.getMessage());
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
         }
         return table;
     }

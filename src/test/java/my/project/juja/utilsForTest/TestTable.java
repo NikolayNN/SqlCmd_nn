@@ -22,18 +22,18 @@ public class TestTable {
         return table;
     }
 
-    private List<CellInfo> createCellInfos(){
+    private List<CellInfo> createCellInfos() {
         List<CellInfo> cellInfos = new ArrayList<>();
-        cellInfos.add(new CellInfo("id","integer", false, false, 0));
-        cellInfos.add(new CellInfo("firstName","text", false, false, 1));
-        cellInfos.add(new CellInfo("lastName","text", true, false, 2));
-        CellInfo column4 = new CellInfo("password","character", false, false, 3);
+        cellInfos.add(new CellInfo("id", "integer", false, false, 0));
+        cellInfos.add(new CellInfo("firstName", "text", false, false, 1));
+        cellInfos.add(new CellInfo("lastName", "text", true, false, 2));
+        CellInfo column4 = new CellInfo("password", "character", false, false, 3);
         column4.setLength(256);
         cellInfos.add(column4);
         return cellInfos;
     }
 
-    private Table createTable (){
+    private Table createTable() {
         List<CellInfo> cellInfos = createCellInfos();
         Table table = new Table("testTable174856", cellInfos);
         Row row1 = new Row(cellInfos);

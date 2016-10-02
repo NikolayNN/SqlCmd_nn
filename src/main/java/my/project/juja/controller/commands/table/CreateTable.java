@@ -35,7 +35,7 @@ public class CreateTable extends Command {
     }
 
     private void checkName(String tableName) {
-        if(isTableExist(tableName)){
+        if (isTableExist(tableName)) {
             throw new RuntimeException("ERROR. table '" + tableName + "'" + " is already exist.");
         }
     }
@@ -44,24 +44,26 @@ public class CreateTable extends Command {
         List<CellInfo> cellInfos = new ArrayList<>();
         int columnIndex = 0;
         String command;
-        main:while (true) {
+        main:
+        while (true) {
             CellInfo cellInfo = createColumnInfo(view, cellInfos, columnIndex++);
             cellInfos.add(cellInfo);
-            second:while (true){
-                    view.writeln("input 'save' to save the table, input 'add' to add one more column, input 'cancel' to cancel");
-                    command = view.read();
-                    if (command.equalsIgnoreCase("save")) {
-                        break main;
-                    }
-                    if (command.equalsIgnoreCase("cancel")) {
-                        throw new RuntimeException("create table cancelled");
-                    }
-                    if (command.equalsIgnoreCase("add")) {
-                        continue main;
-                    } else {
-                        view.writeln("You input wrong command '" + command + "'. Available comands: 'save', 'add', 'cancel' ");
-                        continue second;
-                    }
+            second:
+            while (true) {
+                view.writeln("input 'save' to save the table, input 'add' to add one more column, input 'cancel' to cancel");
+                command = view.read();
+                if (command.equalsIgnoreCase("save")) {
+                    break main;
+                }
+                if (command.equalsIgnoreCase("cancel")) {
+                    throw new RuntimeException("create table cancelled");
+                }
+                if (command.equalsIgnoreCase("add")) {
+                    continue main;
+                } else {
+                    view.writeln("You input wrong command '" + command + "'. Available comands: 'save', 'add', 'cancel' ");
+                    continue second;
+                }
             }
         }
         return cellInfos;

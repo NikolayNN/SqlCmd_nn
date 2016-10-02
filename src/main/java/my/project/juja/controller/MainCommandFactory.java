@@ -23,7 +23,7 @@ public class MainCommandFactory implements CommandFactory {
         supportedCommands = new Command[]{
                 new ConnectServer(store, view),
                 new ConnectDataBase(store, view),
-                new DataBasesNames(store,view),
+                new DataBasesNames(store, view),
                 new DisconnectDataBase(store, view),
                 new CurrentDataBaseName(store, view),
                 new CreateDataBase(store, view),
@@ -38,7 +38,7 @@ public class MainCommandFactory implements CommandFactory {
                 new ClearTable(store, view),
                 new UpdateRecord(store, view),
                 new Help(view),
-                new AddRecord(store,view)
+                new AddRecord(store, view)
         };
 
     }

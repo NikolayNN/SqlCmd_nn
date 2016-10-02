@@ -25,8 +25,9 @@ public class ClearTableMockito {
     private Connection connection;
     private String tableName = "table";
     private Set<String> availableTables;
+
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
@@ -35,7 +36,7 @@ public class ClearTableMockito {
     }
 
     @Test
-    public void clearTableWithValidParameter(){
+    public void clearTableWithValidParameter() {
         //given
         String commandString = Command.CLEAR_TABLE + Command.SEPARATOR + tableName;
         Command command = new ClearTable(store, view);
@@ -50,10 +51,10 @@ public class ClearTableMockito {
         verify(view, atLeast(1)).writeln(captor.capture());
         assertEquals("Are you sure clear table 'table'? (Y/N)\n" +
                 "table has been cleared\n", TestUtils.getString(captor));
-}
+    }
 
     @Test
-    public void clearTableWithoutParameter(){
+    public void clearTableWithoutParameter() {
         //given
         String commandString = Command.CLEAR_TABLE;
         Command command = new ClearTable(store, view);
@@ -62,9 +63,9 @@ public class ClearTableMockito {
         //when
         try {
             command.perform();
-        }catch (RuntimeException ex){
+        } catch (RuntimeException ex) {
             //then
-            assertEquals("ERROR. Wrong count parameters expected 1, but found 0",ex.getMessage());
+            assertEquals("ERROR. Wrong count parameters expected 1, but found 0", ex.getMessage());
         }
     }
 }

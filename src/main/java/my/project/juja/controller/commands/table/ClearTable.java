@@ -21,7 +21,7 @@ public class ClearTable extends Command {
         checkCountParameters(parametrs, countParameters);
         String tableName = parametrs[0];
         checkTableName(tableName);
-        confirmCommand("Are you sure clear table '" +tableName + "'? (Y/N)");
+        confirmCommand("Are you sure clear table '" + tableName + "'? (Y/N)");
         store.clearTable(tableName);
         view.writeln(tableName + " has been cleared");
     }

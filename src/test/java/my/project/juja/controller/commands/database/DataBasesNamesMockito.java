@@ -27,14 +27,14 @@ public class DataBasesNamesMockito {
     private Connection connection;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
     }
 
     @Test
-    public void dataBasesNamesNormal(){
+    public void dataBasesNamesNormal() {
         //given
         String commandString = Command.DATA_BASES_NAMES;
         Command command = new DataBasesNames(store, view);

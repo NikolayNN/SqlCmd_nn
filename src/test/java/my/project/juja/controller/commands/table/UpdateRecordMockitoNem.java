@@ -5,7 +5,7 @@ import my.project.juja.model.Storeable;
 import my.project.juja.model.table.Table;
 import my.project.juja.utilsForTest.TestTable;
 import my.project.juja.utilsForTest.TestUtils;
-import my.project.juja.testutils.WhereConstructor;
+import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;

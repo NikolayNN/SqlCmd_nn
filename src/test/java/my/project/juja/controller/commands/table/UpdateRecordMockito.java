@@ -29,7 +29,7 @@ public class UpdateRecordMockito {
     private Set<String> availableTables;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
@@ -41,7 +41,7 @@ public class UpdateRecordMockito {
     }
 
     @Test
-    public void testNormal(){
+    public void testNormal() {
         //given
         String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + testTable.getTableName();
@@ -60,7 +60,7 @@ public class UpdateRecordMockito {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testException(){
+    public void testException() {
         //given
         String where = "id=1";
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + testTable.getTableName();

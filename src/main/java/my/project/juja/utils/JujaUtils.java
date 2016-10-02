@@ -1,8 +1,7 @@
-package my.project.juja.testutils;
+package my.project.juja.utils;
 
 import my.project.juja.view.View;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -47,19 +46,18 @@ public class JujaUtils {
         }
     }
 
-    public static boolean confirm (String command, View view) {
+    public static boolean confirm(String command, View view) {
         while (true) {
-                if (command.equalsIgnoreCase("n")) {
-                    return false;
-                }
-                if (command.equalsIgnoreCase("y")) {
-                    return true;
-                } else {
-                   view.writeln("you can input 'y' or 'n', but you input '" + command + "'");
-                    view.writeln("(Y/N) ?");
-                    command = view.read();
-                }
-
+            if (command.equalsIgnoreCase("n")) {
+                return false;
+            }
+            if (command.equalsIgnoreCase("y")) {
+                return true;
+            } else {
+                view.writeln("you can input 'y' or 'n', but you input '" + command + "'");
+                view.writeln("(Y/N) ?");
+                command = view.read();
+            }
         }
     }
 }

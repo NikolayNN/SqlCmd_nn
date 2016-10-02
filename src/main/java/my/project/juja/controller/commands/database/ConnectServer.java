@@ -17,11 +17,11 @@ public class ConnectServer extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(parametrs,EXPECTED_COUNT_PARAMETERS);
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String serverUrl = parametrs[0];
         String login = parametrs[1];
         String password = parametrs[2];
-        store.connectToServer(serverUrl, login,password);
+        store.connectToServer(serverUrl, login, password);
         view.writeln("Connect to the server successful!");
     }
 

@@ -1,4 +1,4 @@
-package my.project.juja.testutils;
+package my.project.juja.utils;
 
 import my.project.juja.model.table.CellInfo;
 import my.project.juja.view.View;
@@ -14,8 +14,6 @@ public class WhereConstructor {
     View view;
     List<CellInfo> cellInfos;
     List<String> supportedSym;
-
-
     String where;
 
     {
@@ -36,7 +34,7 @@ public class WhereConstructor {
     public void create() {
         StringBuilder result = new StringBuilder();
         view.writeln("Do you like use where constructor? (Y/N)");
-        if(!JujaUtils.confirm(view.read(),view)){
+        if (!JujaUtils.confirm(view.read(), view)) {
             view.writeln("Input where for sql query");
             where = view.read();
             return;
@@ -50,7 +48,7 @@ public class WhereConstructor {
                 result.append(createConnection());
                 result.append(" ");
                 continue;
-            }else {
+            } else {
                 break;
             }
         }
@@ -81,7 +79,7 @@ public class WhereConstructor {
         return columnName;
     }
 
-    private boolean contains(String columnName){
+    private boolean contains(String columnName) {
         List<String> columnNames = new ArrayList<>();
         for (CellInfo cellInfo : cellInfos) {
             columnNames.add(cellInfo.getColumnName());
@@ -122,6 +120,5 @@ public class WhereConstructor {
                 continue;
             }
         }
-
     }
 }

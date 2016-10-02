@@ -90,7 +90,7 @@ public class Table {
         return result.toString();
     }
 
-    private int[] getMaxColumnsLengths(Table table){
+    private int[] getMaxColumnsLengths(Table table) {
         int[] result = new int[table.getColumnCount()];
         for (int i = 0; i < table.getColumnCount(); i++) {
             result[i] = getMaxLength(i);
@@ -109,7 +109,7 @@ public class Table {
         return max;
     }
 
-    private String addSymbol(String value, int maxLength, String symbol){
+    private String addSymbol(String value, int maxLength, String symbol) {
         int count = maxLength - value.length();
         StringBuilder result = new StringBuilder("");
         for (int i = 0; i < count; i++) {

@@ -28,14 +28,14 @@ public class CreateTableMockito {
 
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
     }
 
     @Test
-    public void testColumnCharacter(){
+    public void testColumnCharacter() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -62,7 +62,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testColumnNameWithSpace(){
+    public void testColumnNameWithSpace() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -93,7 +93,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testCancelCreateTable(){
+    public void testCancelCreateTable() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -105,10 +105,10 @@ public class CreateTableMockito {
                 .thenReturn("n")
                 .thenReturn("cancel");
         //when
-        String errorMessage ="";
+        String errorMessage = "";
         try {
             command.perform();
-        }catch (RuntimeException ex){
+        } catch (RuntimeException ex) {
             errorMessage = ex.getMessage();
         }
         //then
@@ -116,7 +116,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testCreateTableWithTwoColumns(){
+    public void testCreateTableWithTwoColumns() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -154,7 +154,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testCreateTableWrongConfirmThenSave(){
+    public void testCreateTableWrongConfirmThenSave() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -184,7 +184,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testInputWrongType(){
+    public void testInputWrongType() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -215,7 +215,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testAddNullableColumn(){
+    public void testAddNullableColumn() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -243,7 +243,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testColumnCharacterWithNotDefaultLength(){
+    public void testColumnCharacterWithNotDefaultLength() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -271,7 +271,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testColumnCharacterWithNotDefaultLengthAndWithWrongValue(){
+    public void testColumnCharacterWithNotDefaultLengthAndWithWrongValue() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -301,7 +301,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testCreateTableWrongConfirm(){
+    public void testCreateTableWrongConfirm() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -329,8 +329,9 @@ public class CreateTableMockito {
                 "table 'tableName' added\n" +
                 "[[name(character)]]\n", TestUtils.getString(captor));
     }
+
     @Test
-    public void testCreateColumnInteger(){
+    public void testCreateColumnInteger() {
         //given
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
@@ -355,7 +356,7 @@ public class CreateTableMockito {
     }
 
     @Test
-    public void testGetName(){
+    public void testGetName() {
         //given
         Command command = new CreateTable(store, view);
         //when

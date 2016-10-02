@@ -66,17 +66,16 @@ public class DataBaseTest {
         }
     }
 
-   @Test
-   public void getTableData(){
-       Table actualTable = dataBase.getTableData(testDB.getTableName(), "id>=2");
-       assertEquals("users\n" +
-               "-----------------------------------------\n" +
-               "id | firstname | lastname | password   | \n" +
-               "-----------------------------------------\n" +
-               "2  | Kirril    | Ivanov   | 0000       | \n" +
-               "3  | Pasha     | Sidorov  | 157862asdw | \n",actualTable.toString());
-   }
-
+    @Test
+    public void getTableData() {
+        Table actualTable = dataBase.getTableData(testDB.getTableName(), "id>=2");
+        assertEquals("users\n" +
+                "-----------------------------------------\n" +
+                "id | firstname | lastname | password   | \n" +
+                "-----------------------------------------\n" +
+                "2  | Kirril    | Ivanov   | 0000       | \n" +
+                "3  | Pasha     | Sidorov  | 157862asdw | \n", actualTable.toString());
+    }
 
 
     @Test
@@ -86,48 +85,48 @@ public class DataBaseTest {
     }
 
     @Test
-    public void testGetDataBasesNames(){
+    public void testGetDataBasesNames() {
         Set<String> names = dataBase.getDataBasesNames();
-        if(names.contains(testDB.getDbName())){
+        if (names.contains(testDB.getDbName())) {
             assert (true);
-        }else{
+        } else {
             assert (false);
         }
     }
 
     @Test
-    public void testgetNameCurrentDataBase(){
+    public void testgetNameCurrentDataBase() {
         String actualDbName = dataBase.getNameCurrentDataBase();
         assertEquals(testDB.getDbName(), actualDbName);
     }
 
-    @Test (expected = RuntimeException.class)
-    public void dropDataBaseWithoutDisconect(){
+    @Test(expected = RuntimeException.class)
+    public void dropDataBaseWithoutDisconect() {
         dataBase.dropDataBase(testDB.getDbName());
     }
 
     @Test(expected = RuntimeException.class)
-    public void dropDataBaseWithWrongDataBaseName(){
+    public void dropDataBaseWithWrongDataBaseName() {
         dataBase.dropDataBase("wrongDataBaseName");
     }
 
     @Test(expected = RuntimeException.class)
-    public void createDataBaseWithWrongName(){
+    public void createDataBaseWithWrongName() {
         dataBase.createDataBase("wrong data base name");
     }
 
     @Test(expected = RuntimeException.class)
-    public void createTableWithWrongName(){
+    public void createTableWithWrongName() {
         dataBase.createTable("Wrong table name", testDB.getTable().getTableHeader());
     }
 
     @Test(expected = RuntimeException.class)
-    public void dropTableWithWrongName(){
+    public void dropTableWithWrongName() {
         dataBase.dropTable("Wrong table name");
     }
 
     @Test
-    public void testdeleteRecord(){
+    public void testdeleteRecord() {
         dataBase.deleteRecord(testDB.getTableName(), "id=1");
         Table actualTable = dataBase.getTableData(testDB.getTableName());
         assertEquals("users\n" +
@@ -139,10 +138,9 @@ public class DataBaseTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testDeleteRecordWithWrongTableName(){
+    public void testDeleteRecordWithWrongTableName() {
         dataBase.deleteRecord("wrongTableName55151754", "id=1");
     }
-
 
 
     @Test

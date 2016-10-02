@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class CellTest {
 
-
     @Test
     public void test() {
 //        given

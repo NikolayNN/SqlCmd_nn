@@ -2,7 +2,7 @@ package my.project.juja.controller.commands;
 
 import my.project.juja.model.Storeable;
 import my.project.juja.model.table.CellInfo;
-import my.project.juja.testutils.WhereConstructor;
+import my.project.juja.utils.WhereConstructor;
 import my.project.juja.view.View;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public abstract class Command {
         }
     }
 
-    protected boolean confirmCommand (String message) {
+    protected boolean confirmCommand(String message) {
         while (true) {
             view.writeln(message);
             String confirm = view.read().trim();
@@ -80,15 +80,15 @@ public abstract class Command {
         }
     }
 
-    protected boolean isConnectedDataBase(){
-        if(store.getConnectToDataBase() != null){
+    protected boolean isConnectedDataBase() {
+        if (store.getConnectToDataBase() != null) {
             return true;
-        }else{
+        } else {
             throw new RuntimeException("ERROR. at first connect to database");
         }
     }
 
-    public String createWhere(View view, List<CellInfo> cellInfos){
+    public String createWhere(View view, List<CellInfo> cellInfos) {
         WhereConstructor whereConstructor = new WhereConstructor(view, cellInfos);
         whereConstructor.create();
         return whereConstructor.toString();
@@ -96,15 +96,15 @@ public abstract class Command {
 
     public boolean isTableExist(String tableName) {
         Set<String> existingTables = store.getTableList();
-        if(existingTables.contains(tableName)){
+        if (existingTables.contains(tableName)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void checkTableName(String tableName){
-        if(!isTableExist(tableName)){
+    public void checkTableName(String tableName) {
+        if (!isTableExist(tableName)) {
             throw new RuntimeException("ERROR. The table '" + tableName + "'" + " isn't exist. Available tables " + store.getTableList());
         }
     }

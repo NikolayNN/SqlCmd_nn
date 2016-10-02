@@ -17,7 +17,7 @@ public class CurrentDataBaseName extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(parametrs,EXPECTED_COUNT_PARAMETERS);
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         view.writeln("[" + store.getNameCurrentDataBase() + "]");
     }
 

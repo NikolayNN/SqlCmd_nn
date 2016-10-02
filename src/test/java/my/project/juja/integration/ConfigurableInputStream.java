@@ -28,7 +28,7 @@ public class ConfigurableInputStream extends InputStream {
             endLine = true;
         }
 
-         return (int)ch;
+        return (int) ch;
     }
 
     @Override
@@ -37,10 +37,10 @@ public class ConfigurableInputStream extends InputStream {
         endLine = false;
     }
 
-    public void add (String line){
-        if(this.line == null) {
+    public void add(String line) {
+        if (this.line == null) {
             this.line = line + "\n";
-        }else {
+        } else {
             this.line += line + "\n";
         }
     }

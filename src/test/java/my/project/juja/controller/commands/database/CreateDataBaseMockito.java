@@ -21,16 +21,16 @@ public class CreateDataBaseMockito {
     private View view;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
     }
 
     @Test
-    public void test(){
+    public void test() {
         //given
         String commandString = Command.CREATE_DATA_BASE + Command.SEPARATOR + "dbName";
-        Command command =new CreateDataBase(store, view);
+        Command command = new CreateDataBase(store, view);
         command.setup(commandString);
         //when
         command.perform();

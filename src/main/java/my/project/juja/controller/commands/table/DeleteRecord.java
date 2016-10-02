@@ -22,7 +22,7 @@ public class DeleteRecord extends Command {
         checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String tableName = parametrs[0];
         checkTableName(tableName);
-        while (true){
+        while (true) {
             String where = createWhere(view, store.getColumnInformation(tableName));
             Table table = store.getTableData(tableName, where);
             view.writeln(table.toString());

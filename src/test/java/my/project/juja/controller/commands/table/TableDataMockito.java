@@ -24,7 +24,7 @@ public class TableDataMockito {
     private Command command;
 
     @Before
-    public void setup(){
+    public void setup() {
         store = Mockito.mock(Storeable.class);
         view = Mockito.mock(View.class);
         connection = Mockito.mock(Connection.class);
@@ -32,7 +32,7 @@ public class TableDataMockito {
     }
 
     @Test
-    public void tableData(){
+    public void tableData() {
         //given
         String tableName = "table";
         String commandString = Command.TABLE_DATA + Command.SEPARATOR + tableName;
