@@ -18,8 +18,8 @@ public class DropTable extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
-        String tableName = commandParametrs[0];
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
+        String tableName = parametrs[0];
         checkTableName(tableName);
         if (confirmCommand("Are you sure delete table '" + tableName + "'? (Y/N)")) {
             store.dropTable(tableName);

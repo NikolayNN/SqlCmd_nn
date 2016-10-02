@@ -34,7 +34,7 @@ public abstract class Command {
     public static final String TABLE_DATA_WHERE = "table-data-where";
     protected String command;
     protected int countParametrs;
-    protected String[] commandParametrs;
+    protected String[] parametrs;
     protected View view;
     protected Storeable store;
 
@@ -51,9 +51,9 @@ public abstract class Command {
         String[] splitedSource = source.split(SEPARATOR);
         this.command = splitedSource[0];
         this.countParametrs = splitedSource.length - 1;
-        this.commandParametrs = new String[countParametrs];
+        this.parametrs = new String[countParametrs];
         if (splitedSource.length > 1) {
-            System.arraycopy(splitedSource, 1, commandParametrs, 0, commandParametrs.length);
+            System.arraycopy(splitedSource, 1, parametrs, 0, parametrs.length);
         }
     }
 

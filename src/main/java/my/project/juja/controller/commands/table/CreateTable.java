@@ -24,8 +24,8 @@ public class CreateTable extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
-        String tableName = commandParametrs[0];
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
+        String tableName = parametrs[0];
         checkName(tableName);
         List<CellInfo> cellInfos = createCellInfos(view);
         store.createTable(tableName, cellInfos);

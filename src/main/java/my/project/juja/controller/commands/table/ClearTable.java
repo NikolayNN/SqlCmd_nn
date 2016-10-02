@@ -18,8 +18,8 @@ public class ClearTable extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(commandParametrs, countParameters);
-        String tableName = commandParametrs[0];
+        checkCountParameters(parametrs, countParameters);
+        String tableName = parametrs[0];
         checkTableName(tableName);
         confirmCommand("Are you sure clear table '" + tableName + "'? (Y/N)");
         store.clearTable(tableName);

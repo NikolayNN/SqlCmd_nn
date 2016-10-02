@@ -17,8 +17,8 @@ public class ConnectDataBase extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
-        String dbName = commandParametrs[0];
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
+        String dbName = parametrs[0];
         store.connectToDataBase(dbName);
         view.writeln("Connect to the data base '" + dbName + "' successful!");
     }

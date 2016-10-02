@@ -19,8 +19,8 @@ public class TableData extends Command {
     @Override
     public void perform() {
         isConnectedDataBase();
-        checkCountParameters(commandParametrs, COUNT_PARAMETERS);
-        String tableName = commandParametrs[0];
+        checkCountParameters(parametrs, COUNT_PARAMETERS);
+        String tableName = parametrs[0];
         Table table = store.getTableData(tableName);
         view.writeln(table.toString());
     }

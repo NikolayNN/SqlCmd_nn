@@ -17,8 +17,8 @@ public class DropDataBase extends Command {
 
     @Override
     public void perform() {
-        checkCountParameters(commandParametrs, EXPECTED_COUNT_PARAMETERS);
-        String dataBaseName = commandParametrs[0];
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
+        String dataBaseName = parametrs[0];
         while (true) {
             if (confirmCommand("Are you sure delete " + dataBaseName + "? (Y/N)")) {
                 store.dropDataBase(dataBaseName);
