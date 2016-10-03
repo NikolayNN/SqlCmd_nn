@@ -25,9 +25,7 @@ public class Help extends Command {
                         "\t * Example: '" + Command.CONNECTION_TO_SERVER + s + "localhost:5432" + s + "postgres" + s + "root'\n" +
                         Command.CONNECTION_TO_DB + "\n" +
                         "\t - Connect to database '" + Command.CONNECTION_TO_DB + s +
-                        "dbname" + s +
-                        "login" + s +
-                        "password'" + "\n" +
+                        "dbname'" + "\n" +
                         Command.DISCONECT_DATA_BASE + "\n" +
                         "\t - disonnect current database '" + Command.DISCONECT_DATA_BASE + "'" + "\n" +
                         Command.DATA_BASES_NAMES + "\n" +
