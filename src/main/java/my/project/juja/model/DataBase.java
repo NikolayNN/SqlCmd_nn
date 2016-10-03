@@ -364,7 +364,7 @@ public class DataBase implements Storeable {
     @Override
     public void deleteRecord(String tableName, String where) {
         checkConnectionToServer();
-        checkConnectionToServer();
+        checkConnectionToDataBase();
         try (Statement stmt = connectionDataBase.createStatement()) {
             String query = "DELETE FROM " + tableName + " WHERE " + where;
             stmt.executeUpdate(query);

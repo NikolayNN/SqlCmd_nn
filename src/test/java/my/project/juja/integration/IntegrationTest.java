@@ -75,7 +75,7 @@ public class IntegrationTest {
                 "\t - Connect to a server 'connect-server|serverUrl|login|password'\n" +
                 "\t * Example: 'connect-server|localhost:5432|postgres|root'\n" +
                 "connect-db\n" +
-                "\t - Connect to database 'connect-db|dbname|login|password'\n" +
+                "\t - Connect to database 'connect-db|dbname'\n" +
                 "disconnect-db\n" +
                 "\t - disonnect current database 'disconnect-db'\n" +
                 "list-db\n" +
