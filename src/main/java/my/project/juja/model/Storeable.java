@@ -28,7 +28,7 @@ public interface Storeable {
 
     void clearTable(String tableName);
 
-    void addRecord(Table table) throws SQLException;
+    void addRecord(Table table);
 
     Set<String> getTableList();
 

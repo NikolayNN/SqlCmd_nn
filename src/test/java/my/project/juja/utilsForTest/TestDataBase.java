@@ -66,11 +66,8 @@ public class TestDataBase {
         }
         table = createTable();
         store.createTable(tableName, table.getTableHeader());
-        try {
-            store.addRecord(table);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        store.addRecord(table);
+
         store.disconectDataBase();
     }
 

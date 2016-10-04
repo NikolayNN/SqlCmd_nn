@@ -33,7 +33,7 @@ public class AddRecord extends Command {
             try {
                 store.addRecord(table);
                 break;
-            } catch (SQLException ex) {
+            } catch (RuntimeException ex) {
                 view.writeln(ex.getMessage());
                 table = new Table(tableName, store.getColumnInformation(tableName));
                 row = new Row(table.getTableHeader());

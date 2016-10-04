@@ -44,7 +44,7 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public Connection getConnectToServer(){
+    public Connection getConnectToServer() {
         return connectionServer;
     }
 
@@ -128,33 +128,36 @@ public class DataBase implements Storeable {
     }
 
     @Override
-    public void addRecord(Table table) throws SQLException {
+    public void addRecord(Table table) {
         checkConnectionToServer();
         checkConnectionToDataBase();
         for (Row row : table.getRows()) {
             String columnNames = format(row.getColumnNamesNotNull(), "");
             String columnValues = format(row.getCellValuesNotNull(), "'");
-            Statement stmt = connectionDataBase.createStatement();
-            String query = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
-                    " VALUES (" + columnValues + ")";
-            stmt.executeUpdate(query);
-            stmt.close();
+            try (Statement stmt = connectionDataBase.createStatement()) {
+                String query = "INSERT INTO " + table.getTableName() + "(" + columnNames + ")" +
+                        " VALUES (" + columnValues + ")";
+                stmt.executeUpdate(query);
+                stmt.close();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex.getMessage());
+            }
         }
-
     }
 
-
     private String format(List<String> strings, String quoteType) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < strings.size(); i++) {
-            result += quoteType + strings.get(i) + quoteType;
+            result.append(quoteType)
+                    .append(strings.get(i))
+                    .append(quoteType);
             if (!(i == strings.size() - 1)) {
-                result += ",";
+                result.append(",");
             } else {
                 break;
             }
         }
-        return result;
+        return result.toString();
     }
 
     @Override
@@ -167,7 +170,6 @@ public class DataBase implements Storeable {
                 " WHERE table_schema='public'" +
                 " AND table_type='BASE TABLE';";
         try (Statement stmt = connectionDataBase.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-            Set<String> tables = new HashSet<>();
             while (rs.next()) {
                 result.add(rs.getString("table_name"));
             }
@@ -210,10 +212,9 @@ public class DataBase implements Storeable {
         checkConnectionToServer();
         checkConnectionToDataBase();
         Table table = new Table(tableName, getColumnInformation(tableName));
-        try {
-            String query = "SELECT * FROM " + tableName + " WHERE " + where;
-            Statement stmt = connectionDataBase.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+        String query = "SELECT * FROM " + tableName + " WHERE " + where;
+        try (Statement stmt = connectionDataBase.createStatement();
+            ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
                 Row row = new Row(table.getTableHeader());
@@ -226,8 +227,6 @@ public class DataBase implements Storeable {
                 }
                 table.addRow(row);
             }
-            stmt.close();
-            rs.close();
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

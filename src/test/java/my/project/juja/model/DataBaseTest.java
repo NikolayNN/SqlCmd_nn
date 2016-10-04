@@ -170,7 +170,7 @@ public class DataBaseTest {
         assertEquals(actualTable.toString(), expectedTable.toString());
     }
 
-    @Test(expected = SQLException.class)
+    @Test(expected = RuntimeException.class)
     public void testWrongTypeValue() throws SQLException {
         dataBase.clearTable(tableName);
         Table expectedTable = new Table(tableName, dataBase.getColumnInformation(tableName));
