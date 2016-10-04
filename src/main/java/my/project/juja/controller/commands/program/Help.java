@@ -47,9 +47,9 @@ public class Help extends Command {
                         Command.TABLE_DATA_WHERE + "\n" +
                         "\t - Show table rows with the condition WHERE '" + Command.TABLE_DATA_WHERE + s + "tableName'" + "\n" +
                         Command.ADD_RECORD + "\n" +
-                        "\t - Add record in the selectd table '" + Command.ADD_RECORD + s + "tableName'" + "\n" +
+                        "\t - Add record in the selected table '" + Command.ADD_RECORD + s + "tableName'" + "\n" +
                         Command.UPDATE_TABLE + "\n" +
-                        "\t - Update record in the selected table '" + Command.UPDATE_TABLE + s + "tableName" + s + "where'" + "\n" +
+                        "\t - Update record in the selected table '" + Command.UPDATE_TABLE + s + "tableName" + "\n" +
                         Command.CLEAR_TABLE + "\n" +
                         "\t - Clear selected table '" + Command.CLEAR_TABLE + s + "tableName'" + "\n" +
                         Command.EXIT + "\n" +
