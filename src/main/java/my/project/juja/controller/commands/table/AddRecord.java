@@ -35,6 +35,8 @@ public class AddRecord extends Command {
                 break;
             } catch (SQLException ex) {
                 view.writeln(ex.getMessage());
+                table = new Table(tableName, store.getColumnInformation(tableName));
+                row = new Row(table.getTableHeader());
             }
         }
         view.writeln("successful added");
