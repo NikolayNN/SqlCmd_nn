@@ -44,6 +44,11 @@ public class DataBase implements Storeable {
     }
 
     @Override
+    public Connection getConnectToServer(){
+        return connectionServer;
+    }
+
+    @Override
     public void connectToDataBase(String dbName) {
         try {
             Class.forName("org.postgresql.Driver");

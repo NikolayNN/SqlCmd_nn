@@ -80,6 +80,20 @@ public abstract class Command {
         }
     }
 
+    protected void checkConnection(){
+        isConnectedServer();
+        isConnectedDataBase();
+    }
+
+    protected boolean isConnectedServer() {
+        if (store.getConnectToServer() != null) {
+            return true;
+        } else {
+            throw new RuntimeException("ERROR. at first connect to server");
+        }
+    }
+
+
     protected boolean isConnectedDataBase() {
         if (store.getConnectToDataBase() != null) {
             return true;

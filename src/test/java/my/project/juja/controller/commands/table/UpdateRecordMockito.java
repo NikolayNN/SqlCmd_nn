@@ -46,6 +46,7 @@ public class UpdateRecordMockito {
         String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + testTable.getTableName();
         spyCommand.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("n")
                 .thenReturn(where);

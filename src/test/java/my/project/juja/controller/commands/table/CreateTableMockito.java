@@ -40,6 +40,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -67,6 +68,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read())
                 .thenReturn("name with space")
@@ -98,6 +100,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -121,6 +124,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -159,6 +163,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -189,6 +194,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("wrongType")
@@ -220,6 +226,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read())
                 .thenReturn("name")
@@ -248,6 +255,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read())
                 .thenReturn("name")
@@ -276,6 +284,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -306,6 +315,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("character")
@@ -336,6 +346,7 @@ public class CreateTableMockito {
         Command command = new CreateTable(store, view);
         String commandString = Command.CREATE_TABLE + Command.SEPARATOR + "tableName";
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("name")
                 .thenReturn("integer")

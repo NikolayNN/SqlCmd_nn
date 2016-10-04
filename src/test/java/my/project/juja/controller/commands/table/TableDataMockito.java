@@ -37,6 +37,7 @@ public class TableDataMockito {
         String tableName = "table";
         String commandString = Command.TABLE_DATA + Command.SEPARATOR + tableName;
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getTableData(tableName)).thenReturn(new TestTable().getTable());
         //when

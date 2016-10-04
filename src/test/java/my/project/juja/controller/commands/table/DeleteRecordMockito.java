@@ -47,6 +47,7 @@ public class DeleteRecordMockito {
         String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.DELETE_RECORD + Command.SEPARATOR + testTable.getTableName();
         spyCommand.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getTableHeader());

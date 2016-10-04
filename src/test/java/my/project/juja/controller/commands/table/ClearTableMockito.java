@@ -42,6 +42,7 @@ public class ClearTableMockito {
         Command command = new ClearTable(store, view);
         command.setup(commandString);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(view.read()).thenReturn("y");
         //when
@@ -59,6 +60,7 @@ public class ClearTableMockito {
         String commandString = Command.CLEAR_TABLE;
         Command command = new ClearTable(store, view);
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         //when
         try {

@@ -20,7 +20,7 @@ public class UpdateRecord extends Command {
 
     @Override
     public void perform() {
-        isConnectedDataBase();
+        checkConnection();
         checkCountParameters(parametrs, COUNT_PARAMETERS);
         String tableName = parametrs[0];
         checkTableName(tableName);

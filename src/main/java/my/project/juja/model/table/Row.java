@@ -59,10 +59,11 @@ public class Row {
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Cell cell : cells) {
-            result += cell.getValue() + " | ";
+            result.append(cell.getValue());
+            result.append(" | ");
         }
-        return result;
+        return result.toString();
     }
 }

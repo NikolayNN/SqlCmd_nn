@@ -97,16 +97,16 @@ public class IntegrationTest {
                 "table-data-where\n" +
                 "\t - Show table rows with the condition WHERE 'table-data-where|tableName'\n" +
                 "add-record\n" +
-                "\t - Add record in the selectd table 'add-record|tableName'\n" +
+                "\t - Add record in the selected table 'add-record|tableName'\n" +
                 "update-table\n" +
-                "\t - Update record in the selected table 'update-table|tableName|where'\n" +
+                "\t - Update record in the selected table 'update-table|tableName\n" +
                 "clear-table\n" +
                 "\t - Clear selected table 'clear-table|tableName'\n" +
                 "exit\n" +
                 "\t - Close connection to a database and exit\n" +
                 "Input your command or 'help'\n" +
                 "Goodbye\n";
-        assertEquals(TestUtils.replaceLineSeparator(expected), getData());
+        assertEquals(expected, getData().replaceAll("\\r\\n","\n"));
 
     }
 
@@ -201,7 +201,7 @@ public class IntegrationTest {
         //then
         String expected = "Hello\n" +
                 "Input your command or 'help'\n" +
-                "ERROR. at first connect to database\n" +
+                "ERROR. at first connect to server\n" +
                 "Input your command or 'help'\n" +
                 "Goodbye\n";
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());
@@ -461,7 +461,7 @@ public class IntegrationTest {
         //then
         String expected = "Hello\n" +
                 "Input your command or 'help'\n" +
-                "ERROR. at first connect to database\n" +
+                "ERROR. at first connect to server\n" +
                 "Input your command or 'help'\n" +
                 "Goodbye\n";
         assertEquals(TestUtils.replaceLineSeparator(expected), getData());

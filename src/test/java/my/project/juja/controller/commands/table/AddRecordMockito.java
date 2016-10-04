@@ -45,6 +45,7 @@ public class AddRecordMockito {
         String commandString = Command.ADD_RECORD + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(testTable.getTableHeader());
         Mockito.when(view.read()).thenReturn("123")

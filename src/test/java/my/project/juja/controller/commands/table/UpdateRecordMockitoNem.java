@@ -48,6 +48,7 @@ public class UpdateRecordMockitoNem {
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getTableHeader());
@@ -82,6 +83,7 @@ public class UpdateRecordMockitoNem {
         String commandString = Command.UPDATE_TABLE + Command.SEPARATOR + table.getTableName();
         command.setup(commandString);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(whereConstructor.toString()).thenReturn("name='Pasha'");
         Mockito.when(store.getColumnInformation(table.getTableName())).thenReturn(table.getTableHeader());

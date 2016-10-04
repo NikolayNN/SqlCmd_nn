@@ -17,7 +17,7 @@ public class ClearTable extends Command {
 
     @Override
     public void perform() {
-        isConnectedDataBase();
+        checkConnection();
         checkCountParameters(parametrs, countParameters);
         String tableName = parametrs[0];
         checkTableName(tableName);

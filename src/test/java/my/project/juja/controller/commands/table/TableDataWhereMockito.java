@@ -44,6 +44,7 @@ public class TableDataWhereMockito {
         String where = testTable.getCellInfos(0).getColumnName() + "=" + "value";
         String commandString = Command.TABLE_DATA + Command.SEPARATOR_TO_STRING + testTable.getTableName();
         command.setup(commandString);
+        Mockito.when(store.getConnectToServer()).thenReturn(connection);
         Mockito.when(store.getConnectToDataBase()).thenReturn(connection);
         Mockito.when(store.getTableList()).thenReturn(availableTables);
         Mockito.when(store.getColumnInformation(testTable.getTableName())).thenReturn(testTable.getTableHeader());
