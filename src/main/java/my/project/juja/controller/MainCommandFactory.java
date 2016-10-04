@@ -13,12 +13,10 @@ import my.project.juja.view.View;
  * Created by Nikol on 4/13/2016.
  */
 public class MainCommandFactory implements CommandFactory {
-    Storeable store;
-    View view;
+    private View view;
     public Command[] supportedCommands;
 
     public MainCommandFactory(Storeable store, View view) {
-        this.store = store;
         this.view = view;
         supportedCommands = new Command[]{
                 new ConnectServer(store, view),
@@ -40,7 +38,6 @@ public class MainCommandFactory implements CommandFactory {
                 new Help(view),
                 new AddRecord(store, view)
         };
-
     }
 
     @Override
